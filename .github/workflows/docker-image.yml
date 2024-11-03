@@ -1,4 +1,4 @@
-name: paint-board Docker Image CI
+name: Paint-Board Docker Image CI
 
 on:
   workflow_dispatch:
