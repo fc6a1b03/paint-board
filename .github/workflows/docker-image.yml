@@ -1,0 +1,53 @@
+name: paint-board Docker Image CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # Step 1: 设置Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # Step 2: 为多平台构建安装QEMU
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    # Step 3: 登录Docker Hub
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Step 4: 准备 Docker 镜像标签
+    - name: Prepare Docker tags
+      id: prepare_tags
+      run: |
+        echo "TAGS=fc6a1b03/paint-board:latest,fc6a1b03/paint-board:$(jq -r '.version' package.json)" >> $GITHUB_ENV
+
+    # Step 5: 为多种架构构建和推送Docker镜像
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ env.TAGS }}
+        platforms: linux/amd64,linux/arm64
+
+    # Step 6: 更新记录的最后构建版本
+    - name: Update last built version
+      run: |
+        echo $LATEST_VERSION > last_built_version.txt
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git add last_built_version.txt
+        git commit -m "Update last built version to $LATEST_VERSION"
+        git push --force
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
