@@ -15,7 +15,7 @@ RUN echo "https://registry.npmmirror.com" > .npmrc && \
     npm install -g pnpm && \
     pnpm install --frozen-lockfile && \
     pnpm build && \
-    rm .npmrc # 删除 .npmrc 文件以节省空间
+    rm .npmrc
 
 # 复制项目的源文件（为了缩小镜像体积，将此步骤放在依赖安装后）
 COPY . .
