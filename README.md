@@ -51,6 +51,7 @@ Link: [https://songlh.top/paint-board/](https://songlh.top/paint-board/)
   - Supports font and style settings when selecting text.
   - Layer settings are supported for all drawings, including Move Layer Up, Move Layer Down, Move to Top, and Move to Bottom.
   - All drawings support transparency configurations.
+  - All drawings support eraser or not erasable configuration.
 + Drawing Board Configuration
   - The drawing board supports background configuration, including colour, background image, and transparency.
   - The drawing board supports customized width and height configurations.
@@ -139,6 +140,7 @@ I'm glad you're interested in contributing to PAINT BOARD. If you find a bug and
 
 ## Document
 + After refactoring with Fabric.js
+  - [Exploring the Canvas Series: combined with Transformers.js to achieve intelligent image processing](https://songlh.top/2024/11/23/Exploring-the-Canvas-Series-combined-with-Transformers-js-to-achieve-intelligent-image-processing/)
   - [Exploring the Canvas Series: The Art of Time Reversal in the Canvas](https://songlh.top/2024/01/10/Exploring-the-Canvas-Series-The-Art-of-Time-Reversal-in-the-Canvas/)
   - [Exploring the Canvas Series: Creative Brushes Part 1](https://songlh.top/2024/04/14/Exploring-the-Canvas-Series-Creative-Brushes-Part-1/)
   - [Exploring the Canvas Series: Creative Brushes Part 2](https://songlh.top/2024/04/15/Exploring-the-Canvas-Series-Creative-Brushes-Part-2/)
