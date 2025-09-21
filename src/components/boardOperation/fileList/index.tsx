@@ -4,10 +4,8 @@ import useBoardStore from '@/store/board'
 import { ActionMode } from '@/constants'
 import { paintBoard } from '@/core/paintBoard'
 
-import AddFileIcon from '@/components/icons/fileList/addFile.svg?react'
-import RemoveFileIcon from '@/components/icons/fileList/removeFile.svg?react'
-import ExportFileIcon from '@/components/icons/fileList/exportFile.svg?react'
-import ImportFileIcon from '@/components/icons/fileList/importFile.svg?react'
+import { FileMinus, FilePlus, FileUp, FileDown } from 'lucide-react'
+
 import Toast from '@/components/toast'
 
 interface IProps {
@@ -64,19 +62,30 @@ const FileList: FC<IProps> = ({ updateShow }) => {
           </div>
           <div className="bg-[#eef1ff] rounded-2xl mt-5 py-2 w-max max-w-full">
             <div className="flex justify-end items-center px-4 pb-2">
-              <AddFileIcon
-                className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-9 h-9"
+              <FilePlus
+                color="#66CC8A"
+                className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-8 h-8"
                 onClick={addFile}
               />
               <label htmlFor="delete-file-modal">
-                <RemoveFileIcon className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-9 h-9" />
+                <FileMinus
+                  size={20}
+                  color="#66CC8A"
+                  className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-8 h-8"
+                />
               </label>
-              <ExportFileIcon
-                className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-9 h-9"
+              <FileUp
+                size={20}
+                color="#66CC8A"
+                className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-8 h-8"
                 onClick={saveJSON}
               />
               <label htmlFor="file-upload" className="cursor-pointer">
-                <ImportFileIcon className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-9 h-9" />
+                <FileDown
+                  size={20}
+                  color="#66CC8A"
+                  className="hover:bg-slate-200 cursor-pointer p-1 rounded-lg w-8 h-8"
+                />
               </label>
               <input
                 type="file"

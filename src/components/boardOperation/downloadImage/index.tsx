@@ -5,10 +5,8 @@ import { useDebounceEffect } from '@/hooks/useDebounceEffect'
 import ReactCrop, { Crop } from 'react-image-crop'
 import { canvasPreview } from './canvasPreview'
 
+import { Scaling, RotateCw, Proportions } from 'lucide-react'
 import Mask from '@/components/mask'
-import ImageRotate from '@/components/icons/boardOperation/image-rotate.svg?react'
-import ImageScale from '@/components/icons/boardOperation/image-scale.svg?react'
-import ImageSize from '@/components/icons/boardOperation/image-size.svg?react'
 
 import 'react-image-crop/dist/ReactCrop.css'
 
@@ -148,13 +146,13 @@ const DownloadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
                   className="mr-[12px] shrink-0 tooltip"
                   data-tip={t('downloadImage.size')}
                 >
-                  <ImageSize />
+                  <Proportions color="#66CC8A" />
                 </div>
-                <div className="tabs tabs-boxed bg-[#333C4D] shrink-0">
+                <div className="tabs tabs-sm tabs-boxed bg-[#333C4D] shrink-0">
                   {[1, 2, 3].map((value) => (
                     <a
                       key={value}
-                      className={`tab tab-sm flex-grow font-fredokaOne font-normal text-white ${
+                      className={`tab flex-grow font-fredokaOne font-normal text-white ${
                         saveImageSize === value ? 'tab-active' : ''
                       }`}
                       onClick={() => {
@@ -172,7 +170,7 @@ const DownloadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
                   className="mr-[6px] shrink-0 tooltip"
                   data-tip={t('downloadImage.rotate')}
                 >
-                  <ImageRotate />
+                  <RotateCw color="#66CC8A" />
                 </div>
                 <input
                   className="range range-primary range-xs"
@@ -192,7 +190,7 @@ const DownloadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
                   className="mr-[12px] shrink-0 tooltip"
                   data-tip={t('downloadImage.scale')}
                 >
-                  <ImageScale />
+                  <Scaling color="#66CC8A" />
                 </div>
                 <input
                   className="range range-primary range-xs"

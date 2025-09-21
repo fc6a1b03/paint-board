@@ -12,9 +12,8 @@ import {
 import { ImageElement } from '@/core/element/image'
 import { cropTransparent } from '@/utils/cropTransparent'
 
+import { Info, LoaderCircle } from 'lucide-react'
 import Mask from '@/components/mask'
-import InfoOutline from '@/components/icons/info-outline.svg?react'
-import LoadingIcon from '@/components/icons/loading.svg?react'
 import PositiveIcon from '@/components/icons/boardOperation/image-segmentation-positive.svg?react'
 import NegativeIcon from '@/components/icons/boardOperation/image-segmentation-negative.svg?react'
 
@@ -399,7 +398,7 @@ const ImageSegmentation: FC<IProps> = ({
           </div>
         </div>
         <div className="text-xs text-base-content mt-2 max-w-[60vw] flex">
-          <InfoOutline className="shrink-0" />
+          <Info size={14} className="shrink-0" />
           <span className="ml-1">{t(segmentationTip)}</span>
         </div>
         <div
@@ -413,7 +412,7 @@ const ImageSegmentation: FC<IProps> = ({
         >
           {segmentationStatus !== SEGMENTATION_STATUS.PROCESSING_SUCCESS && (
             <div className="absolute z-[3] top-0 left-0 w-full h-full bg-slate-400 bg-opacity-70 flex justify-center items-center">
-              <LoadingIcon className="animate-spin" />
+              <LoaderCircle size={32} className="animate-spin" />
             </div>
           )}
           <div className="h-full w-max relative overflow-hidden">

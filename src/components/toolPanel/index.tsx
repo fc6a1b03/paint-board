@@ -4,12 +4,11 @@ import useBoardStore from '@/store/board'
 import { ActionMode } from '@/constants'
 import { modeSwitch } from './constant'
 
+import { X, Menu } from 'lucide-react'
 import DrawConfig from './drawConfig'
 import EraserConfig from './eraserConfig'
 import SelectConfig from './selectConfig'
 import BoardConfig from './boardConfig'
-import CloseIcon from '@/components/icons/close.svg?react'
-import MenuIcon from '@/components/icons/menu.svg?react'
 
 const ToolPanel: FC = () => {
   const { t } = useTranslation()
@@ -23,19 +22,29 @@ const ToolPanel: FC = () => {
       }`}
     >
       {/* toggle main panel display button */}
-      <label className="btn btn-circle swap swap-rotate absolute -top-3 -left-3 h-7 w-7 min-h-0">
+      <label className="btn btn-neutral btn-circle swap swap-rotate absolute -top-3 -left-3 h-7 w-7 min-h-0">
         <input type="checkbox" onChange={() => setShowPanel((v) => !v)} />
-        <CloseIcon className="swap-on fill-current" />
-        <MenuIcon className="swap-off fill-current" />
+        <Menu
+          strokeWidth={2.5}
+          color="#fff"
+          size={20}
+          className="swap-on fill-current"
+        />
+        <X
+          strokeWidth={2.5}
+          color="#fff"
+          size={20}
+          className="swap-off fill-current"
+        />
       </label>
       {showPanel && (
         <div className="max-h-[100%] overflow-y-auto noScrollbar">
           {/* switch mode tabs */}
-          <div className="tabs tabs-boxed bg-[#333C4D]">
+          <div className="tabs tabs-sm tabs-boxed bg-[#333C4D]">
             {modeSwitch.map(({ type, text }) => (
               <a
                 key={type}
-                className={`tab tab-sm flex-grow font-fredokaOne text-white font-medium ${
+                className={`tab flex-grow font-fredokaOne text-white font-medium ${
                   mode === type ? 'tab-active' : ''
                 }`}
                 onClick={() => {

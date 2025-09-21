@@ -6,8 +6,8 @@ import { paintBoard } from '@/core/paintBoard'
 import { debounce } from 'lodash'
 import { rgbaToHex } from '@/utils/color'
 
+import { ImageUp } from 'lucide-react'
 import OpacityIcon from '@/components/icons/opacity.svg?react'
-import UploadIcon from '@/components/icons/boardOperation/upload.svg?react'
 import ClearIcon from '@/components/icons/clear.svg?react'
 import UploadSuccessIcon from '@/components/icons/uploadSuccess.svg?react'
 
@@ -113,7 +113,7 @@ const BackgroundConfig = () => {
               <UploadSuccessIcon className="w-7 h-7 object-contain" />
             </>
           ) : (
-            <UploadIcon />
+            <ImageUp color="#66CC8A" size={28} />
           )}
         </label>
         <input

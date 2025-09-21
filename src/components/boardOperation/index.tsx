@@ -5,19 +5,22 @@ import { ActionMode } from '@/constants'
 import { paintBoard } from '@/core/paintBoard'
 import { isMobile as isMobileFn } from '@/utils'
 
-import UndoIcon from '@/components/icons/boardOperation/undo.svg?react'
-import RedoIcon from '@/components/icons/boardOperation/redo.svg?react'
-import SaveIcon from '@/components/icons/boardOperation/save.svg?react'
-import CleanIcon from '@/components/icons/boardOperation/clean.svg?react'
-import UploadIcon from '@/components/icons/boardOperation/upload.svg?react'
-import CopyIcon from '@/components/icons/boardOperation/copy.svg?react'
-import TextIcon from '@/components/icons/boardOperation/text.svg?react'
-import DeleteIcon from '@/components/icons/boardOperation/delete.svg?react'
-import FileListIcon from '@/components/icons/boardOperation/fileList.svg?react'
-import FullscreenIcon from '@/components/icons/boardOperation/fullscreen.svg?react'
-import FullscreenExitIcon from '@/components/icons/boardOperation/fullscreen-exit.svg?react'
-import CloseIcon from '@/components/icons/close.svg?react'
-import MenuIcon from '@/components/icons/menu.svg?react'
+import {
+  Undo2,
+  Redo2,
+  Type,
+  Copy,
+  Trash2,
+  ImageUp,
+  BrushCleaning,
+  Save,
+  Expand,
+  Shrink,
+  X,
+  Menu,
+  BookText
+} from 'lucide-react'
+
 import FileList from './fileList'
 import DownloadImage from './downloadImage'
 import UploadImage from './uploadImage'
@@ -131,14 +134,14 @@ const BoardOperation = () => {
               className="min-xs:tooltip cursor-pointer py-1.5 pl-3 pr-2 rounded-l-full hover:bg-slate-200 xs:pl-2 xs:rounded-l-none xs:rounded-t-full"
               data-tip={t('operate.undo')}
             >
-              <UndoIcon className="transform scale-x-[-1] scale-y-[1]" />
+              <Undo2 strokeWidth={2.5} color="#66CC8A" />
             </div>
             <div
               onClick={redo}
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.redo')}
             >
-              <RedoIcon />
+              <Redo2 strokeWidth={2.5} color="#66CC8A" />
             </div>
             {[ActionMode.SELECT, ActionMode.Board].includes(mode) && (
               <>
@@ -147,14 +150,14 @@ const BoardOperation = () => {
                   className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
                   data-tip={t('operate.copy')}
                 >
-                  <CopyIcon />
+                  <Copy strokeWidth={2.5} color="#66CC8A" />
                 </div>
                 <div
                   onClick={deleteObject}
                   className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
                   data-tip={t('operate.delete')}
                 >
-                  <DeleteIcon />
+                  <Trash2 strokeWidth={2.5} color="#66CC8A" />
                 </div>
               </>
             )}
@@ -163,14 +166,14 @@ const BoardOperation = () => {
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               onClick={inputText}
             >
-              <TextIcon />
+              <Type strokeWidth={2.5} color="#66CC8A" />
             </div>
             <div
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.image')}
             >
               <label htmlFor="image-upload" className="cursor-pointer">
-                <UploadIcon />
+                <ImageUp strokeWidth={2.5} color="#66CC8A" />
               </label>
               <input
                 type="file"
@@ -185,14 +188,14 @@ const BoardOperation = () => {
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.clean')}
             >
-              <CleanIcon />
+              <BrushCleaning strokeWidth={2.5} color="#66CC8A" />
             </label>
             <div
               onClick={saveImage}
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.save')}
             >
-              <SaveIcon />
+              <Save strokeWidth={2.5} color="#66CC8A" />
             </div>
             {!isMobile && (
               <div
@@ -202,7 +205,11 @@ const BoardOperation = () => {
                   isFullscreen ? 'operate.exitFullscreen' : 'operate.fullscreen'
                 )}
               >
-                {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+                {isFullscreen ? (
+                  <Shrink strokeWidth={2.5} color="#66CC8A" />
+                ) : (
+                  <Expand strokeWidth={2.5} color="#66CC8A" />
+                )}
               </div>
             )}
             <label
@@ -211,14 +218,14 @@ const BoardOperation = () => {
               data-tip={t('operate.fileList')}
               onClick={() => updateShowFile(true)}
             >
-              <FileListIcon />
+              <BookText strokeWidth={2.5} color="#66CC8A" />
             </label>
           </>
         )}
-        <label className="btn btn-circle swap swap-rotate w-7 h-7 min-h-0 my-1.5 mx-2 min-xs:hidden">
+        <label className="btn btn-neutral btn-circle swap swap-rotate w-7 h-7 min-h-0 my-1.5 mx-2 min-xs:hidden">
           <input type="checkbox" onChange={() => setShowOperation((v) => !v)} />
-          <CloseIcon className="swap-on fill-current" />
-          <MenuIcon className="swap-off fill-current" />
+          <X strokeWidth={2.5} color="#fff" size={20} className="swap-on" />
+          <Menu strokeWidth={2.5} color="#fff" size={20} className="swap-off" />
         </label>
       </div>
       {showFile && <FileList updateShow={updateShowFile} />}

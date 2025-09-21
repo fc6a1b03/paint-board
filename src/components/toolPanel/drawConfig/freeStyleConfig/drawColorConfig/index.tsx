@@ -1,7 +1,7 @@
-import AddColorIcon from '@/components/icons/addColor.svg?react'
 import useDrawStore from '@/store/draw'
 import { useTranslation } from 'react-i18next'
 
+import AddColorIcon from '@/components/icons/addColor.svg?react'
 import ClearIcon from '@/components/icons/clear.svg?react'
 
 const DrawColorConfig = () => {

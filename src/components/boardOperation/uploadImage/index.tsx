@@ -11,9 +11,9 @@ import {
 import { ImageElement } from '@/core/element/image'
 import { cropTransparent } from '@/utils/cropTransparent'
 
+import { Info } from 'lucide-react'
 import Mask from '@/components/mask'
 import ImageSegmentation from './imageSegmentation'
-import InfoOutline from '@/components/icons/info-outline.svg?react'
 
 interface IProps {
   url: string
@@ -212,7 +212,7 @@ const UploadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
           </button>
         </div>
         <div className="text-xs text-base-content mt-2 w-[50vw] max-w-[400px] flex">
-          <InfoOutline className="shrink-0" />
+          <Info size={14} className="shrink-0" />
           <span className="ml-1">{t(removeBackgroundBtnTip)}</span>
         </div>
         <div className="relative mt-4 border border-base-content border-dashed rounded-lg overflow-hidden">

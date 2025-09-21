@@ -1,33 +1,31 @@
 import { ShapeStyle } from '@/constants/shape'
 
+import {
+  Square,
+  Circle,
+  Triangle,
+  ArrowDownUp,
+  ArrowBigLeft,
+  Cloud,
+  MessageSquare,
+  Zap,
+  X,
+  Check,
+  Info,
+  Delete,
+  Volume,
+  Search,
+  Heart,
+  Bell
+} from 'lucide-react'
 import LineIcon from '@/components/icons/shapeStyle/line.svg?react'
-import RectIcon from '@/components/icons/shapeStyle/rect.svg?react'
-import CircleIcon from '@/components/icons/shapeStyle/circle.svg?react'
 import EllipseIcon from '@/components/icons/shapeStyle/ellipse.svg?react'
-import TriangleIcon from '@/components/icons/shapeStyle/triangle.svg?react'
-import ArrowLineIcon from '@/components/icons/shapeStyle/arrowLine.svg?react'
-import ArrowOutlineIcon from '@/components/icons/shapeStyle/arrowOutline.svg?react'
-import CloudIcon from '@/components/icons/shapeStyle/cloud.svg?react'
-import TooltipsIcon from '@/components/icons/shapeStyle/tooltips.svg?react'
-import LightningIcon from '@/components/icons/shapeStyle/lightning.svg?react'
-import CloseIcon from '@/components/icons/shapeStyle/close.svg?react'
-import CheckIcon from '@/components/icons/shapeStyle/check.svg?react'
-import InfoIcon from '@/components/icons/shapeStyle/info.svg?react'
-import BackspaceIcon from '@/components/icons/shapeStyle/backspace.svg?react'
 import BlockIcon from '@/components/icons/shapeStyle/block.svg?react'
-import SpeakerIcon from '@/components/icons/shapeStyle/speaker.svg?react'
-import SearchIcon from '@/components/icons/shapeStyle/search.svg?react'
 import InfoOutlineIcon from '@/components/icons/shapeStyle/infoOutline.svg?react'
-import HeartIcon from '@/components/icons/shapeStyle/heart.svg?react'
-import AlertIcon from '@/components/icons/shapeStyle/alert.svg?react'
 
 interface ShapeStyleSwitchType {
   type: string
-  icon: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement> & {
-      title?: string | undefined
-    }
-  >
+  icon: React.ComponentType<any>
 }
 
 export const shapeStyleSwitch: Record<string, Array<ShapeStyleSwitchType>> = {
@@ -38,11 +36,11 @@ export const shapeStyleSwitch: Record<string, Array<ShapeStyleSwitchType>> = {
     },
     {
       type: ShapeStyle.Rect,
-      icon: RectIcon
+      icon: Square
     },
     {
       type: ShapeStyle.Circle,
-      icon: CircleIcon
+      icon: Circle
     },
     {
       type: ShapeStyle.Ellipse,
@@ -50,47 +48,47 @@ export const shapeStyleSwitch: Record<string, Array<ShapeStyleSwitchType>> = {
     },
     {
       type: ShapeStyle.Triangle,
-      icon: TriangleIcon
+      icon: Triangle
     }
   ],
   line_2: [
     {
       type: ShapeStyle.ArrowLine,
-      icon: ArrowLineIcon
+      icon: ArrowDownUp
     },
     {
       type: ShapeStyle.ArrowOutline,
-      icon: ArrowOutlineIcon
+      icon: ArrowBigLeft
     },
     {
       type: ShapeStyle.Cloud,
-      icon: CloudIcon
+      icon: Cloud
     },
     {
       type: ShapeStyle.Tooltips,
-      icon: TooltipsIcon
+      icon: MessageSquare
     },
     {
       type: ShapeStyle.Lightning,
-      icon: LightningIcon
+      icon: Zap
     }
   ],
   line_3: [
     {
       type: ShapeStyle.Close,
-      icon: CloseIcon
+      icon: X
     },
     {
       type: ShapeStyle.Check,
-      icon: CheckIcon
+      icon: Check
     },
     {
       type: ShapeStyle.Info,
-      icon: InfoIcon
+      icon: Info
     },
     {
       type: ShapeStyle.Backspace,
-      icon: BackspaceIcon
+      icon: Delete
     },
     {
       type: ShapeStyle.Block,
@@ -100,11 +98,11 @@ export const shapeStyleSwitch: Record<string, Array<ShapeStyleSwitchType>> = {
   line_4: [
     {
       type: ShapeStyle.Speaker,
-      icon: SpeakerIcon
+      icon: Volume
     },
     {
       type: ShapeStyle.Search,
-      icon: SearchIcon
+      icon: Search
     },
     {
       type: ShapeStyle.InfoOutline,
@@ -112,11 +110,11 @@ export const shapeStyleSwitch: Record<string, Array<ShapeStyleSwitchType>> = {
     },
     {
       type: ShapeStyle.Heart,
-      icon: HeartIcon
+      icon: Heart
     },
     {
       type: ShapeStyle.Alert,
-      icon: AlertIcon
+      icon: Bell
     }
   ]
 }
