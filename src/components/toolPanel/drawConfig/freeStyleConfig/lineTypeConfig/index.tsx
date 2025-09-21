@@ -13,12 +13,12 @@ const LineTypeConfig: FC = () => {
         {t('title.lineType')}
       </div>
       {Object.keys(drawLineTypeSwitch).map((lineKey) => (
-        <div key={lineKey} className="btn-group mt-1 flex">
+        <div key={lineKey} className="join mt-1 flex">
           {drawLineTypeSwitch[lineKey].map(({ type, icon }) => (
             <button
               key={type}
-              className={`btn btn-xs flex-grow ${
-                lineType === type ? 'btn-active' : ''
+              className={`join-item btn btn-xs flex-grow ${
+                lineType === type ? 'btn-primary' : 'btn-neutral'
               }`}
               onClick={() => {
                 updateLineType(type)

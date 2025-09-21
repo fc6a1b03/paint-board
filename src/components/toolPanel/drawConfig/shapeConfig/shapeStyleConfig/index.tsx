@@ -12,18 +12,18 @@ const ShapeStyleConfig = () => {
         {t('title.shapeType')}
       </div>
       {Object.keys(shapeStyleSwitch).map((lineKey) => (
-        <div key={lineKey} className="btn-group mt-1 flex">
-          {shapeStyleSwitch[lineKey].map(({ type, icon }) => (
+        <div key={lineKey} className="join mt-1 flex">
+          {shapeStyleSwitch[lineKey].map(({ type, icon: Icon }) => (
             <button
               key={type}
-              className={`btn btn-xs flex-grow text-[#eef1ff] ${
-                shapeStyle === type ? 'btn-active' : ''
+              className={`join-item btn btn-xs flex-grow text-[#eef1ff] ${
+                shapeStyle === type ? 'btn-primary' : 'btn-neutral'
               }`}
               onClick={() => {
                 updateShapeStyle(type)
               }}
             >
-              {icon({})}
+              <Icon size={16} />
             </button>
           ))}
         </div>

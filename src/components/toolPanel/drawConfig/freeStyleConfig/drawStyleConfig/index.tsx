@@ -12,12 +12,12 @@ const DrawStyleConfig = () => {
         {t('title.drawStyle')}
       </div>
       {Object.keys(styleSwitch).map((lineKey) => (
-        <div key={lineKey} className="btn-group mt-1 flex">
+        <div key={lineKey} className="join mt-1 flex">
           {styleSwitch[lineKey].map(({ type, text }) => (
             <button
               key={type}
-              className={`btn btn-xs flex-grow font-fredokaOne text-xs font-normal ${
-                drawStyle === type ? 'btn-active font-semibold' : ''
+              className={`join-item btn btn-xs flex-grow font-fredokaOne text-xs font-normal ${
+                drawStyle === type ? 'btn-primary font-semibold' : 'btn-neutral'
               }`}
               onClick={() => updateDrawStyle(type)}
             >

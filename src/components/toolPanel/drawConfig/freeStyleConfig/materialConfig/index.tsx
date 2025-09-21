@@ -12,12 +12,12 @@ const MaterialConfig = () => {
         <div className="font-bold text-sm font-fredokaOne">
           {t('title.materialType')}
         </div>
-        <div className="btn-group mt-1 flex">
+        <div className="join mt-1 flex">
           {MaterialSwitch.map(({ type, image }, index) => (
             <button
               key={index}
-              className={`btn btn-xs flex-grow ${
-                materialType === type ? 'btn-active' : ''
+              className={`join-item btn btn-xs flex-grow ${
+                materialType === type ? 'btn-primary' : 'btn-neutral'
               }`}
               onClick={() => {
                 updateMaterialType(type)

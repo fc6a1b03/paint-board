@@ -37,7 +37,8 @@ export default defineConfig({
   plugins: [
     react(),
     viteEslint({
-      failOnError: false
+      failOnError: false,
+      exclude: ['/registerSW.js']
     }),
     svgr(),
     splitVendorChunkPlugin(),

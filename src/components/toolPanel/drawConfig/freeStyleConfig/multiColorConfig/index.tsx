@@ -18,12 +18,12 @@ const MultiColorConfig = () => {
         <div className="font-bold text-sm font-fredokaOne">
           {t('title.multiColorType')}
         </div>
-        <div className="btn-group mt-1 flex">
+        <div className="join mt-1 flex">
           {MultiColorSwitch.map((item, index) => (
             <button
               key={index}
-              className={`btn btn-xs flex-grow ${
-                multiColorType === item ? 'btn-active' : ''
+              className={`join-item btn btn-xs flex-grow ${
+                multiColorType === item ? 'btn-primary' : 'btn-neutral'
               }`}
               onClick={() => {
                 updateMultiColorType(item)

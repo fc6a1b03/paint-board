@@ -33,11 +33,11 @@ const FillStyleConfig: FC<IProps> = (props) => {
           />
         </div>
         <div className="divider divider-horizontal mx-2"></div>
-        <div className="tabs tabs-boxed bg-[#333C4D] flex">
+        <div className="tabs tabs-xs tabs-boxed bg-[#333C4D] flex">
           {FillTypeSwitch.map(({ type, icon }) => (
             <button
               key={type}
-              className={`tab tab-xs flex-grow text-[#eef1ff] ${
+              className={`tab flex-grow text-[#eef1ff] ${
                 (props?.fillType || fillType) === type ? 'tab-active' : ''
               }`}
               onClick={() => {

@@ -52,10 +52,10 @@ body {
   overflow: hidden;
 }
 
-.btn:not(.btn-active):hover {
+.btn:not(.btn-primary):hover {
   color: #ffffff80;
-  background-color: hsl(var(--n, var(--n)) / var(--tw-bg-opacity));
-  border-color: hsl(var(--n, var(--n)) / var(--tw-border-opacity));
+  background-color: oklch(var(--n, var(--n)) / var(--tw-bg-opacity));
+  border-color: oklch(var(--n, var(--n)) / var(--tw-border-opacity));
 }
 
 .tab:not(.tab-active):hover {

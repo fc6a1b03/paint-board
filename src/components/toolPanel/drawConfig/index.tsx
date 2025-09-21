@@ -15,12 +15,12 @@ const DrawConfig = () => {
       <div className="font-bold text-sm font-fredokaOne mt-2">
         {t('title.drawType')}
       </div>
-      <div className="btn-group flex mt-1">
+      <div className="join flex mt-1">
         {DrawTypeSwitch.map(({ type, text }) => (
           <button
             key={type}
-            className={`btn btn-xs flex-grow font-fredokaOne font-normal ${
-              drawType === type ? 'btn-active font-semibold' : ''
+            className={`join-item btn btn-xs flex-grow font-fredokaOne font-normal ${
+              drawType === type ? 'btn-primary font-semibold' : 'btn-neutral'
             }`}
             onClick={() => {
               updateDrawType(type)

@@ -71,12 +71,12 @@ const GuideInfo: React.FC = () => {
             </div>
 
             <div className="dropdown dropdown-bottom dropdown-end">
-              <label tabIndex={0}>
+              <div tabIndex={0} role="button">
                 <TranslateIcon className="w-8 h-8 p-1 bg-[#66CC8960] rounded-md hover:bg-[#66CC8980] cursor-pointer" />
-              </label>
+              </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu menu-compact shadow bg-base-100 rounded-box w-40"
+                className="dropdown-content menu menu-compact shadow bg-base-100 rounded-box w-40 z-[10]"
               >
                 {languageList.map((item) => (
                   <li

@@ -33,16 +33,9 @@ module.exports = {
       }
     }
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require('daisyui')],
   daisyui: {
-    styled: true,
-    themes: true,
-    base: true,
-    utils: true,
-    logs: true,
-    rtl: false,
-    prefix: '',
-    // eslint-disable-next-line no-dupe-keys
     themes: ['emerald']
   }
 }
