@@ -37,36 +37,34 @@ export class PaintBoard {
     this.textElement = new TextElement()
   }
 
-  initCanvas(canvasEl: HTMLCanvasElement) {
-    return new Promise<boolean>(async (resolve) => {
-      this.canvas = new fabric.Canvas(canvasEl, {
-        selectionColor: 'rgba(101, 204, 138, 0.3)',
-        preserveObjectStacking: true,
-        enableRetinaScaling: true,
-        backgroundVpt: false
-      })
-      fabric.Object.prototype.set({
-        borderColor: '#65CC8A',
-        cornerColor: '#65CC8A',
-        cornerStyle: 'circle',
-        borderDashArray: [3, 3],
-        transparentCorners: false
-      })
-      fabric.Line.prototype.strokeLineJoin = 'round'
-      fabric.Line.prototype.strokeLineCap = 'round'
-
-      if (isMobile()) {
-        brushMouseMixin.initCanvas(this.canvas)
-      }
-      alignGuideLine.init(this.canvas, useBoardStore.getState().openGuideLine)
-
-      this.evnet = new CanvasEvent()
-      this.handleMode()
-
-      await this.initCanvasStorage()
-
-      resolve(true)
+  async initCanvas(canvasEl: HTMLCanvasElement) {
+    this.canvas = new fabric.Canvas(canvasEl, {
+      selectionColor: 'rgba(101, 204, 138, 0.3)',
+      preserveObjectStacking: true,
+      enableRetinaScaling: true,
+      backgroundVpt: false
     })
+    fabric.Object.prototype.set({
+      borderColor: '#65CC8A',
+      cornerColor: '#65CC8A',
+      cornerStyle: 'circle',
+      borderDashArray: [3, 3],
+      transparentCorners: false
+    })
+    fabric.Line.prototype.strokeLineJoin = 'round'
+    fabric.Line.prototype.strokeLineCap = 'round'
+
+    if (isMobile()) {
+      brushMouseMixin.initCanvas(this.canvas)
+    }
+    alignGuideLine.init(this.canvas, useBoardStore.getState().openGuideLine)
+
+    this.evnet = new CanvasEvent()
+    this.handleMode()
+
+    await this.initCanvasStorage()
+
+    return true
   }
 
   removeCanvas() {
