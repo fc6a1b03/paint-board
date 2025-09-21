@@ -23,7 +23,11 @@ export const getRandomFloat = (min: number, max: number) => {
  */
 export const formatPublicUrl = (originUrl: string) => {
   if (originUrl && typeof originUrl === 'string') {
-    return `${import.meta.env.BASE_URL}${originUrl}`
+    const baseUrl = import.meta.env.BASE_URL
+    // Ensure there's a slash between BASE_URL and originUrl
+    const separator =
+      baseUrl.endsWith('/') || originUrl.startsWith('/') ? '' : '/'
+    return `${baseUrl}${separator}${originUrl}`
   }
   return ''
 }
