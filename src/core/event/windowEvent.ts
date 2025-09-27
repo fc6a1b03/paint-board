@@ -4,7 +4,6 @@ import { ImageElement } from '@/core/element/image'
 import { fabric } from 'fabric'
 import useFileStore from '@/store/files'
 import useBoardStore from '@/store/board'
-import { handleBackgroundImageWhenCanvasSizeChange } from '@/core/utils/background'
 
 export class WindowEvent {
   constructor() {
@@ -111,11 +110,12 @@ export class WindowEvent {
   resizeFn() {
     const canvas = paintBoard.canvas
     if (canvas) {
-      canvas.setWidth(window.innerWidth * useBoardStore.getState().canvasWidth)
-      canvas.setHeight(
-        window.innerHeight * useBoardStore.getState().canvasHeight
-      )
-      handleBackgroundImageWhenCanvasSizeChange()
+      const { files, currentId } = useFileStore.getState()
+      const file = files.find((item) => item.id === currentId)
+      if (file) {
+        canvas.setWidth(window.innerWidth * file.canvasWidth)
+        canvas.setHeight(window.innerHeight * file.canvasHeight)
+      }
     }
   }
 }

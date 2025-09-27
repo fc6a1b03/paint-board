@@ -1,9 +1,13 @@
 import { ChangeEvent, useState, useCallback, useEffect } from 'react'
 import useBoardStore from '@/store/board'
+import { DEFAULT_BACKGROUND_SORT, useCurrentFile } from '@/store/files'
 import { useTranslation } from 'react-i18next'
 import { ActionMode } from '@/constants'
 import { paintBoard } from '@/core/paintBoard'
 import { isMobile as isMobileFn } from '@/utils'
+
+import { drawBackground } from '../background/backgroundColor/utils'
+import { drawBackgroundImage } from '../background/backgroundImage/utils'
 
 import {
   Undo2,
@@ -30,6 +34,7 @@ const isMobile = isMobileFn()
 const BoardOperation = () => {
   const { t } = useTranslation()
   const { mode } = useBoardStore()
+  const currentFile = useCurrentFile()
   const [showFile, updateShowFile] = useState(false) // show file list draw
   const [showOperation, setShowOperation] = useState(true) // mobile: show all operation
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -116,9 +121,63 @@ const BoardOperation = () => {
   }
 
   // save as image
-  const saveImage = () => {
+  const saveImage = async () => {
     if (paintBoard.canvas) {
-      const url = paintBoard.canvas.toDataURL()
+      // Get the original canvas dimensions
+      const originalCanvas = paintBoard.canvas.getElement()
+      const width = originalCanvas.width
+      const height = originalCanvas.height
+
+      // Create off-screen canvas
+      const offscreenCanvas = document.createElement('canvas')
+      offscreenCanvas.width = width
+      offscreenCanvas.height = height
+      const ctx = offscreenCanvas.getContext('2d')
+
+      if (!ctx) {
+        return
+      }
+
+      const backgroundSort =
+        currentFile?.backgroundSort || DEFAULT_BACKGROUND_SORT
+      const reverseBackgroundSort = [...backgroundSort].reverse()
+      for (let i = 0; i < reverseBackgroundSort.length; i++) {
+        const type = reverseBackgroundSort[i]
+        switch (type) {
+          case 'image':
+            if (currentFile?.backgroundImage) {
+              await drawBackgroundImage(
+                ctx,
+                currentFile.backgroundImage,
+                currentFile.backgroundImageOpacity,
+                width,
+                height
+              )
+            }
+            break
+          case 'color':
+            if (
+              currentFile?.backgroundColorList?.length &&
+              currentFile?.currentBackgroundColor !== -1
+            ) {
+              drawBackground(
+                ctx,
+                currentFile.backgroundColorList[
+                  currentFile.currentBackgroundColor
+                ],
+                width,
+                height
+              )
+            }
+            break
+        }
+      }
+
+      // Draw the original canvas content
+      ctx.drawImage(originalCanvas, 0, 0)
+
+      // Get the merged URL
+      const url = offscreenCanvas.toDataURL()
       setDownloadImageURL(url)
       setShowDownloadModal(true)
     }
@@ -134,14 +193,14 @@ const BoardOperation = () => {
               className="min-xs:tooltip cursor-pointer py-1.5 pl-3 pr-2 rounded-l-full hover:bg-slate-200 xs:pl-2 xs:rounded-l-none xs:rounded-t-full"
               data-tip={t('operate.undo')}
             >
-              <Undo2 strokeWidth={2.5} color="#66CC8A" />
+              <Undo2 strokeWidth={2} color="#66CC8A" />
             </div>
             <div
               onClick={redo}
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.redo')}
             >
-              <Redo2 strokeWidth={2.5} color="#66CC8A" />
+              <Redo2 strokeWidth={2} color="#66CC8A" />
             </div>
             {[ActionMode.SELECT, ActionMode.Board].includes(mode) && (
               <>
@@ -150,14 +209,14 @@ const BoardOperation = () => {
                   className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
                   data-tip={t('operate.copy')}
                 >
-                  <Copy strokeWidth={2.5} color="#66CC8A" />
+                  <Copy strokeWidth={2} color="#66CC8A" />
                 </div>
                 <div
                   onClick={deleteObject}
                   className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
                   data-tip={t('operate.delete')}
                 >
-                  <Trash2 strokeWidth={2.5} color="#66CC8A" />
+                  <Trash2 strokeWidth={2} color="#66CC8A" />
                 </div>
               </>
             )}
@@ -166,14 +225,14 @@ const BoardOperation = () => {
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               onClick={inputText}
             >
-              <Type strokeWidth={2.5} color="#66CC8A" />
+              <Type strokeWidth={2} color="#66CC8A" />
             </div>
             <div
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.image')}
             >
               <label htmlFor="image-upload" className="cursor-pointer">
-                <ImageUp strokeWidth={2.5} color="#66CC8A" />
+                <ImageUp strokeWidth={2} color="#66CC8A" />
               </label>
               <input
                 type="file"
@@ -188,14 +247,14 @@ const BoardOperation = () => {
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.clean')}
             >
-              <BrushCleaning strokeWidth={2.5} color="#66CC8A" />
+              <BrushCleaning strokeWidth={2} color="#66CC8A" />
             </label>
             <div
               onClick={saveImage}
               className="min-xs:tooltip cursor-pointer py-1.5 px-2 hover:bg-slate-200"
               data-tip={t('operate.save')}
             >
-              <Save strokeWidth={2.5} color="#66CC8A" />
+              <Save strokeWidth={2} color="#66CC8A" />
             </div>
             {!isMobile && (
               <div
@@ -206,9 +265,9 @@ const BoardOperation = () => {
                 )}
               >
                 {isFullscreen ? (
-                  <Shrink strokeWidth={2.5} color="#66CC8A" />
+                  <Shrink strokeWidth={2} color="#66CC8A" />
                 ) : (
-                  <Expand strokeWidth={2.5} color="#66CC8A" />
+                  <Expand strokeWidth={2} color="#66CC8A" />
                 )}
               </div>
             )}
@@ -218,7 +277,7 @@ const BoardOperation = () => {
               data-tip={t('operate.fileList')}
               onClick={() => updateShowFile(true)}
             >
-              <BookText strokeWidth={2.5} color="#66CC8A" />
+              <BookText strokeWidth={2} color="#66CC8A" />
             </label>
           </>
         )}

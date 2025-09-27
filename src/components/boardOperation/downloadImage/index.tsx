@@ -143,7 +143,7 @@ const DownloadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
             <div className="w-[48%]">
               <div className="flex items-center flex-wrap gap-y-2">
                 <div
-                  className="mr-[12px] shrink-0 tooltip"
+                  className="mr-[12px] shrink-0 min-xs:tooltip"
                   data-tip={t('downloadImage.size')}
                 >
                   <Proportions color="#66CC8A" />
@@ -167,7 +167,7 @@ const DownloadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
 
               <div className="flex items-center mt-3">
                 <div
-                  className="mr-[6px] shrink-0 tooltip"
+                  className="mr-[6px] shrink-0 min-xs:tooltip"
                   data-tip={t('downloadImage.rotate')}
                 >
                   <RotateCw color="#66CC8A" />
@@ -187,7 +187,7 @@ const DownloadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
 
               <div className="flex items-center mt-3">
                 <div
-                  className="mr-[12px] shrink-0 tooltip"
+                  className="mr-[12px] shrink-0 min-xs:tooltip"
                   data-tip={t('downloadImage.scale')}
                 >
                   <Scaling color="#66CC8A" />

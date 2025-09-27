@@ -1,9 +1,12 @@
-import useBoardStore from '@/store/board'
+import useFileStore, { useCurrentFile } from '@/store/files'
 import { useTranslation } from 'react-i18next'
 
 const CanvasSizeConfig = () => {
-  const { canvasWidth, canvasHeight, updateCanvasWidth, updateCanvasHeight } =
-    useBoardStore()
+  const { updateCanvasWidth, updateCanvasHeight } = useFileStore()
+  const currentFile = useCurrentFile()
+  if (!currentFile) {
+    return null
+  }
   const { t } = useTranslation()
 
   return (
@@ -16,7 +19,7 @@ const CanvasSizeConfig = () => {
           {t('canvasSize.width')}
         </div>
         <div className="text-sm font-fredokaOne mr-2 text-primary-focus w-9 shrink-0">
-          {(canvasWidth * 100).toFixed(0) + '%'}
+          {(currentFile.canvasWidth * 100).toFixed(0) + '%'}
         </div>
         <input
           className="range range-primary range-xs"
@@ -24,7 +27,7 @@ const CanvasSizeConfig = () => {
           min="0.1"
           max="1"
           step="0.01"
-          value={String(canvasWidth)}
+          value={String(currentFile.canvasWidth)}
           onChange={(e) => {
             updateCanvasWidth(Number(e.target.value))
           }}
@@ -35,7 +38,7 @@ const CanvasSizeConfig = () => {
           {t('canvasSize.height')}
         </div>
         <div className="text-sm font-fredokaOne mr-2 text-primary-focus w-9 shrink-0">
-          {(canvasHeight * 100).toFixed(0) + '%'}
+          {(currentFile.canvasHeight * 100).toFixed(0) + '%'}
         </div>
         <input
           className="range range-primary range-xs"
@@ -43,7 +46,7 @@ const CanvasSizeConfig = () => {
           min="0.1"
           max="1"
           step="0.01"
-          value={String(canvasHeight)}
+          value={String(currentFile.canvasHeight)}
           onChange={(e) => {
             updateCanvasHeight(Number(e.target.value))
           }}

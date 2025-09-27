@@ -16,8 +16,7 @@ import { material } from './element/draw/material'
 import { renderMultiColor } from './element/draw/multiColor'
 import { renderPencilBrush } from './element/draw/basic'
 import { getEraserWidth } from './utils/draw'
-import { handleCanvasJSONLoaded } from './utils/loadCanvas'
-import { handleBackgroundImageWhenCanvasSizeChange } from './utils/background'
+import { handleFileListData, handleCanvasJSONLoaded } from './utils/loadCanvas'
 
 import useFileStore from '@/store/files'
 import useDrawStore from '@/store/draw'
@@ -81,8 +80,11 @@ export class PaintBoard {
   initCanvasStorage() {
     return new Promise((resolve) => {
       setTimeout(() => {
+        handleFileListData()
+
         const { files, currentId } = useFileStore.getState()
         const file = files?.find((item) => item?.id === currentId)
+
         if (file && this.canvas) {
           this.canvas.clear()
           this.canvas.loadFromJSON(file.boardData, () => {
@@ -90,6 +92,12 @@ export class PaintBoard {
               if (file.viewportTransform) {
                 this.canvas.setViewportTransform(file.viewportTransform)
               }
+
+              this.canvas.setWidth(window.innerWidth * (file?.canvasWidth || 1))
+              this.canvas.setHeight(
+                window.innerHeight * (file?.canvasHeight || 1)
+              )
+
               if (file?.zoom && this.canvas.width && this.canvas.height) {
                 this.canvas.zoomToPoint(
                   new fabric.Point(
@@ -98,24 +106,15 @@ export class PaintBoard {
                   ),
                   file.zoom
                 )
+                this.evnet?.zoomEvent.handleZoomPercentage()
               }
-
-              this.canvas.setWidth(window.innerWidth * (file?.canvasWidth || 1))
-              useBoardStore.getState().updateCanvasWidth(file?.canvasWidth || 1)
-              this.canvas.setHeight(
-                window.innerHeight * (file?.canvasHeight || 1)
-              )
-              useBoardStore.getState().initBackground()
-
-              useBoardStore
-                .getState()
-                .updateCanvasHeight(file?.canvasHeight || 1)
 
               handleCanvasJSONLoaded(this.canvas)
 
               fabric.Object.prototype.set({
                 objectCaching: useBoardStore.getState().isObjectCaching
               })
+
               this.canvas.renderAll()
               this.triggerHook()
               this.history = new History()
@@ -369,16 +368,12 @@ export class PaintBoard {
   updateCanvasWidth = debounce((width) => {
     if (this.canvas) {
       this.canvas.setWidth(window.innerWidth * width)
-      handleBackgroundImageWhenCanvasSizeChange()
-      useFileStore.getState().updateCanvasWidth(width)
     }
   }, 500)
 
   updateCanvasHeight = debounce((height) => {
     if (this.canvas) {
       this.canvas.setHeight(window.innerHeight * height)
-      handleBackgroundImageWhenCanvasSizeChange()
-      useFileStore.getState().updateCanvasHeight(height)
     }
   }, 500)
 }
