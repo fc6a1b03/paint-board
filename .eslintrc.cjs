@@ -28,8 +28,12 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': [
-      'warn',
-      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        ignoreRestSiblings: true
+      }
     ],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off'
