@@ -70,7 +70,11 @@
     "save": "이미지로 저장",
     "fileList": "파일 목록",
     "fullscreen": "전체 화면",
-    "exitFullscreen": "전체 화면 종료"
+    "exitFullscreen": "전체 화면 종료",
+    "addFile": "파일 추가",
+    "deleteFile": "파일 삭제",
+    "saveFile": "파일 데이터 저장",
+    "uploadFile": "파일 데이터 업로드"
   },
   "info": {
     "welecome": "별점 환영합니다",

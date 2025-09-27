@@ -70,7 +70,11 @@
     "save": "Save as image",
     "fileList": "File List",
     "fullscreen": "Enter Fullscreen",
-    "exitFullscreen": "Exit Fullscreen"
+    "exitFullscreen": "Exit Fullscreen",
+    "addFile": "Add File",
+    "deleteFile": "Delete File",
+    "saveFile": "Save File Data",
+    "uploadFile": "Upload File Data"
   },
   "info": {
     "welecome": "Welcome to star",

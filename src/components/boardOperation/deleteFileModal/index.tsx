@@ -1,20 +1,17 @@
-import useBoardStore from '@/store/board'
 import useFileStore from '@/store/files'
 import { useTranslation } from 'react-i18next'
 
-import { ActionMode } from '@/constants'
-import { paintBoard } from '@/core/paintBoard'
+interface IProps {
+  fileId: string
+}
 
-const DeleteFileModal = () => {
+const DeleteFileModal: React.FC<IProps> = ({ fileId }) => {
   const { t } = useTranslation()
   const { files, deleteFile } = useFileStore()
-  const { updateMode } = useBoardStore()
 
   const deleteCurrentFile = () => {
     if (files.length > 1) {
-      deleteFile()
-      paintBoard.initCanvasStorage()
-      updateMode(ActionMode.DRAW)
+      deleteFile(fileId)
     }
   }
 

@@ -70,7 +70,11 @@
     "save": "保存为图片",
     "fileList": "文件列表",
     "fullscreen": "进入全屏",
-    "exitFullscreen": "退出全屏"
+    "exitFullscreen": "退出全屏",
+    "addFile": "添加文件",
+    "deleteFile": "删除文件",
+    "saveFile": "保存文件数据",
+    "uploadFile": "上传文件数据"
   },
   "info": {
     "welecome": "欢迎Star",

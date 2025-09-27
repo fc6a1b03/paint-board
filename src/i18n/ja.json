@@ -70,7 +70,11 @@
     "save": "画像として保存",
     "fileList": "ファイルリスト",
     "fullscreen": "全画面表示",
-    "exitFullscreen": "全画面を終了"
+    "exitFullscreen": "全画面を終了",
+    "addFile": "ファイル追加",
+    "deleteFile": "ファイル削除",
+    "saveFile": "ファイルデータ保存",
+    "uploadFile": "ファイルデータアップロード"
   },
   "info": {
     "welecome": "スターへようこそ",
