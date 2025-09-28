@@ -59,7 +59,7 @@ const OpacityConfig: FC<IProps> = ({ refreshCount }) => {
           <div className="font-bold font-fredokaOne mt-3 text-sm">
             {t('title.opacity')}
           </div>
-          <div className="mt-1 flex items-center w-full">
+          <div className="mt-1 flex items-center w-56">
             <input
               className="range range-primary range-xs"
               type="range"

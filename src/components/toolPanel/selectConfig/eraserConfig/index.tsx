@@ -2,6 +2,8 @@ import { useMemo, FC } from 'react'
 import { paintBoard } from '@/core/paintBoard'
 import { useTranslation } from 'react-i18next'
 
+import { Info } from 'lucide-react'
+
 interface IProps {
   refreshCount: number
 }
@@ -40,13 +42,16 @@ const EraserConfig: FC<IProps> = ({ refreshCount }) => {
     <>
       {erasableControl.show && (
         <>
-          <div className="font-bold font-fredokaOne mt-3 text-sm">
+          <div className="font-bold font-fredokaOne mt-3 text-sm flex items-center">
             {t('eraserConfig.eraser')}
+            <div
+              className="tooltip tooltip-right ml-1 cursor-pointer before:max-w-24"
+              data-tip={t('eraserConfig.erasableTip')}
+            >
+              <Info size={16} />
+            </div>
           </div>
           <div className="mt-1 flex items-center w-full">
-            <div className="font-fredokaOne text-xs mr-3">
-              {t('eraserConfig.erasable')}
-            </div>
             <input
               type="checkbox"
               className="toggle toggle-success"

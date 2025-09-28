@@ -14,24 +14,24 @@ const LayerConfig = () => {
       <div className="font-bold font-fredokaOne mt-3 text-sm">
         {t('title.layer')}
       </div>
-      <ul className="menu menu-vertical lg:menu-horizontal bg-base-100 rounded-box mt-1 flex-row w-max">
+      <ul className="menu menu-xs menu-vertical lg:menu-horizontal bg-base-100 rounded-box mt-1 flex-row w-max">
         <li>
-          <a className="px-1.5 py-1" onClick={() => paintBoard.bringForWard()}>
+          <a onClick={() => paintBoard.bringForWard()}>
             <BringForWardIcon />
           </a>
         </li>
         <li>
-          <a className="px-1.5 py-1" onClick={() => paintBoard.seendBackWard()}>
+          <a onClick={() => paintBoard.seendBackWard()}>
             <SendBackWardIcon />
           </a>
         </li>
         <li>
-          <a className="px-1.5 py-1" onClick={() => paintBoard.bringToFront()}>
+          <a onClick={() => paintBoard.bringToFront()}>
             <BringToFrontIcon />
           </a>
         </li>
         <li>
-          <a className="px-1.5 py-1" onClick={() => paintBoard.sendToBack()}>
+          <a onClick={() => paintBoard.sendToBack()}>
             <SendToBackIcon />
           </a>
         </li>

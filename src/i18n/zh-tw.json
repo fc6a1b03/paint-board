@@ -116,14 +116,15 @@
       "line1": "多文件配置：支持多個畫布切換，每個畫布可自定義標題、增加、刪除，並提供上傳和下載功能"
     }
   },
-  "cleanModal":{
+  "cleanModal": {
     "title": "確認清除內容？"
   },
   "deleteFileModal": {
     "title": "確認刪除當前文件嗎？"
   },
-  "toast": {
-    "uploadFileFail": "上傳失敗，請重試"
+  "tip": {
+    "uploadFileFail": "上傳失敗，請重試",
+    "unselectedElementTip": "請點擊或者框選畫板內容"
   },
   "filters": {
     "Sepia": "復古",
@@ -184,6 +185,7 @@
   },
   "eraserConfig": {
     "eraser": "橡皮擦",
-    "erasable": "可擦除"
+    "erasable": "可擦除",
+    "erasableTip": "開啓後, 橡皮擦可擦除所有內容"
   }
 }

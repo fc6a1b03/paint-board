@@ -43,7 +43,7 @@ const FontFamilyConfg: FC<IProps> = ({ fontFamily, updateFontFamily }) => {
             <input
               type="radio"
               name="radio-5"
-              className="radio radio-success radio-sm"
+              className="radio radio-success radio-xs"
               checked={(fontFamily || textFontFamily) === fontFamilyRadio[key]}
               onChange={() => {
                 updateTextFontFamily(fontFamilyRadio[key])
