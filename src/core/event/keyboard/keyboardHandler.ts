@@ -1,0 +1,195 @@
+import { paintBoard } from '@/core/paintBoard'
+import useBoardStore from '@/store/board'
+import { ActionMode } from '@/constants'
+
+import { KeyCode } from '@/constants/event'
+import { ClipboardHandler } from './clipboardHandler'
+import { HistoryHandler } from './historyHandler'
+import { TransformCanvasHandler } from './transformCanvasHandler'
+import { ModeHandler } from './modeHandler'
+
+/**
+ * Main keyboard shortcuts handler
+ * Coordinates all keyboard-related operations
+ */
+export class KeyboardHandler {
+  private clipboardHandler: ClipboardHandler
+  private historyHandler: HistoryHandler
+  private transformCanvasHandler: TransformCanvasHandler
+  private modeHandler: ModeHandler
+
+  constructor() {
+    this.clipboardHandler = new ClipboardHandler()
+    this.historyHandler = new HistoryHandler()
+    this.transformCanvasHandler = new TransformCanvasHandler()
+    this.modeHandler = new ModeHandler()
+  }
+
+  /**
+   * Handle keydown events
+   */
+  handleKeyDown = (e: KeyboardEvent) => {
+    const target = e.target as HTMLElement
+
+    // Skip if user is typing in input fields
+    if (this.isInputActive(target)) {
+      return
+    }
+
+    switch (e.code) {
+      case KeyCode.KEY_A:
+        // Ctrl+A (Windows/Linux) or Cmd+A (Mac) select all elements
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          e.preventDefault() // prevent default select all behavior
+          this.clipboardHandler.selectAllObjects()
+        }
+        break
+
+      case KeyCode.KEY_C:
+        // Ctrl+C (Windows/Linux) or Cmd+C (Mac) copy selected objects
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          e.preventDefault()
+          this.clipboardHandler.copySelectedObjects()
+        }
+        break
+
+      case KeyCode.KEY_D:
+        // Ctrl+D (Windows/Linux) or Cmd+D (Mac) duplicate objects
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          e.preventDefault()
+          useBoardStore.getState().updateMode(ActionMode.SELECT)
+          paintBoard.copyObject()
+        }
+        break
+
+      case KeyCode.KEY_V:
+        // Ctrl+V (Windows/Linux) or Cmd+V (Mac) paste
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          // set a flag to let pasteFn know that this is keyboard triggered
+          this.clipboardHandler.setKeyboardPasteFlag()
+          // do not prevent default behavior, let pasteFn handle the clipboard first
+        }
+        break
+
+      case KeyCode.KEY_Z:
+        // Ctrl/Cmd + Z undo, Ctrl/Cmd + Shift + Z redo
+        if (this.isModifierKey(e) && !e.altKey) {
+          e.preventDefault()
+
+          if (e.shiftKey) {
+            // Ctrl/Cmd + Shift + Z - redo
+            this.historyHandler.redoAction()
+          } else {
+            // Ctrl/Cmd + Z - undo
+            this.historyHandler.undoAction()
+          }
+        }
+        break
+
+      case KeyCode.DIGIT_1:
+      case KeyCode.DIGIT_2:
+      case KeyCode.DIGIT_3:
+      case KeyCode.DIGIT_4:
+        // Number keys for mode switching
+        this.modeHandler.switchMode(e.code)
+        break
+
+      case KeyCode.BACKSPACE:
+        // Delete selected objects
+        paintBoard.deleteObject()
+        break
+
+      case KeyCode.ARROW_UP:
+      case KeyCode.ARROW_DOWN:
+      case KeyCode.ARROW_LEFT:
+      case KeyCode.ARROW_RIGHT:
+        // Ctrl+Arrow keys (Windows/Linux) or Cmd+Arrow keys (Mac) pan canvas
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          e.preventDefault()
+          this.transformCanvasHandler.panCanvas(e.code)
+        }
+        break
+
+      case KeyCode.EQUAL:
+      case KeyCode.NUMPAD_ADD:
+        // Ctrl/Cmd + + zoom in
+        if (this.isModifierKey(e) && !e.altKey) {
+          e.preventDefault()
+          paintBoard.evnet?.zoomEvent.updateZoom('in')
+        }
+        break
+
+      case KeyCode.MINUS:
+      case KeyCode.NUMPAD_SUBTRACT:
+        // Ctrl/Cmd + - zoom out
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          e.preventDefault()
+          paintBoard.evnet?.zoomEvent.updateZoom('out')
+        }
+        break
+
+      case KeyCode.DIGIT_0:
+      case KeyCode.NUMPAD_0:
+        // Ctrl/Cmd + 0 reset zoom
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          e.preventDefault()
+          paintBoard.evnet?.zoomEvent.resetZoom()
+        }
+        break
+
+      case KeyCode.BRACKET_RIGHT:
+        // Ctrl+] (Windows/Linux) or Cmd+] (Mac) bring forward
+        // Ctrl+Shift+] (Windows/Linux) or Cmd+Shift+] (Mac) bring to front
+        if (this.isModifierKey(e) && !e.altKey) {
+          e.preventDefault()
+          if (e.shiftKey) {
+            paintBoard.bringToFront()
+          } else {
+            paintBoard.bringForWard()
+          }
+        }
+        break
+
+      case KeyCode.BRACKET_LEFT:
+        // Ctrl+[ (Windows/Linux) or Cmd+[ (Mac) send backward
+        // Ctrl+Shift+[ (Windows/Linux) or Cmd+Shift+[ (Mac) send to back
+        if (this.isModifierKey(e) && !e.altKey) {
+          e.preventDefault()
+          if (e.shiftKey) {
+            paintBoard.sendToBack()
+          } else {
+            paintBoard.seendBackWard()
+          }
+        }
+        break
+
+      default:
+        break
+    }
+  }
+
+  /**
+   * Handle paste events
+   */
+  handlePaste = (e: ClipboardEvent) => {
+    this.clipboardHandler.handlePaste(e)
+  }
+
+  /**
+   * Check if modifier key (Ctrl/Cmd) is pressed
+   */
+  private isModifierKey(e: KeyboardEvent): boolean {
+    return e.ctrlKey || e.metaKey
+  }
+
+  /**
+   * Check if user is currently typing in input fields
+   */
+  private isInputActive(target: HTMLElement): boolean {
+    return (
+      target.tagName === 'INPUT' ||
+      target.tagName === 'TEXTAREA' ||
+      target.isContentEditable
+    )
+  }
+}

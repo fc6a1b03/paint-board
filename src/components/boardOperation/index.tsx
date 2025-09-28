@@ -96,7 +96,7 @@ const BoardOperation = () => {
 
   // load IText object
   const inputText = () => {
-    paintBoard.textElement?.loadText()
+    paintBoard.textElement?.loadText({})
   }
 
   // upload image file

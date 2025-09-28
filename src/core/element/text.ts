@@ -8,7 +8,7 @@ export class TextElement {
   text: fabric.IText | null = null
   isTextEditing = false
 
-  loadText(x?: number, y?: number) {
+  loadText({ x, y, text }: { x?: number; y?: number; text?: string }) {
     const canvas = paintBoard?.canvas
     if (canvas) {
       // Creating editable text input
@@ -17,7 +17,7 @@ export class TextElement {
 
       const boardCenter = isUndefined(x) && isUndefined(y)
 
-      const text = new fabric.IText('Type here...', {
+      const textObj = new fabric.IText(text || 'Type here...', {
         originX: boardCenter ? 'center' : 'left',
         originY: boardCenter ? 'center' : 'top',
         left: boardCenter ? viewportCenter.x : x,
@@ -30,12 +30,12 @@ export class TextElement {
         underline: fontStyles.includes(FontStyle.UNDER_LINE),
         linethrough: fontStyles.includes(FontStyle.LINE_THROUGH)
       })
-      this.text = text
-      canvas.add(text)
-      canvas.setActiveObject(text)
+      this.text = textObj
+      canvas.add(textObj)
+      canvas.setActiveObject(textObj)
 
-      text.enterEditing() // Enters editing state
-      text.selectAll() // Selects entire text
+      textObj.enterEditing() // Enters editing state
+      textObj.selectAll() // Selects entire text
     }
   }
 

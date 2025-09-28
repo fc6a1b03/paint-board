@@ -122,7 +122,7 @@ const FileList: FC<IProps> = ({ updateShow }) => {
           </div>
         </div>
       </div>
-      {showUploadFail && <Toast message="toast.uploadFileFail" />}
+      {showUploadFail && <Toast message="tip.uploadFileFail" />}
       <DeleteFileModal fileId={deleteFileId} />
     </div>
   )

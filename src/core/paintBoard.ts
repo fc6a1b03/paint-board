@@ -7,7 +7,6 @@ import { History } from './history'
 import { ActionMode, ELEMENT_CUSTOM_TYPE } from '@/constants'
 import { DrawStyle, DrawType } from '@/constants/draw'
 
-import { v4 as uuidv4 } from 'uuid'
 import { debounce } from 'lodash'
 import { isMobile } from '@/utils'
 import { CanvasEvent } from './event'
@@ -17,6 +16,7 @@ import { renderMultiColor } from './element/draw/multiColor'
 import { renderPencilBrush } from './element/draw/basic'
 import { getEraserWidth } from './utils/draw'
 import { handleFileListData, handleCanvasJSONLoaded } from './utils/loadCanvas'
+import { cloneObjects } from './utils/object'
 
 import useFileStore from '@/store/files'
 import useDrawStore from '@/store/draw'
@@ -143,6 +143,9 @@ export class PaintBoard {
       hoverCursor: 'default'
     }
 
+    let defaultCursor = undefined
+    let freeDrawingCursor = undefined
+
     switch (mode) {
       case ActionMode.DRAW:
         if (
@@ -155,6 +158,8 @@ export class PaintBoard {
           this.handleDrawStyle()
         }
         this.canvas.discardActiveObject()
+        defaultCursor = 'crosshair'
+        freeDrawingCursor = 'crosshair'
         break
       case ActionMode.ERASE:
         isDrawingMode = true
@@ -174,6 +179,9 @@ export class PaintBoard {
       default:
         break
     }
+
+    this.canvas.defaultCursor = defaultCursor
+    this.canvas.freeDrawingCursor = freeDrawingCursor
     this.canvas.isDrawingMode = isDrawingMode
     this.canvas.selection = selection
     fabric.Object.prototype.set(objectSet)
@@ -251,34 +259,12 @@ export class PaintBoard {
     if (!canvas) {
       return
     }
-    const targets = canvas.getActiveObjects()
-    if (targets.length <= 0) {
+    const objects = canvas.getActiveObjects()
+    if (objects.length <= 0) {
       return
     }
-    canvas.discardActiveObject()
-    const copys = targets.map((target) => {
-      return new Promise<fabric.Object>((resolve) => {
-        target?.clone((cloned: fabric.Object) => {
-          const id = uuidv4()
-          cloned.set({
-            left: (cloned?.left || 0) + 10,
-            top: (cloned?.top || 0) + 10,
-            evented: true,
-            id,
-            perPixelTargetFind: true
-          })
-          resolve(cloned)
-          canvas.add(cloned)
-        })
-      })
-    })
-    Promise.all(copys).then((objs) => {
-      const activeSelection = new fabric.ActiveSelection(objs, {
-        canvas: canvas
-      })
-      canvas.setActiveObject(activeSelection)
-      this.render()
-    })
+
+    cloneObjects(objects)
   }
 
   /**

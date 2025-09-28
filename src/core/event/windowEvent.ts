@@ -1,12 +1,15 @@
 import { KeyCode } from '@/constants/event'
 import { paintBoard } from '@/core/paintBoard'
-import { ImageElement } from '@/core/element/image'
 import { fabric } from 'fabric'
 import useFileStore from '@/store/files'
 import useBoardStore from '@/store/board'
+import { KeyboardHandler } from './keyboard'
 
 export class WindowEvent {
+  private keyboardHandler: KeyboardHandler
+
   constructor() {
+    this.keyboardHandler = new KeyboardHandler()
     this.initWindowEvent()
   }
 
@@ -26,38 +29,36 @@ export class WindowEvent {
     window.removeEventListener('orientationchange', this.resizeFn)
   }
 
-  keydownFn(e: KeyboardEvent) {
-    const canvas = paintBoard?.canvas
-    switch (e.code) {
-      case KeyCode.SPACE:
-        /**
-         * After pressing the SPACE key, change the mouse style, disable the drawing function, and open the drawing cache
-         */
-        paintBoard?.evnet?.clickEvent.setSpaceKeyDownState(true)
-        if (canvas) {
-          if (!useBoardStore.getState().isObjectCaching) {
-            fabric.Object.prototype.set({
-              objectCaching: true
-            })
-          }
-          canvas.defaultCursor = 'pointer'
-          canvas.isDrawingMode = false
-          canvas.selection = false
+  keydownFn = (e: KeyboardEvent) => {
+    // Handle space key for pan mode
+    if (e.code === KeyCode.SPACE) {
+      /**
+       * After pressing the SPACE key, change the mouse style, disable the drawing function, and open the drawing cache
+       */
+      paintBoard?.evnet?.clickEvent.setSpaceKeyDownState(true)
+      const canvas = paintBoard?.canvas
+      if (canvas) {
+        if (!useBoardStore.getState().isObjectCaching) {
           fabric.Object.prototype.set({
-            selectable: false,
-            hoverCursor: 'pointer'
+            objectCaching: true
           })
         }
-        break
-      case KeyCode.BACKSPACE:
-        paintBoard.deleteObject()
-        break
-      default:
-        break
+        canvas.defaultCursor = 'pointer'
+        canvas.isDrawingMode = false
+        canvas.selection = false
+        fabric.Object.prototype.set({
+          selectable: false,
+          hoverCursor: 'pointer'
+        })
+      }
+      return
     }
+
+    // Delegate other keyboard events to the keyboard handler
+    this.keyboardHandler.handleKeyDown(e)
   }
 
-  keyupFn(e: KeyboardEvent) {
+  keyupFn = (e: KeyboardEvent) => {
     if (e.code === KeyCode.SPACE) {
       /**
        * restores all states.
@@ -80,34 +81,12 @@ export class WindowEvent {
     }
   }
 
-  pasteFn(e: ClipboardEvent) {
-    if (e.clipboardData && e.clipboardData.items) {
-      /**
-       * Paste Clipboard Image
-       */
-      const items = e.clipboardData.items
-      const item = Array.from(items).find(
-        (item) => item.kind === 'file' && item.type.indexOf('image') !== -1
-      )
-      if (item) {
-        const blob = item.getAsFile()
-        if (blob) {
-          const reader = new FileReader()
-          reader.onload = (event) => {
-            const data = event.target?.result
-            if (data && typeof data === 'string') {
-              const image = new ImageElement()
-              image.addImage(data)
-            }
-          }
-
-          reader.readAsDataURL(blob)
-        }
-      }
-    }
+  pasteFn = (e: ClipboardEvent) => {
+    // Delegate paste events to the keyboard handler
+    this.keyboardHandler.handlePaste(e)
   }
 
-  resizeFn() {
+  resizeFn = () => {
     const canvas = paintBoard.canvas
     if (canvas) {
       const { files, currentId } = useFileStore.getState()

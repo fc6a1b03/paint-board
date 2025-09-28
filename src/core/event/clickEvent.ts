@@ -88,6 +88,7 @@ export class CanvasClickEvent {
         return
       }
       this.startPoint = e.absolutePointer
+
       let currentElement = null
 
       if (useBoardStore.getState().mode === ActionMode.DRAW) {
@@ -242,7 +243,10 @@ export class CanvasClickEvent {
     canvas?.on('mouse:dblclick', (e) => {
       if (e?.absolutePointer) {
         const { x, y } = e.absolutePointer
-        paintBoard.textElement?.loadText(x, y)
+        paintBoard.textElement?.loadText({
+          x,
+          y
+        })
       }
     })
   }

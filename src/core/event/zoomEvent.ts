@@ -12,6 +12,7 @@ import { getStrokeDashArray } from '@/core/element/draw/utils'
 let zoomHook: (zoom: number) => undefined
 export const MIN_ZOOM = 0.3
 export const MAX_ZOOM = 5
+export const ZOOM_STEP = 0.1
 
 export class CanvasZoomEvent {
   constructor() {
@@ -25,36 +26,16 @@ export class CanvasZoomEvent {
       paintBoard.textElement?.resetText()
 
       const delta = options.e.deltaY // Get the direction in which the wheel scrolls
-
-      // Adjust the zoom ratio according to the direction of the scroll wheel
-      let zoom = canvas.getZoom()
-      zoom = delta > 0 ? zoom * 1.1 : zoom / 1.1
-
-      if (zoom < MIN_ZOOM || zoom > MAX_ZOOM) {
-        return
-      }
-
-      if (!useBoardStore.getState().isObjectCaching) {
-        fabric.Object.prototype.set({
-          objectCaching: true
-        })
-      }
-
-      const centerX = (canvas?.width || 1) / 2
-      const centerY = (canvas?.height || 1) / 2
-      zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom))
-      canvas.zoomToPoint({ x: centerX, y: centerY }, zoom)
-
+      this.updateZoom(delta > 0 ? 'in' : 'out')
       options.e.preventDefault()
       options.e.stopPropagation()
-      this.updateZoomPercentage(true, zoom)
     })
   }
 
   /**
    * Initialize zoom to 1
    */
-  initZoom() {
+  resetZoom() {
     const canvas = paintBoard.canvas
     if (canvas) {
       const canvasWidth = (canvas?.width || 1) / 2
@@ -62,6 +43,34 @@ export class CanvasZoomEvent {
       canvas.zoomToPoint(new fabric.Point(canvasWidth, canvasHeight), 1)
       this.updateZoomPercentage(true, 1)
     }
+  }
+
+  updateZoom(type: 'in' | 'out') {
+    const canvas = paintBoard.canvas
+    if (!canvas) {
+      return
+    }
+
+    const currentZoom = canvas.getZoom()
+    let zoom = currentZoom
+    zoom = type === 'in' ? currentZoom + ZOOM_STEP : currentZoom - ZOOM_STEP
+
+    zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom))
+    if (zoom < MIN_ZOOM || zoom > MAX_ZOOM) {
+      return
+    }
+
+    if (!useBoardStore.getState().isObjectCaching) {
+      fabric.Object.prototype.set({
+        objectCaching: true
+      })
+    }
+
+    const centerX = (canvas?.width || 1) / 2
+    const centerY = (canvas?.height || 1) / 2
+    canvas.zoomToPoint({ x: centerX, y: centerY }, zoom)
+
+    this.updateZoomPercentage(true, zoom)
   }
 
   /**
