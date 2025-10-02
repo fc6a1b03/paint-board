@@ -1,7 +1,7 @@
 import { fabric } from 'fabric'
 import { paintBoard } from '@/core/paintBoard'
 import { initCustomObjectAttr } from '@/core/utils/object'
-import { getShapeBorder, getShapeBorderWidth } from './utils'
+import { getShapeStrokeStyle, getShapeStrokeWidth } from './utils'
 import useShapeStore from '@/store/shape'
 import {
   actionHandler,
@@ -22,7 +22,7 @@ export class ArrowLineShape {
     }
     this.startX = point.x
     this.startY = point.y
-    const strokeWidth = getShapeBorderWidth()
+    const strokeWidth = getShapeStrokeWidth()
 
     let pathStr = `M ${this.startX} ${this.startY}`
     for (let i = 0; i < useShapeStore.getState().shapeLinePointCount - 1; i++) {
@@ -34,12 +34,14 @@ export class ArrowLineShape {
     pathStr += ` M ${this.startX} ${this.startY}`
     pathStr += ` L ${this.startX + 5} ${this.startY + 5}`
 
+    const { strokeColorList, currentStrokeColor } = useShapeStore.getState()
+
     const line = new fabric.Path(pathStr, {
-      stroke: useShapeStore.getState().borderColor,
+      stroke: strokeColorList[currentStrokeColor],
       strokeWidth,
       originX: 'center',
       originY: 'center',
-      strokeDashArray: getShapeBorder(strokeWidth + 5),
+      strokeDashArray: getShapeStrokeStyle(strokeWidth + 5),
       strokeLineCap: 'round',
       fill: 'transparent',
       objectCaching: false,

@@ -1,7 +1,6 @@
 import { fabric } from 'fabric'
-import { ActionMode } from '@/constants'
+import { ActionMode, SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
 import { DrawStyle, DrawType } from '@/constants/draw'
-import { ShapeStyle } from '@/constants/shape'
 import { paintBoard } from '@/core/paintBoard'
 
 import { ReticulateElement } from '../element/draw/reticulate'
@@ -14,26 +13,9 @@ import { ThornElement } from '../element/draw/thorn'
 import { MultiPointElement } from '../element/draw/multiPoint'
 import { WiggleElement } from '../element/draw/wiggle'
 
-import { RectShape } from '@/core/element/shape/rect'
-import { CircleShape } from '@/core/element/shape/circle'
 import { LineShape } from '@/core/element/shape/line'
-import { EllipseShape } from '@/core/element/shape/ellipse'
-import { TriangleShape } from '@/core/element/shape/triangle'
-import { ArrowOutlineShape } from '@/core/element/shape/arrowOutline'
-import { CloudShape } from '@/core/element/shape/cloud'
-import { TooltipsShape } from '@/core/element/shape/tooltips'
-import { LightningShape } from '@/core/element/shape/lightning'
-import { CloseShape } from '@/core/element/shape/close'
-import { CheckShap } from '@/core/element/shape/check'
-import { InfoShape } from '@/core/element/shape/info'
-import { BackspaceShape } from '@/core/element/shape/backspace'
-import { BlockShap } from '@/core/element/shape/block'
-import { SpeakerShape } from '@/core/element/shape/speaker'
-import { SearchShape } from '@/core/element/shape/search'
-import { InfoOutlineShape } from '@/core/element/shape/infoOutline'
-import { HeartShape } from '@/core/element/shape/heart'
-import { AlertShape } from '@/core/element/shape/alert'
 import { ArrowLineShape } from '@/core/element/shape/arrowLine'
+import { GraphElement } from '@/core/element/shape/graph'
 
 import useDrawStore from '@/store/draw'
 import useBoardStore from '@/store/board'
@@ -53,26 +35,9 @@ export class CanvasClickEvent {
     | ThornElement
     | MultiPointElement
     | WiggleElement
-    | RectShape
-    | CircleShape
     | LineShape
-    | EllipseShape
-    | TriangleShape
-    | ArrowOutlineShape
-    | CloudShape
-    | TooltipsShape
-    | LightningShape
-    | CloseShape
-    | CheckShap
-    | InfoShape
-    | BackspaceShape
-    | BlockShap
-    | SpeakerShape
-    | SearchShape
-    | InfoOutlineShape
-    | HeartShape
-    | AlertShape
     | ArrowLineShape
+    | GraphElement
     | null = null // The current mouse move draws the element
 
   constructor() {
@@ -93,68 +58,15 @@ export class CanvasClickEvent {
 
       if (useBoardStore.getState().mode === ActionMode.DRAW) {
         if (useBoardStore.getState().drawType === DrawType.Shape) {
-          switch (useShapeStore.getState().shapeStyle) {
-            case ShapeStyle.Rect:
-              currentElement = new RectShape(e.absolutePointer)
-              break
-            case ShapeStyle.Circle:
-              currentElement = new CircleShape(e.absolutePointer)
-              break
-            case ShapeStyle.Line:
+          switch (useShapeStore.getState().currentShapeIcon) {
+            case SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE:
               currentElement = new LineShape(e.absolutePointer)
               break
-            case ShapeStyle.Ellipse:
-              currentElement = new EllipseShape(e.absolutePointer)
-              break
-            case ShapeStyle.Triangle:
-              currentElement = new TriangleShape(e.absolutePointer)
-              break
-            case ShapeStyle.ArrowLine:
+            case SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_ARROW_LINE:
               currentElement = new ArrowLineShape(e.absolutePointer)
               break
-            case ShapeStyle.ArrowOutline:
-              currentElement = new ArrowOutlineShape(e.absolutePointer)
-              break
-            case ShapeStyle.Cloud:
-              currentElement = new CloudShape(e.absolutePointer)
-              break
-            case ShapeStyle.Tooltips:
-              currentElement = new TooltipsShape(e.absolutePointer)
-              break
-            case ShapeStyle.Lightning:
-              currentElement = new LightningShape(e.absolutePointer)
-              break
-            case ShapeStyle.Close:
-              currentElement = new CloseShape(e.absolutePointer)
-              break
-            case ShapeStyle.Check:
-              currentElement = new CheckShap(e.absolutePointer)
-              break
-            case ShapeStyle.Info:
-              currentElement = new InfoShape(e.absolutePointer)
-              break
-            case ShapeStyle.Backspace:
-              currentElement = new BackspaceShape(e.absolutePointer)
-              break
-            case ShapeStyle.Block:
-              currentElement = new BlockShap(e.absolutePointer)
-              break
-            case ShapeStyle.Speaker:
-              currentElement = new SpeakerShape(e.absolutePointer)
-              break
-            case ShapeStyle.Search:
-              currentElement = new SearchShape(e.absolutePointer)
-              break
-            case ShapeStyle.InfoOutline:
-              currentElement = new InfoOutlineShape(e.absolutePointer)
-              break
-            case ShapeStyle.Heart:
-              currentElement = new HeartShape(e.absolutePointer)
-              break
-            case ShapeStyle.Alert:
-              currentElement = new AlertShape(e.absolutePointer)
-              break
             default:
+              currentElement = new GraphElement(e.absolutePointer)
               break
           }
         } else if (useBoardStore.getState().drawType === DrawType.FreeStyle) {

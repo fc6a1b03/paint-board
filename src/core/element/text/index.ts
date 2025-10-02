@@ -1,5 +1,5 @@
 import { fabric } from 'fabric'
-import { paintBoard } from '../paintBoard'
+import { paintBoard } from '../../paintBoard'
 import useDrawStore from '@/store/draw'
 import { FontStyle } from '@/constants/font'
 import { isUndefined } from 'lodash'

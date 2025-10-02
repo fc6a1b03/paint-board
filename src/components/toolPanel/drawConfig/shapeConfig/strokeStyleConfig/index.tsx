@@ -4,18 +4,18 @@ import { drawLineTypeSwitch } from '@/constants/drawLineType'
 import { FC } from 'react'
 
 interface IProps {
-  borderType?: string
-  updateBorderType?: (borderType: string) => void
+  strokeStyle?: string
+  updateStrokeStyle?: (strokeStyle: string) => void
 }
 
-const BorderTypeConfig: FC<IProps> = (props) => {
-  const { borderType, updateBorderType } = useShapeStore()
+const StrokeStyleConfig: FC<IProps> = (props) => {
+  const { strokeStyle, updateStrokeStyle } = useShapeStore()
   const { t } = useTranslation()
 
   return (
     <div className="mt-3">
       <div className="font-bold text-sm font-fredokaOne">
-        {t('title.borderType')}
+        {t('title.strokeStyle')}
       </div>
       {Object.keys(drawLineTypeSwitch).map((lineKey) => (
         <div key={lineKey} className="join mt-1 flex">
@@ -23,13 +23,13 @@ const BorderTypeConfig: FC<IProps> = (props) => {
             <button
               key={type}
               className={`join-item btn btn-xs flex-grow ${
-                (props.borderType || borderType) === type
+                (props.strokeStyle || strokeStyle) === type
                   ? 'btn-primary'
                   : 'btn-neutral'
               }`}
               onClick={() => {
-                updateBorderType(type)
-                props?.updateBorderType?.(type)
+                updateStrokeStyle(type)
+                props?.updateStrokeStyle?.(type)
               }}
             >
               {icon({})}
@@ -41,4 +41,4 @@ const BorderTypeConfig: FC<IProps> = (props) => {
   )
 }
 
-export default BorderTypeConfig
+export default StrokeStyleConfig

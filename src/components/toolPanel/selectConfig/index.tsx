@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { paintBoard } from '@/core/paintBoard'
-import { ELEMENT_CUSTOM_TYPE, SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
+import { ELEMENT_CUSTOM_TYPE } from '@/constants'
 
 import { Info } from 'lucide-react'
 import LayerConfig from './layerConfig'
@@ -9,7 +9,6 @@ import OpacityConfig from './opacityConfig'
 import EraserConfig from './eraserConfig'
 import ImageFilterConfig from './imageFilterConfig'
 import FontStyleConfig from './fontStyleConfig'
-import SelectShapeConfig from './selectShapeConfig'
 import SelectFontFamilyConfig from './selectFontFamilyConfig'
 
 const SelectConfig = () => {
@@ -53,10 +52,6 @@ const SelectConfig = () => {
       {[ELEMENT_CUSTOM_TYPE.DRAW_TEXT, ELEMENT_CUSTOM_TYPE.I_TEXT].includes(
         activeObject?._customType as string
       ) && <SelectFontFamilyConfig refreshCount={refreshCount} />}
-
-      {Object.values(SHAPE_ELEMENT_CUSTOM_TYPE).includes(
-        activeObject?._customType as string
-      ) && <SelectShapeConfig refreshCount={refreshCount} />}
     </div>
   )
 }

@@ -17,6 +17,7 @@
     "lineType": "Line Type",
     "shadow": "Shadow",
     "AI": "AI",
+    "graphSelect": "Graph Select",
     "shapeType": "Shape Type",
     "shapeCount": "Shape Count",
     "materialType": "Material Type",
@@ -24,8 +25,9 @@
     "drawText": "Draw Text",
     "fontFamily": "Font Family",
     "shapeLinePointCount": "Point Count",
-    "borderType": "Border Type",
-    "borderStyle": "Border Style",
+    "strokeStyle": "Stroke Style",
+    "strokeColor": "Stroke Color",
+    "strokeWidth": "Stroke Width",
     "fillStyle": "Fill Style",
     "eraserWidth": "Eraser Width",
     "opacity": "Opacity",
@@ -43,7 +45,7 @@
   },
   "drawType": {
     "freeStyle": "FreeStyle",
-    "shape": "Shape"
+    "graph": "Graph"
   },
   "style": {
     "basic": "Basic",
@@ -187,5 +189,41 @@
     "eraser": "Eraser",
     "erasable": "Erasable",
     "erasableTip": "After enabling, the eraser can erase all content"
+  },
+  "graphInput": {
+    "titleTip": "Graphics from Lucide, click to view more graphics",
+    "graphInputTip": "Please enter the graph name",
+    "add": "Add",
+    "addSuccess": "Add Success",
+    "deleteTip": "icon deleted",
+    "addFailed": "Not found, please check the name"
+  },
+  "displayConfig": {
+    "title": "Display Config",
+    "openCamera": "Open Camera",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "saturation": "Saturation",
+    "filter": {
+      "title": "Filter",
+      "normal": "Normal",
+      "warm": "Warm",
+      "cold": "Cold",
+      "grayscale": "Grayscale",
+      "sepia": "Sepia",
+      "vintage": "Vintage",
+      "vivid": "Vivid",
+      "soft": "Soft",
+      "dramatic": "Dramatic",
+      "neon": "Neon",
+      "moonlight": "Moonlight",
+      "sunrise": "Sunrise",
+      "pixel": "Pixel",
+      "emboss": "Emboss",
+      "sketch": "Sketch"
+    }
+  },
+  "handConfig": {
+    "title": "Hand Config"
   }
 }

@@ -7,6 +7,6 @@ export const DrawTypeSwitch = [
   },
   {
     type: DrawType.Shape,
-    text: 'drawType.shape'
+    text: 'drawType.graph'
   }
 ]

@@ -17,6 +17,7 @@
     "lineType": "ラインタイプ",
     "shadow": "影",
     "AI": "AI",
+    "graphSelect": "グラフ選択",
     "shapeType": "図形タイプ",
     "shapeCount": "図形数",
     "materialType": "素材タイプ",
@@ -24,8 +25,9 @@
     "drawText": "テキスト描画",
     "fontFamily": "フォントファミリー",
     "shapeLinePointCount": "ポイント数",
-    "borderType": "境界線タイプ",
-    "borderStyle": "境界線スタイル",
+    "strokeStyle": "ストロークスタイル",
+    "strokeColor": "ストローク色",
+    "strokeWidth": "ストローク幅",
     "fillStyle": "塗りつぶしスタイル",
     "eraserWidth": "消しゴム幅",
     "opacity": "不透明度",
@@ -43,7 +45,7 @@
   },
   "drawType": {
     "freeStyle": "フリースタイル",
-    "shape": "図形"
+    "graph": "グラフ"
   },
   "style": {
     "basic": "ベーシック",
@@ -187,5 +189,41 @@
     "eraser": "消しゴム",
     "erasable": "消去可能",
     "erasableTip": "消去可能にすると、消しゴムですべてのコンテンツを消去できます"
+  },
+  "graphInput": {
+    "titleTip": "Lucideからのグラフィック、クリックしてより多くのグラフィックを表示",
+    "graphInputTip": "グラフ名を入力してください",
+    "add": "追加",
+    "addSuccess": "追加成功",
+    "deleteTip": "icon 削除済み",
+    "addFailed": "見つかりません。名前の正しさを確認してください。"
+  },
+  "displayConfig": {
+    "title": "表示設定",
+    "openCamera": "カメラを開く",
+    "brightness": "明るさ",
+    "contrast": "コントラスト",
+    "saturation": "彩度",
+    "filter": {
+      "title": "フィルター",
+      "normal": "正常",
+      "warm": "暖色",
+      "cold": "冷色",
+      "grayscale": "グレースケール",
+      "sepia": "セピア",
+      "vintage": "ビンテージ",
+      "vivid": "鮮明",
+      "soft": "柔らかい",
+      "dramatic": "ドラマティック",
+      "neon": "ネオン",
+      "moonlight": "月明かり",
+      "sunrise": "日の出",
+      "pixel": "ピクセル",
+      "emboss": "浮き彫り",
+      "sketch": "素描"
+    }
+  },
+  "handConfig": {
+    "title": "手勢設定"
   }
 }

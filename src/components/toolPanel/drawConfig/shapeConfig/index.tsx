@@ -1,27 +1,29 @@
 import { useMemo } from 'react'
 import useShapeStore from '@/store/shape'
-import { ShapeStyle } from '@/constants/shape'
+import { SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
 
-import BorderStyleConfig from './borderStyleConfig'
-import BorderTypeConfig from './borderTypeConfig'
-import FillStyleConfig from './fillStyleConfig'
+import StrokeStyleConfig from './strokeStyleConfig'
 import PointCountConfig from './linePointCountConfig'
-import ShapeStyleConfig from './shapeStyleConfig'
+import ShapeSelectConfig from './shapeSelectConfig'
+import StrokeWidthConfig from './strokeWidthConfig'
+import StrokeColorConfig from './strokeColorConfig'
 
 const ShapeDrawConfig = () => {
-  const { shapeStyle } = useShapeStore()
+  const { currentShapeIcon } = useShapeStore()
   const isLine = useMemo(() => {
-    return [ShapeStyle.Line, ShapeStyle.ArrowLine].includes(shapeStyle)
-  }, [shapeStyle])
+    return [
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_ARROW_LINE
+    ].includes(currentShapeIcon)
+  }, [currentShapeIcon])
 
   return (
     <>
-      <ShapeStyleConfig />
+      <ShapeSelectConfig />
       {isLine && <PointCountConfig />}
-
-      <BorderTypeConfig />
-      <BorderStyleConfig />
-      {!isLine && <FillStyleConfig />}
+      <StrokeStyleConfig />
+      <StrokeWidthConfig />
+      <StrokeColorConfig />
     </>
   )
 }

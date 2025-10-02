@@ -1,6 +1,6 @@
 import { fabric } from 'fabric'
-import { paintBoard } from '../paintBoard'
-import { initCustomObjectAttr } from '../utils/object'
+import { paintBoard } from '../../paintBoard'
+import { initCustomObjectAttr } from '../../utils/object'
 import { ELEMENT_CUSTOM_TYPE } from '@/constants'
 
 export class ImageElement {

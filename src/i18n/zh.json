@@ -17,6 +17,7 @@
     "lineType": "画笔类型",
     "shadow": "阴影",
     "AI": "AI",
+    "graphSelect": "图形选择",
     "shapeType": "形状类型",
     "shapeCount": "形状数量",
     "materialType": "素材类型",
@@ -24,8 +25,9 @@
     "drawText": "文字内容",
     "fontFamily": "字体",
     "shapeLinePointCount": "线段端点",
-    "borderType": "边框类型",
-    "borderStyle": "边框样式",
+    "strokeStyle": "线条样式",
+    "strokeColor": "线条颜色",
+    "strokeWidth": "线条宽度",
     "fillStyle": "填充样式",
     "eraserWidth": "橡皮擦宽度",
     "opacity": "透明度",
@@ -43,7 +45,7 @@
   },
   "drawType": {
     "freeStyle": "自由绘画",
-    "shape": "形状绘画"
+    "graph": "图形绘画"
   },
   "style": {
     "basic": "基础",
@@ -187,5 +189,41 @@
     "eraser": "橡皮擦",
     "erasable": "可擦除",
     "erasableTip": "开启后, 橡皮擦可擦除所有内容"
+  },
+  "graphInput": {
+    "titleTip": "图形来源于Lucide, 点击查看更多图形",
+    "graphInputTip": "请输入图形名字",
+    "add": "添加",
+    "addSuccess": "添加成功",
+    "deleteTip": "icon已删除",
+    "addFailed": "未找到，请检查名字是否正确"
+  },
+  "displayConfig": {
+    "title": "显示配置",
+    "openCamera": "开启摄像头",
+    "brightness": "亮度",
+    "contrast": "对比度",
+    "saturation": "饱和度",
+    "filter": {
+      "title": "滤镜",
+      "normal": "正常",
+      "warm": "暖色",
+      "cold": "冷色",
+      "grayscale": "灰度",
+      "sepia": "复古",
+      "vintage": "古典",
+      "vivid": "鲜艳",
+      "soft": "柔和",
+      "dramatic": "戏剧",
+      "neon": "霓虹",
+      "moonlight": "月光",
+      "sunrise": "日出",
+      "pixel": "像素",
+      "emboss": "浮雕",
+      "sketch": "素描"
+    }
+  },
+  "handConfig": {
+    "title": "手势配置"
   }
 }
