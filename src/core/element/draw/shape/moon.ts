@@ -4,12 +4,17 @@ import { generateRandomCoordinates } from '../utils'
 import useDrawStore from '@/store/draw'
 
 export function drawMoon(point: fabric.Point, size: number) {
+  const { currentMultiColor, drawColors } = useDrawStore.getState()
+  const filterDrawColors = drawColors.filter((_, index) =>
+    currentMultiColor.includes(index)
+  )
+
   if (useDrawStore.getState().drawShapeCount === 1) {
     const moon = drawMoonItem(size)
     moon.set({
       left: point.x - size,
       top: point.y - size,
-      fill: useDrawStore.getState().drawColors[0]
+      fill: filterDrawColors[getRandomInt(0, filterDrawColors.length - 1)]
     })
     return moon
   } else {
@@ -19,11 +24,9 @@ export function drawMoon(point: fabric.Point, size: number) {
       size * 3,
       useDrawStore.getState().drawShapeCount
     )
-    const moons = points.map((item, index) => {
+    const moons = points.map((item) => {
       const color =
-        index > useDrawStore.getState().drawColors.length - 1
-          ? useDrawStore.getState().drawColors[0]
-          : useDrawStore.getState().drawColors[index]
+        filterDrawColors[getRandomInt(0, filterDrawColors.length - 1)]
       const moon = drawMoonItem(size)
       moon.set({
         left: item.x,

@@ -38,26 +38,24 @@ export class PixelsElement {
 
 function drawPixels(x: number, y: number) {
   const rects = []
+  const { currentMultiColor, drawColors, drawWidth } = useDrawStore.getState()
+  const filterDrawColors = drawColors.filter((_, index) =>
+    currentMultiColor.includes(index)
+  )
+
   const size = Number(
-    (
-      useDrawStore.getState().drawWidth / (paintBoard?.canvas?.getZoom() ?? 1)
-    ).toFixed(2)
+    (drawWidth / (paintBoard?.canvas?.getZoom() ?? 1)).toFixed(2)
   )
   const step = Number(
-    (
-      useDrawStore.getState().drawWidth /
-      3 /
-      (paintBoard?.canvas?.getZoom() ?? 1)
-    ).toFixed(2)
+    (drawWidth / 3 / (paintBoard?.canvas?.getZoom() ?? 1)).toFixed(2)
   )
 
   for (let i = -size; i < size; i += step) {
     for (let j = -size; j < size; j += step) {
       if (Math.random() > 0.5) {
         const color =
-          useDrawStore.getState().drawColors?.[
-            getRandomInt(0, useDrawStore.getState().drawColors.length - 1)
-          ] ?? useDrawStore.getState().drawColors[0]
+          filterDrawColors?.[getRandomInt(0, filterDrawColors.length - 1)] ??
+          filterDrawColors[0]
 
         const rect = new fabric.Rect({
           left: x + i,

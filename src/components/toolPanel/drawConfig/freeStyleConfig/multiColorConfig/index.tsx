@@ -1,6 +1,7 @@
 import useDrawStore from '@/store/draw'
 import { MultiColorType } from '@/core/element/draw/multiColor'
 import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
 
 const MultiColorSwitch = [
   MultiColorType.COL,
@@ -9,8 +10,16 @@ const MultiColorSwitch = [
 ]
 
 const MultiColorConfig = () => {
-  const { multiColorType, updateMultiColorType, drawColors } = useDrawStore()
+  const {
+    multiColorType,
+    updateMultiColorType,
+    drawColors,
+    currentMultiColor
+  } = useDrawStore()
   const { t } = useTranslation()
+  const filteredDrawColors = useMemo(() => {
+    return drawColors.filter((_, index) => currentMultiColor.includes(index))
+  }, [drawColors, currentMultiColor])
 
   return (
     <>
@@ -31,7 +40,7 @@ const MultiColorConfig = () => {
             >
               {item === MultiColorType.COL && (
                 <div className="flex w-4/6 h-4/6 rounded-lg overflow-hidden ">
-                  {drawColors.map((color, index) => (
+                  {filteredDrawColors.map((color, index) => (
                     <div
                       className="h-full flex-1"
                       style={{
@@ -44,7 +53,7 @@ const MultiColorConfig = () => {
               )}
               {item === MultiColorType.ROW && (
                 <div className="flex flex-col w-4/6 h-4/6 rounded-lg overflow-hidden ">
-                  {drawColors.map((color, index) => (
+                  {filteredDrawColors.map((color, index) => (
                     <div
                       className="h-full flex-1"
                       style={{
@@ -57,7 +66,7 @@ const MultiColorConfig = () => {
               )}
               {item === MultiColorType.CIRCLE && (
                 <div className="w-4/6 h-4/6 relative">
-                  {drawColors.map((color, index) => (
+                  {filteredDrawColors.map((color, index) => (
                     <div
                       className="h-4 w-4 rounded-full absolute top-0"
                       style={{

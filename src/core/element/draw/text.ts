@@ -51,14 +51,13 @@ export class DrawTextElement {
 }
 
 function drawText(el: DrawTextElement) {
+  const { drawColors, currentDrawColor, drawTextValue } =
+    useDrawStore.getState()
   const points = el.points
   const mouse = points[points.length - 1]
   const d = getDistance(el.position as fabric.Point, mouse)
   const fontSize = minFontSize + d / 2
-  const letter =
-    useDrawStore.getState().drawTextValue[
-      el.counter % useDrawStore.getState().drawTextValue.length
-    ]
+  const letter = drawTextValue[el.counter % drawTextValue.length]
   const stepSize = textWidth(letter, fontSize)
 
   if (stepSize && d > stepSize) {
@@ -71,7 +70,7 @@ function drawText(el: DrawTextElement) {
       originX: 'left',
       originY: 'bottom',
       angle: fabric.util.radiansToDegrees(angle),
-      fill: useDrawStore.getState().drawColors[0]
+      fill: drawColors[currentDrawColor]
     })
 
     el.position = {

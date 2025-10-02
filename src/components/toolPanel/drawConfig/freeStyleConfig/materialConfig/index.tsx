@@ -3,7 +3,8 @@ import { MaterialSwitch } from './constant'
 import { useTranslation } from 'react-i18next'
 
 const MaterialConfig = () => {
-  const { materialType, updateMaterialType, drawColors } = useDrawStore()
+  const { materialType, updateMaterialType, drawColors, currentDrawColor } =
+    useDrawStore()
   const { t } = useTranslation()
 
   return (
@@ -28,7 +29,7 @@ const MaterialConfig = () => {
                 alt=""
                 className={`w-5 h-3 opacity-60 rounded-sm`}
                 style={{
-                  backgroundColor: drawColors[0]
+                  backgroundColor: drawColors[currentDrawColor]
                 }}
               />
             </button>

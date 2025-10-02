@@ -37,8 +37,16 @@ export class Material {
 
   render({
     materialType = useDrawStore.getState().materialType,
-    color = useDrawStore.getState().drawColors[0]
+    color
+  }: {
+    materialType?: string
+    color?: string
   }) {
+    if (!color) {
+      const { currentDrawColor, drawColors } = useDrawStore.getState()
+      color = drawColors[currentDrawColor]
+    }
+
     this.initPromise?.then(() => {
       switch (materialType) {
         case MATERIAL_TYPE.CRAYON:

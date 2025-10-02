@@ -12,7 +12,7 @@ const ShadowConfig = () => {
         {t('title.shadow')}
       </div>
       <div className="flex mt-1 items-center">
-        <div className="w-7 h-7 cursor-pointer">
+        <div className="w-6 h-6 cursor-pointer">
           <input
             type="color"
             value={shadowColor}

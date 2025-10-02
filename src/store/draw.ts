@@ -10,9 +10,12 @@ import {
 import { paintBoard } from '@/core/paintBoard'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { produce } from 'immer'
 
 interface DrawState {
   drawWidth: number // draw brush width
+  currentDrawColor: number // current draw brush color
+  currentMultiColor: number[]
   drawColors: string[] // draw brush colors
   lineType: string // line type 'solid' | 'dashed' | 'dotted'
   shadowWidth: number // brush shadow blur
@@ -30,7 +33,9 @@ interface DrawState {
 
 interface DrawAction {
   updateDrawWidth: (drawWidth: number) => void
-  updateDrawColors: (drawColors: string[]) => void
+  updateCurrentDrawColor: (colorIndex: number) => void
+  updateDrawColor: (color: string, colorIndex: number) => void
+  deleteDrawColor: (colorIndex: number) => void
   updateLineType: (lineType: string) => void
   updateShadowWidth: (shadowWidth: number) => void
   updateShadowColor: (shadowColor: string) => void
@@ -49,6 +54,8 @@ const useDrawStore = create<DrawState & DrawAction>()(
   persist(
     (set, get) => ({
       drawWidth: 10,
+      currentDrawColor: 0,
+      currentMultiColor: [0],
       drawColors: ['#000000'],
       lineType: DrawLineType.Solid,
       shadowWidth: 0,
@@ -84,29 +91,77 @@ const useDrawStore = create<DrawState & DrawAction>()(
           }
         }
       },
-      updateDrawColors: (drawColors) => {
-        set((state) => {
-          switch (state.drawStyle) {
-            case DrawStyle.Basic:
-              if (paintBoard.canvas) {
-                paintBoard.canvas.freeDrawingBrush.color = drawColors[0]
+      updateCurrentDrawColor(colorIndex) {
+        const { drawStyle, currentMultiColor, currentDrawColor, drawColors } =
+          get()
+
+        // 确保索引在有效范围内
+        if (colorIndex < 0 || colorIndex >= drawColors.length) {
+          return
+        }
+
+        switch (drawStyle) {
+          case DrawStyle.MultiColor:
+          case DrawStyle.Pixels:
+          case DrawStyle.Shape:
+            if (currentMultiColor.includes(colorIndex)) {
+              if (currentMultiColor.length > 1) {
+                set({
+                  currentMultiColor: currentMultiColor.filter(
+                    (item) => item !== colorIndex
+                  )
+                })
               }
-              break
-            case DrawStyle.Material:
-              if (state.drawColors[0] !== drawColors[0]) {
-                material.render({})
-              }
-              break
-            case DrawStyle.MultiColor:
-              renderMultiColor({
-                colors: drawColors
+            } else {
+              set({
+                currentMultiColor: [...currentMultiColor, colorIndex]
               })
-              break
-            default:
-              break
-          }
-          return { drawColors }
-        })
+            }
+            break
+          default:
+            if (currentDrawColor === colorIndex) {
+              return
+            }
+            set({
+              currentDrawColor: colorIndex
+            })
+            break
+        }
+        updateDrawColors()
+      },
+      updateDrawColor: (color: string, colorIndex: number) => {
+        set(
+          produce((state) => {
+            state.drawColors[colorIndex] = color
+          })
+        )
+
+        const { currentMultiColor, currentDrawColor } = get()
+        if (
+          currentMultiColor.includes(colorIndex) ||
+          currentDrawColor === colorIndex
+        ) {
+          updateDrawColors()
+        }
+      },
+      deleteDrawColor(colorIndex) {
+        set(
+          produce((state) => {
+            state.drawColors.splice(colorIndex, 1)
+
+            if (state.currentDrawColor === colorIndex) {
+              state.currentDrawColor = 0
+              updateDrawColors()
+            }
+
+            if (state.currentMultiColor.includes(colorIndex)) {
+              state.currentMultiColor = state.currentMultiColor.filter(
+                (item: number) => item !== colorIndex
+              )
+              updateDrawColors()
+            }
+          })
+        )
       },
       updateLineType(lineType) {
         const { lineType: oldLineType, drawStyle } = get()
@@ -206,5 +261,25 @@ const useDrawStore = create<DrawState & DrawAction>()(
     }
   )
 )
+
+const updateDrawColors = () => {
+  const { drawStyle, currentDrawColor, drawColors } = useDrawStore.getState()
+
+  switch (drawStyle) {
+    case DrawStyle.Basic:
+      if (paintBoard.canvas) {
+        paintBoard.canvas.freeDrawingBrush.color = drawColors[currentDrawColor]
+      }
+      break
+    case DrawStyle.Material:
+      material.render({})
+      break
+    case DrawStyle.MultiColor:
+      renderMultiColor({})
+      break
+    default:
+      break
+  }
+}
 
 export default useDrawStore

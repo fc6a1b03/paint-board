@@ -20,8 +20,13 @@ export const renderMultiColor = (params: {
   if (!canvas) {
     return
   }
-  const colors = params?.colors ?? useDrawStore.getState().drawColors
+  const { drawColors, currentMultiColor } = useDrawStore.getState()
+  const colors = params?.colors ?? drawColors
   const type = params?.type ?? useDrawStore.getState().multiColorType
+
+  const filterDrawColors = colors.filter((_, index) =>
+    currentMultiColor.includes(index)
+  )
 
   const patternBrush = new fabric.PatternBrush(canvas)
   const patternCanvas = document.createElement('canvas')
@@ -29,13 +34,13 @@ export const renderMultiColor = (params: {
   if (context) {
     switch (type) {
       case MultiColorType.COL:
-        renderCol(patternCanvas, context, colors)
+        renderCol(patternCanvas, context, filterDrawColors)
         break
       case MultiColorType.ROW:
-        renderRow(patternCanvas, context, colors)
+        renderRow(patternCanvas, context, filterDrawColors)
         break
       case MultiColorType.CIRCLE:
-        renderCircle(patternCanvas, context, colors)
+        renderCircle(patternCanvas, context, filterDrawColors)
         break
       default:
         break

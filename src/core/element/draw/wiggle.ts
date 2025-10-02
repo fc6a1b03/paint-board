@@ -48,7 +48,7 @@ export class WiggleElement {
 
 function drawWiggle(el: WiggleElement, curPoint: fabric.Point) {
   const lastPoint = el.lastPoint as fabric.Point
-
+  const { drawColors, currentDrawColor } = useDrawStore.getState()
   const distance = getDistance(lastPoint, curPoint)
   const midX = (lastPoint.x + curPoint.x) / 2
   const midY = (lastPoint.y + curPoint.y) / 2
@@ -68,7 +68,7 @@ function drawWiggle(el: WiggleElement, curPoint: fabric.Point) {
     radius: distance / 2,
     startAngle: angle + flip,
     endAngle: angle + flip + fabric.util.radiansToDegrees(Math.PI),
-    stroke: useDrawStore.getState().drawColors[0],
+    stroke: drawColors[currentDrawColor],
     strokeWidth,
     fill: '',
     strokeLineJoin: 'round',

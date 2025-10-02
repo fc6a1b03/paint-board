@@ -14,7 +14,8 @@ export const renderPencilBrush = () => {
   canvas.isDrawingMode = true
   canvas.freeDrawingBrush = pencilBrush
   canvas.freeDrawingBrush.width = getDrawWidth()
-  canvas.freeDrawingBrush.color = useDrawStore.getState().drawColors[0]
+  const { currentDrawColor, drawColors } = useDrawStore.getState()
+  canvas.freeDrawingBrush.color = drawColors[currentDrawColor]
 
   const strokeDashArray = getStrokeDashArray()
   canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
