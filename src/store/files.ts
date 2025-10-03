@@ -198,7 +198,8 @@ const useFileStore = create<FileState & FileAction>()(
       },
       updateCurrentBackgroundColor(colorIndex) {
         updateCurrentFile(get, set, (file) => {
-          file.currentBackgroundColor = colorIndex
+          file.currentBackgroundColor =
+            colorIndex === file.currentBackgroundColor ? -1 : colorIndex
         })
       },
       updateBackgroundColor(colorIndex, color) {
