@@ -70,21 +70,17 @@ export class Material {
     })
   }
 
-  renderMaterial(
-    materialImg: HTMLImageElement | null,
-    color: string,
-    opacity = 1
-  ) {
+  renderMaterial(materialImg: HTMLImageElement | null, color: string) {
     if (paintBoard.canvas) {
       const patternBrush = new fabric.PatternBrush(paintBoard.canvas)
       const patternCanvas = document.createElement('canvas')
       patternCanvas.width = patternCanvas.height = 100
       const context = patternCanvas.getContext('2d')
       if (context) {
-        context.fillStyle = color
+        context.fillStyle = `${color}90`
         context.fillRect(0, 0, 100, 100)
         if (materialImg) {
-          context.globalAlpha = opacity
+          context.globalAlpha = 0.9
           context.drawImage(materialImg, 0, 0, 100, 100)
         }
       }
@@ -100,12 +96,17 @@ export class Material {
       const strokeDashArray = getStrokeDashArray()
       paintBoard.canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-      paintBoard.canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-        blur: getShadowWidth(),
-        offsetX: 0,
-        offsetY: 0,
-        color: useDrawStore.getState().shadowColor
-      })
+      const { shadowOffsetX, shadowOffsetY, shadowColor, shadowWidth } =
+        useDrawStore.getState()
+
+      if (shadowWidth > 0) {
+        paintBoard.canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+          blur: getShadowWidth(),
+          offsetX: shadowOffsetX,
+          offsetY: shadowOffsetY,
+          color: shadowColor
+        })
+      }
     }
   }
 

@@ -60,12 +60,17 @@ export const renderMultiColor = (params: {
     const strokeDashArray = getStrokeDashArray()
     canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-    canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-      blur: getShadowWidth(),
-      offsetX: 0,
-      offsetY: 0,
-      color: useDrawStore.getState().shadowColor
-    })
+    const { shadowOffsetX, shadowOffsetY, shadowColor, shadowWidth } =
+      useDrawStore.getState()
+
+    if (shadowWidth > 0) {
+      canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+        blur: getShadowWidth(),
+        offsetX: shadowOffsetX,
+        offsetY: shadowOffsetY,
+        color: shadowColor
+      })
+    }
   }
 }
 

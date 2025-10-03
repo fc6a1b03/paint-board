@@ -51,7 +51,7 @@ export class DrawTextElement {
 }
 
 function drawText(el: DrawTextElement) {
-  const { drawColors, currentDrawColor, drawTextValue } =
+  const { drawColors, currentDrawColor, drawTextValue, textFontFamily } =
     useDrawStore.getState()
   const points = el.points
   const mouse = points[points.length - 1]
@@ -66,7 +66,7 @@ function drawText(el: DrawTextElement) {
       fontSize,
       top: el.position.y,
       left: el.position.x,
-      fontFamily: useDrawStore.getState().textFontFamily,
+      fontFamily: textFontFamily,
       originX: 'left',
       originY: 'bottom',
       angle: fabric.util.radiansToDegrees(angle),

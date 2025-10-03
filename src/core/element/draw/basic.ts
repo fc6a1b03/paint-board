@@ -14,16 +14,25 @@ export const renderPencilBrush = () => {
   canvas.isDrawingMode = true
   canvas.freeDrawingBrush = pencilBrush
   canvas.freeDrawingBrush.width = getDrawWidth()
-  const { currentDrawColor, drawColors } = useDrawStore.getState()
+  const {
+    currentDrawColor,
+    drawColors,
+    shadowWidth,
+    shadowOffsetX,
+    shadowOffsetY,
+    shadowColor
+  } = useDrawStore.getState()
   canvas.freeDrawingBrush.color = drawColors[currentDrawColor]
 
   const strokeDashArray = getStrokeDashArray()
   canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-  canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-    blur: getShadowWidth(),
-    offsetX: 0,
-    offsetY: 0,
-    color: useDrawStore.getState().shadowColor
-  })
+  if (shadowWidth > 0) {
+    canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+      blur: getShadowWidth(),
+      offsetX: shadowOffsetX,
+      offsetY: shadowOffsetY,
+      color: shadowColor
+    })
+  }
 }
