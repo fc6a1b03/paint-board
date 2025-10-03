@@ -190,6 +190,10 @@
     "erasable": "可擦除",
     "erasableTip": "开启后, 橡皮擦可擦除所有内容"
   },
+  "lockConfig": {
+    "lock": "锁定",
+    "lockTip": "开启后, 对象将无法移动、旋转或缩放"
+  },
   "graphInput": {
     "titleTip": "图形来源于Lucide, 点击查看更多图形",
     "graphInputTip": "请输入图形名字",
@@ -225,5 +229,8 @@
   },
   "handConfig": {
     "title": "手势配置"
+  },
+  "shadow": {
+    "configTip": "颜色, 模糊程度, X偏移量, Y偏移量"
   }
 }

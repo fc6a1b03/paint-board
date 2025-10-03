@@ -64,15 +64,15 @@ const FontStyleConfig: FC<IProps> = ({ refreshCount }) => {
   }
 
   return (
-    <>
-      <div className="font-bold font-fredokaOne mt-3 text-sm">
+    <div className="flex items-start mt-2">
+      <div className="font-bold font-fredokaOne text-sm w-20 shrink-0 text-right">
         {t('title.fontStyle')}
       </div>
-      <div className="flex flex-row flex-wrap gap-x-2 items-center w-40 mt-2">
+      <div className="flex flex-row flex-wrap gap-x-2 items-center w-40 ml-2">
         {fontStyleCheckbox.map((item, index) => (
           <label
             key={index}
-            className="cursor-pointer label inline-flex justify-start px-0 py-1"
+            className="cursor-pointer label inline-flex justify-start p-1"
           >
             <span className="label-text mr-2 font-fredokaOne text-xs">
               {t(item.text)}
@@ -86,7 +86,7 @@ const FontStyleConfig: FC<IProps> = ({ refreshCount }) => {
           </label>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

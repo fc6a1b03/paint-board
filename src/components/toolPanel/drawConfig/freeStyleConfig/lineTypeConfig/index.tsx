@@ -8,7 +8,7 @@ const LineTypeConfig: FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="mt-3">
+    <div className="mt-2">
       <div className="font-bold text-sm font-fredokaOne">
         {t('title.lineType')}
       </div>

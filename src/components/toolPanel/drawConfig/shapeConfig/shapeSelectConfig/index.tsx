@@ -118,7 +118,7 @@ const ShapeSelectConfig = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <LucideIcons.Info size={16} />
+          <LucideIcons.CircleQuestionMark size={16} />
         </a>
       </div>
       <div className="join w-full mt-2">

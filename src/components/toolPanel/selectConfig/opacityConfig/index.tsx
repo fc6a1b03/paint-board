@@ -52,27 +52,25 @@ const OpacityConfig: FC<IProps> = ({ refreshCount }) => {
     }
   }
 
+  if (!opacityControl.show) {
+    return null
+  }
+
   return (
-    <>
-      {opacityControl.show && (
-        <>
-          <div className="font-bold font-fredokaOne mt-3 text-sm">
-            {t('title.opacity')}
-          </div>
-          <div className="mt-1 flex items-center w-56">
-            <input
-              className="range range-primary range-xs"
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={opacityControl.opacity}
-              onChange={(e) => updateObjectOpacity(Number(e.target.value))}
-            />
-          </div>
-        </>
-      )}
-    </>
+    <div className="flex items-center mt-3">
+      <div className="font-bold font-fredokaOne text-sm shrink-0 w-20 text-right">
+        {t('title.opacity')}
+      </div>
+      <input
+        className="range range-primary range-xs ml-3 w-24"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={opacityControl.opacity}
+        onChange={(e) => updateObjectOpacity(Number(e.target.value))}
+      />
+    </div>
   )
 }
 

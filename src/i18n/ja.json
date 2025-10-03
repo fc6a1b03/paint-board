@@ -190,6 +190,10 @@
     "erasable": "消去可能",
     "erasableTip": "消去可能にすると、消しゴムですべてのコンテンツを消去できます"
   },
+  "lockConfig": {
+    "lock": "ロック",
+    "lockTip": "ロックを有効にすると、オブジェクトは移動、回転、または拡大縮小できません"
+  },
   "graphInput": {
     "titleTip": "Lucideからのグラフィック、クリックしてより多くのグラフィックを表示",
     "graphInputTip": "グラフ名を入力してください",
@@ -225,5 +229,8 @@
   },
   "handConfig": {
     "title": "手勢設定"
+  },
+  "shadow": {
+    "configTip": "色, ぼかし, Xオフセット, Yオフセット"
   }
 }

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import useBoardStore from '@/store/board'
 
-import { Info } from 'lucide-react'
+import { CircleQuestionMark } from 'lucide-react'
 
 const CacheConfig = () => {
   const { t } = useTranslation()
@@ -15,7 +15,7 @@ const CacheConfig = () => {
           className="tooltip tooltip-top ml-1 cursor-pointer before:max-w-32"
           data-tip={t('boardConfig.cacheTip')}
         >
-          <Info size={16} />
+          <CircleQuestionMark size={16} />
         </div>
       </div>
       <div className="mt-1 flex items-start w-full">

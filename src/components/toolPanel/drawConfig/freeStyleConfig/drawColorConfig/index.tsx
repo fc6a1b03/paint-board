@@ -34,11 +34,11 @@ const DrawColorConfig = () => {
   }, 100)
 
   return (
-    <div className="form-control mt-3">
+    <div className="form-control mt-2">
       <div className="font-bold text-sm font-fredokaOne">
         {t('title.drawColor')}
       </div>
-      <div className="mt-2 pb-1 flex items-center gap-x-2 w-full relative">
+      <div className="mt-1 pb-1 flex items-center gap-x-2 w-full relative">
         {drawColors.map((drawColor, drawColorIndex) => (
           <div
             className={`relative w-6 h-6 transition-all duration-300 ${

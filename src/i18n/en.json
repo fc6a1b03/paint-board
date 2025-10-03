@@ -190,6 +190,10 @@
     "erasable": "Erasable",
     "erasableTip": "After enabling, the eraser can erase all content"
   },
+  "lockConfig": {
+    "lock": "Lock",
+    "lockTip": "After enabling, the object will not be able to move, rotate or scale"
+  },
   "graphInput": {
     "titleTip": "Graphics from Lucide, click to view more graphics",
     "graphInputTip": "Please enter the graph name",
@@ -225,5 +229,8 @@
   },
   "handConfig": {
     "title": "Hand Config"
+  },
+  "shadow": {
+    "configTip": "Color, Blur, X Offset, Y Offset"
   }
 }

@@ -14,22 +14,37 @@ const fontFamilyRadio: Record<string, string> = {
 
 interface IProps {
   fontFamily?: string
+  layoutType?: string
   updateFontFamily?: (fontFamily: string) => void
 }
 
-const FontFamilyConfg: FC<IProps> = ({ fontFamily, updateFontFamily }) => {
+const FontFamilyConfg: FC<IProps> = ({
+  fontFamily,
+  updateFontFamily,
+  layoutType = 'horizontal'
+}) => {
   const { textFontFamily, updateTextFontFamily } = useDrawStore()
   const { t } = useTranslation()
 
   return (
-    <>
-      <div className="font-bold text-sm font-fredokaOne mt-3">
+    <div
+      className={`mt-2 ${
+        layoutType === 'horizontal' ? 'flex items-start' : ''
+      }`}
+    >
+      <div
+        className={`font-bold text-sm font-fredokaOne ${
+          layoutType === 'horizontal' ? 'w-20 text-right shrink-0' : ''
+        }`}
+      >
         {t('title.fontFamily')}
       </div>
       <div>
         {Object.keys(fontFamilyRadio).map((key) => (
           <label
-            className="flex justify-between items-center mt-2 w-full cursor-pointer"
+            className={`flex justify-between items-center mt-1 w-full cursor-pointer ${
+              layoutType === 'horizontal' ? 'first:mt-0 ml-3' : ''
+            }`}
             key={key}
           >
             <div
@@ -53,7 +68,7 @@ const FontFamilyConfg: FC<IProps> = ({ fontFamily, updateFontFamily }) => {
           </label>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 
