@@ -7,6 +7,7 @@ import { Info } from 'lucide-react'
 import LayerConfig from './layerConfig'
 import OpacityConfig from './opacityConfig'
 import EraserConfig from './eraserConfig'
+import LockConfig from './lockConfig'
 import ImageFilterConfig from './imageFilterConfig'
 import FontStyleConfig from './fontStyleConfig'
 import SelectFontFamilyConfig from './selectFontFamilyConfig'
@@ -39,6 +40,8 @@ const SelectConfig = () => {
       <OpacityConfig refreshCount={refreshCount} />
 
       <EraserConfig refreshCount={refreshCount} />
+
+      <LockConfig refreshCount={refreshCount} />
 
       <LayerConfig />
 

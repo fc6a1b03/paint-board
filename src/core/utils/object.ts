@@ -46,3 +46,31 @@ export const cloneObjects = (objects: fabric.Object[]) => {
     paintBoard.render()
   })
 }
+
+/**
+ * Check if the object is locked (cannot move, rotate or scale)
+ * @param obj fabric object
+ * @returns if the object is locked return true, otherwise return false
+ */
+export const isObjectLocked = (obj: fabric.Object): boolean => {
+  // check if any locked properties are set to true
+  return !!(
+    obj.lockMovementX ||
+    obj.lockMovementY ||
+    obj.lockRotation ||
+    obj.lockScalingX ||
+    obj.lockScalingY ||
+    obj.lockUniScaling
+  )
+}
+
+/**
+ * Filter out locked objects
+ * @param objects objects array
+ * @returns filtered objects array (excluding locked objects)
+ */
+export const filterUnlockedObjects = (
+  objects: fabric.Object[]
+): fabric.Object[] => {
+  return objects.filter((obj) => !isObjectLocked(obj))
+}

@@ -29,7 +29,14 @@ export const getCanvasJSON = (): Partial<IBoardData> => {
         'id',
         '_customType',
         'perPixelTargetFind',
-        'objectCaching'
+        'objectCaching',
+        'lockMovementX',
+        'lockMovementY',
+        'lockRotation',
+        'lockScalingX',
+        'lockScalingY',
+        'lockUniScaling',
+        'hasControls'
       ]) ?? {}
     )
   }
