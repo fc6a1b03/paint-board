@@ -22,6 +22,11 @@ export const FREESTYLE_ELEMENT_CUSTOM_TYPE = {
 export const SHAPE_ELEMENT_CUSTOM_TYPE = {
   SHAPE_LINE: 'shapeLine',
   SHAPE_ARROW_LINE: 'shapeArrowLine',
+  SHAPE_RECTANGLE: 'shapeRectangle',
+  SHAPE_CIRCLE: 'shapeCircle',
+  SHAPE_TRIANGLE: 'shapeTriangle',
+  SHAPE_PENTAGON: 'shapePentagon',
+  SHAPE_HEXAGON: 'shapeHexagon',
   SHAPE_GRAPH: 'shapeGraph'
 }
 

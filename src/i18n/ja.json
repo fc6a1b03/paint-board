@@ -28,6 +28,7 @@
     "strokeStyle": "ストロークスタイル",
     "strokeColor": "ストローク色",
     "strokeWidth": "ストローク幅",
+    "fillColor": "塗りつぶし色",
     "fillStyle": "塗りつぶしスタイル",
     "eraserWidth": "消しゴム幅",
     "opacity": "不透明度",

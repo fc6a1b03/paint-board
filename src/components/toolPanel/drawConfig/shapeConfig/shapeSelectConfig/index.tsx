@@ -13,6 +13,26 @@ const DEFAULT_SHAPE_ICON = [
   {
     type: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_ARROW_LINE,
     iconName: 'ArrowDownUp'
+  },
+  {
+    type: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_RECTANGLE,
+    iconName: 'Square'
+  },
+  {
+    type: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_CIRCLE,
+    iconName: 'Circle'
+  },
+  {
+    type: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_TRIANGLE,
+    iconName: 'Triangle'
+  },
+  {
+    type: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_PENTAGON,
+    iconName: 'Pentagon'
+  },
+  {
+    type: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_HEXAGON,
+    iconName: 'Hexagon'
   }
 ]
 

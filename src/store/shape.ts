@@ -1,4 +1,4 @@
-import { DrawLineType } from '@/constants/drawLineType'
+import { StrokeStyleType, FillStyleType } from '@/constants/shape'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { produce } from 'immer'
@@ -11,6 +11,9 @@ interface ShapeState {
   currentStrokeColor: number // current stroke color
   strokeColorList: string[] // stroke Color list
   strokeWidth: number // stroke width
+  currentFillColor: number // current fill color
+  fillColorList: string[]
+  fillStyle: string // shape fill style
   shapeLinePointCount: number // Number of line segment turning points
 }
 
@@ -23,6 +26,10 @@ interface ShapeAction {
   updateStrokeColor: (strokeColor: string, strokeColorIndex: number) => void
   deleteStrokeColor: (strokeColorIndex: number) => void
   updateStrokeWidth: (strokeWidth: number) => void
+  updateCurrentFillColor: (fillColorIndex: number) => void
+  updateFillColor: (fillColor: string, fillColorIndex: number) => void
+  deleteFillColor: (fillColorIndex: number) => void
+  updateFillStyle: (fillStyle: string) => void
   updateShapeLinePointCount: (count: number) => void
 }
 
@@ -31,15 +38,29 @@ const useShapeStore = create<ShapeState & ShapeAction>()(
     (set, get) => ({
       currentShapeIcon: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE,
       shapeIconList: [],
-      strokeStyle: DrawLineType.Solid,
+      strokeStyle: StrokeStyleType.Solid,
       currentStrokeColor: 0,
       strokeColorList: ['#000000'],
       strokeWidth: 3,
       shapeLinePointCount: 3,
+      currentFillColor: 0,
+      fillColorList: ['#000000'],
+      fillStyle: FillStyleType.Solid,
       updateCurrentShapeIcon(shapeIcon) {
         set({
           currentShapeIcon: shapeIcon
         })
+
+        const { strokeStyle } = get()
+        if (
+          (shapeIcon === SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE ||
+            shapeIcon === SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_ARROW_LINE) &&
+          strokeStyle === StrokeStyleType.Sketch
+        ) {
+          set({
+            strokeStyle: StrokeStyleType.Solid
+          })
+        }
       },
       addShapeIcon(shapeIcon) {
         set(
@@ -102,6 +123,33 @@ const useShapeStore = create<ShapeState & ShapeAction>()(
         if (count !== oldCount) {
           set({
             shapeLinePointCount: count
+          })
+        }
+      },
+      updateCurrentFillColor(colorIndex) {
+        set({
+          currentFillColor: colorIndex
+        })
+      },
+      updateFillColor(color: string, colorIndex: number) {
+        set(
+          produce((state) => {
+            state.fillColorList[colorIndex] = color
+          })
+        )
+      },
+      deleteFillColor(colorIndex) {
+        set(
+          produce((state) => {
+            state.fillColorList.splice(colorIndex, 1)
+          })
+        )
+      },
+      updateFillStyle(fillStyle) {
+        const oldFillStyle = get().fillStyle
+        if (oldFillStyle !== fillStyle) {
+          set({
+            fillStyle
           })
         }
       }

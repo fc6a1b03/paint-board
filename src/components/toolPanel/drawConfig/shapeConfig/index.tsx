@@ -7,6 +7,8 @@ import PointCountConfig from './linePointCountConfig'
 import ShapeSelectConfig from './shapeSelectConfig'
 import StrokeWidthConfig from './strokeWidthConfig'
 import StrokeColorConfig from './strokeColorConfig'
+import FillColorConfig from './fillColorConfig'
+import FillStyleConfig from './fillStyleConfig'
 
 const ShapeDrawConfig = () => {
   const { currentShapeIcon } = useShapeStore()
@@ -17,13 +19,25 @@ const ShapeDrawConfig = () => {
     ].includes(currentShapeIcon)
   }, [currentShapeIcon])
 
+  const isFill = useMemo(() => {
+    return [
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_RECTANGLE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_CIRCLE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_TRIANGLE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_PENTAGON,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_HEXAGON
+    ].includes(currentShapeIcon)
+  }, [currentShapeIcon])
+
   return (
     <>
       <ShapeSelectConfig />
       {isLine && <PointCountConfig />}
-      <StrokeStyleConfig />
       <StrokeWidthConfig />
+      <StrokeStyleConfig />
       <StrokeColorConfig />
+      {isFill && <FillColorConfig />}
+      {isFill && <FillStyleConfig />}
     </>
   )
 }

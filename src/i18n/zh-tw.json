@@ -28,6 +28,7 @@
     "strokeStyle": "線條樣式",
     "strokeColor": "線條顏色",
     "strokeWidth": "線條寬度",
+    "fillColor": "填充顏色",
     "fillStyle": "填充樣式",
     "eraserWidth": "橡皮擦寬度",
     "opacity": "透明度",

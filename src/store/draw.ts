@@ -1,5 +1,5 @@
 import { DrawShape, DrawStyle } from '@/constants/draw'
-import { DrawLineType } from '@/constants/drawLineType'
+import { DrawLineType } from '@/constants/draw'
 import { getDrawWidth, getEraserWidth, getShadowWidth } from '@/core/utils/draw'
 import { getStrokeDashArray } from '@/core/element/draw/utils'
 import { MATERIAL_TYPE, material } from '@/core/element/draw/material'
@@ -11,6 +11,7 @@ import { paintBoard } from '@/core/paintBoard'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { produce } from 'immer'
+import { fabric } from 'fabric'
 
 interface DrawState {
   drawWidth: number // draw brush width
@@ -20,6 +21,8 @@ interface DrawState {
   lineType: string // line type 'solid' | 'dashed' | 'dotted'
   shadowWidth: number // brush shadow blur
   shadowColor: string // brush shadow color
+  shadowOffsetX: number // brush shadow offset x
+  shadowOffsetY: number // brush shadow offset y
   drawTextValue: string // text draws the content
   drawStyle: string // draw style
   drawShapeCount: number // count of shape mode
@@ -39,6 +42,8 @@ interface DrawAction {
   updateLineType: (lineType: string) => void
   updateShadowWidth: (shadowWidth: number) => void
   updateShadowColor: (shadowColor: string) => void
+  updateShadowOffsetX: (shadowOffsetX: number) => void
+  updateShadowOffsetY: (shadowOffsetY: number) => void
   updateDrawShape: (drawShape: string) => void
   updateDrawStyle: (drawStyle: string) => void
   updateDrawShapeCount: (drawShapeCount: number) => void
@@ -60,6 +65,8 @@ const useDrawStore = create<DrawState & DrawAction>()(
       lineType: DrawLineType.Solid,
       shadowWidth: 0,
       shadowColor: '#000000',
+      shadowOffsetX: 0,
+      shadowOffsetY: 0,
       drawTextValue: 'draw',
       drawStyle: DrawStyle.Basic,
       drawShapeCount: 2,
@@ -185,21 +192,56 @@ const useDrawStore = create<DrawState & DrawAction>()(
       },
       updateShadowWidth: (shadowWidth) => {
         set(() => {
-          if (paintBoard.canvas) {
-            ;(paintBoard.canvas.freeDrawingBrush.shadow as fabric.Shadow).blur =
-              getShadowWidth(shadowWidth)
+          const freeDrawingBrush = paintBoard?.canvas?.freeDrawingBrush
+          const shadow = freeDrawingBrush?.shadow as fabric.Shadow
+
+          if (shadowWidth) {
+            if (shadow) {
+              shadow.blur = getShadowWidth(shadowWidth)
+            } else if (freeDrawingBrush) {
+              const { shadowOffsetX, shadowOffsetY, shadowColor } = get()
+              freeDrawingBrush.shadow = new fabric.Shadow({
+                offsetX: shadowOffsetX,
+                offsetY: shadowOffsetY,
+                color: shadowColor,
+                blur: getShadowWidth(shadowWidth)
+              })
+            }
+          } else if (freeDrawingBrush?.shadow) {
+            freeDrawingBrush.shadow = ''
           }
+
           return { shadowWidth }
         })
       },
       updateShadowColor: (shadowColor) => {
         set(() => {
-          if (paintBoard.canvas) {
-            ;(
-              paintBoard.canvas.freeDrawingBrush.shadow as fabric.Shadow
-            ).color = shadowColor
+          const shadow = paintBoard?.canvas?.freeDrawingBrush
+            ?.shadow as fabric.Shadow
+          if (shadow) {
+            shadow.color = shadowColor
           }
           return { shadowColor }
+        })
+      },
+      updateShadowOffsetX: (shadowOffsetX) => {
+        set(() => {
+          const shadow = paintBoard?.canvas?.freeDrawingBrush
+            ?.shadow as fabric.Shadow
+          if (shadow) {
+            shadow.offsetX = getShadowWidth(shadowOffsetX)
+          }
+          return { shadowOffsetX }
+        })
+      },
+      updateShadowOffsetY: (shadowOffsetY) => {
+        set(() => {
+          const shadow = paintBoard?.canvas?.freeDrawingBrush
+            ?.shadow as fabric.Shadow
+          if (shadow) {
+            shadow.offsetY = getShadowWidth(shadowOffsetY)
+          }
+          return { shadowOffsetY }
         })
       },
       updateDrawShape: (drawShape) => set({ drawShape }),

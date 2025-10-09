@@ -18,7 +18,7 @@ const ToolPanel: FC = () => {
   return (
     <div
       className={`fixed top-7 left-7 flex flex-col card shadow-xl overflow-visible z-[3] bg-[#eef1ff] max-h-[80%] max-w-[85%] ${
-        showPanel ? 'p-5' : ''
+        showPanel ? 'p-4' : ''
       }`}
     >
       {/* toggle main panel display button */}
@@ -38,7 +38,7 @@ const ToolPanel: FC = () => {
         />
       </label>
       {showPanel && (
-        <div className="max-h-[100%] overflow-y-auto noScrollbar">
+        <div className="max-h-[100%] overflow-y-auto noScrollbar p-1">
           {/* switch mode tabs */}
           <div className="tabs tabs-sm tabs-boxed bg-[#333C4D]">
             {modeSwitch.map(({ type, text }, modeIndex) => (

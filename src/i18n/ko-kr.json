@@ -28,6 +28,7 @@
     "strokeStyle": "스트로크 스타일",
     "strokeColor": "스트로크 색상",
     "strokeWidth": "스트로크 너비",
+    "fillColor": "채우기 색상",
     "fillStyle": "채우기 스타일",
     "eraserWidth": "지우개 너비",
     "opacity": "투명도",

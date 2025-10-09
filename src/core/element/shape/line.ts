@@ -1,7 +1,7 @@
 import { fabric } from 'fabric'
 import { paintBoard } from '@/core/paintBoard'
 import { initCustomObjectAttr } from '@/core/utils/object'
-import { getShapeStrokeStyle, getShapeStrokeWidth } from './utils'
+import { getShapeStrokeDashArray, getShapeStrokeWidth } from './utils'
 import useShapeStore from '@/store/shape'
 import {
   actionHandler,
@@ -39,7 +39,7 @@ export class LineShape {
       strokeWidth,
       originX: 'center',
       originY: 'center',
-      strokeDashArray: getShapeStrokeStyle(strokeWidth + 5),
+      strokeDashArray: getShapeStrokeDashArray(strokeWidth + 5),
       strokeLineCap: 'round',
       fill: 'transparent',
       objectCaching: false,

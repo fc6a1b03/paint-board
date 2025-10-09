@@ -1,7 +1,9 @@
 import useShapeStore from '@/store/shape'
 import { useTranslation } from 'react-i18next'
-import { drawLineTypeSwitch } from '@/constants/drawLineType'
-import { FC } from 'react'
+import { strokeStyleSwitch } from './constants'
+import { FC, useMemo } from 'react'
+import { SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
+import { StrokeStyleType } from '@/constants/shape'
 
 interface IProps {
   strokeStyle?: string
@@ -9,34 +11,44 @@ interface IProps {
 }
 
 const StrokeStyleConfig: FC<IProps> = (props) => {
-  const { strokeStyle, updateStrokeStyle } = useShapeStore()
+  const { strokeStyle, updateStrokeStyle, currentShapeIcon } = useShapeStore()
   const { t } = useTranslation()
+
+  const filterStrokeStyleSwitch = useMemo(() => {
+    switch (currentShapeIcon) {
+      case SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE:
+      case SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_ARROW_LINE:
+        return strokeStyleSwitch.filter(
+          ({ type }) => type !== StrokeStyleType.Sketch
+        )
+      default:
+        return strokeStyleSwitch
+    }
+  }, [currentShapeIcon])
 
   return (
     <div className="mt-3">
       <div className="font-bold text-sm font-fredokaOne">
         {t('title.strokeStyle')}
       </div>
-      {Object.keys(drawLineTypeSwitch).map((lineKey) => (
-        <div key={lineKey} className="join mt-1 flex">
-          {drawLineTypeSwitch[lineKey].map(({ type, icon }) => (
-            <button
-              key={type}
-              className={`join-item btn btn-xs flex-grow ${
-                (props.strokeStyle || strokeStyle) === type
-                  ? 'btn-primary'
-                  : 'btn-neutral'
-              }`}
-              onClick={() => {
-                updateStrokeStyle(type)
-                props?.updateStrokeStyle?.(type)
-              }}
-            >
-              {icon({})}
-            </button>
-          ))}
-        </div>
-      ))}
+      <div className="flex items-center gap-2 mt-1">
+        {filterStrokeStyleSwitch.map(({ type, icon }) => (
+          <div
+            key={type}
+            className={`w-7 h-7 rounded-lg cursor-pointer bg-white flex items-center justify-center ${
+              strokeStyle === type
+                ? 'ring-2 ring-primary'
+                : 'hover:ring-2 ring-base-200'
+            }`}
+            onClick={() => {
+              updateStrokeStyle(type)
+              props?.updateStrokeStyle?.(type)
+            }}
+          >
+            {icon({})}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

@@ -16,8 +16,8 @@ const StrokeWidthConfig = () => {
         </div>
         <input
           type="range"
-          min="5"
-          max="30"
+          min="1"
+          max="20"
           step="1"
           value={strokeWidth}
           className="range range-primary range-xs"

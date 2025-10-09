@@ -1,8 +1,12 @@
 import { fabric } from 'fabric'
-import { paintBoard } from '../../paintBoard'
-import useDrawStore from '@/store/draw'
-import { FontStyle } from '@/constants/font'
 import { isUndefined } from 'lodash'
+import { paintBoard } from '../../paintBoard'
+
+import { FontStyle } from '@/constants/font'
+import { ActionMode } from '@/constants'
+
+import useDrawStore from '@/store/draw'
+import useBoardStore from '@/store/board'
 
 export class TextElement {
   text: fabric.IText | null = null
@@ -32,10 +36,12 @@ export class TextElement {
       })
       this.text = textObj
       canvas.add(textObj)
+      useBoardStore.getState().updateMode(ActionMode.SELECT)
       canvas.setActiveObject(textObj)
 
       textObj.enterEditing() // Enters editing state
       textObj.selectAll() // Selects entire text
+      canvas.requestRenderAll()
     }
   }
 

@@ -28,6 +28,7 @@
     "strokeStyle": "线条样式",
     "strokeColor": "线条颜色",
     "strokeWidth": "线条宽度",
+    "fillColor": "填充颜色",
     "fillStyle": "填充样式",
     "eraserWidth": "橡皮擦宽度",
     "opacity": "透明度",

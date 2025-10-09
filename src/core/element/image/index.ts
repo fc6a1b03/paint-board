@@ -1,7 +1,8 @@
 import { fabric } from 'fabric'
 import { paintBoard } from '../../paintBoard'
 import { initCustomObjectAttr } from '../../utils/object'
-import { ELEMENT_CUSTOM_TYPE } from '@/constants'
+import { ActionMode, ELEMENT_CUSTOM_TYPE } from '@/constants'
+import useBoardStore from '@/store/board'
 
 export class ImageElement {
   image: fabric.Image | null = null
@@ -33,6 +34,8 @@ export class ImageElement {
 
         canvas.add(img)
         paintBoard.render()
+        useBoardStore.getState().updateMode(ActionMode.SELECT)
+        canvas.setActiveObject(img)
       },
       {
         crossOrigin: 'anonymous'

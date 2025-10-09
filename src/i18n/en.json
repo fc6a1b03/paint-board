@@ -28,6 +28,7 @@
     "strokeStyle": "Stroke Style",
     "strokeColor": "Stroke Color",
     "strokeWidth": "Stroke Width",
+    "fillColor": "Fill Color",
     "fillStyle": "Fill Style",
     "eraserWidth": "Eraser Width",
     "opacity": "Opacity",
