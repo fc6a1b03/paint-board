@@ -12,6 +12,7 @@ export enum KeyCode {
   KEY_D = 'KeyD',
   KEY_V = 'KeyV',
   KEY_Z = 'KeyZ',
+  KEY_B = 'KeyB',
   BRACKET_LEFT = 'BracketLeft', // [
   BRACKET_RIGHT = 'BracketRight', // ]
   ARROW_UP = 'ArrowUp',

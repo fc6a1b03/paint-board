@@ -9,8 +9,8 @@ import { DrawStyle, DrawType } from '@/constants/draw'
 
 import { debounce } from 'lodash'
 import { isMobile } from '@/utils'
-import { CanvasEvent } from './event'
-import { TextElement } from './element/text'
+import { EventModule } from './event'
+import { TextElement } from './element/text/index'
 import { material } from './element/draw/material'
 import { renderMultiColor } from './element/draw/multiColor'
 import { renderPencilBrush } from './element/draw/basic'
@@ -27,7 +27,7 @@ import useBoardStore from '@/store/board'
  */
 export class PaintBoard {
   canvas: fabric.Canvas | null = null
-  evnet: CanvasEvent | null = null
+  evnet: EventModule | null = null
   history: History | null = null
   textElement: TextElement
   hookFn: Array<() => void> = []
@@ -58,7 +58,7 @@ export class PaintBoard {
     }
     alignGuideLine.init(this.canvas, useBoardStore.getState().openGuideLine)
 
-    this.evnet = new CanvasEvent()
+    this.evnet = new EventModule()
     this.handleMode()
 
     await this.initCanvasStorage()
@@ -143,9 +143,6 @@ export class PaintBoard {
       hoverCursor: 'default'
     }
 
-    let defaultCursor = undefined
-    let freeDrawingCursor = undefined
-
     switch (mode) {
       case ActionMode.DRAW:
         if (
@@ -158,8 +155,6 @@ export class PaintBoard {
           this.handleDrawStyle()
         }
         this.canvas.discardActiveObject()
-        defaultCursor = 'crosshair'
-        freeDrawingCursor = 'crosshair'
         break
       case ActionMode.ERASE:
         isDrawingMode = true
@@ -179,9 +174,6 @@ export class PaintBoard {
       default:
         break
     }
-
-    this.canvas.defaultCursor = defaultCursor
-    this.canvas.freeDrawingCursor = freeDrawingCursor
     this.canvas.isDrawingMode = isDrawingMode
     this.canvas.selection = selection
     fabric.Object.prototype.set(objectSet)

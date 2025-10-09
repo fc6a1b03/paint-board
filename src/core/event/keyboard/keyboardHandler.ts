@@ -1,6 +1,9 @@
+import { fabric } from 'fabric'
 import { paintBoard } from '@/core/paintBoard'
-import useBoardStore from '@/store/board'
 import { ActionMode } from '@/constants'
+
+import useBoardStore from '@/store/board'
+import useFileStore from '@/store/files'
 
 import { KeyCode } from '@/constants/event'
 import { ClipboardHandler } from './clipboardHandler'
@@ -29,6 +32,11 @@ export class KeyboardHandler {
    * Handle keydown events
    */
   handleKeyDown = (e: KeyboardEvent) => {
+    const canvas = paintBoard?.canvas
+    if (!canvas) {
+      return
+    }
+
     const target = e.target as HTMLElement
 
     // Skip if user is typing in input fields
@@ -48,7 +56,6 @@ export class KeyboardHandler {
       case KeyCode.KEY_C:
         // Ctrl+C (Windows/Linux) or Cmd+C (Mac) copy selected objects
         if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
-          e.preventDefault()
           this.clipboardHandler.copySelectedObjects()
         }
         break
@@ -65,9 +72,15 @@ export class KeyboardHandler {
       case KeyCode.KEY_V:
         // Ctrl+V (Windows/Linux) or Cmd+V (Mac) paste
         if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
-          // set a flag to let pasteFn know that this is keyboard triggered
-          this.clipboardHandler.setKeyboardPasteFlag()
-          // do not prevent default behavior, let pasteFn handle the clipboard first
+          e.preventDefault()
+          this.clipboardHandler.pasteObjects()
+        }
+        break
+
+      case KeyCode.KEY_B:
+        if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
+          e.preventDefault()
+          this.clipboardHandler.pasteClipboard()
         }
         break
 
@@ -162,17 +175,55 @@ export class KeyboardHandler {
           }
         }
         break
-
+      case KeyCode.SPACE:
+        paintBoard?.evnet?.mouseEvent.setSpaceKeyDownState(true)
+        if (canvas) {
+          if (!useBoardStore.getState().isObjectCaching) {
+            fabric.Object.prototype.set({
+              objectCaching: true
+            })
+          }
+          canvas.defaultCursor = 'pointer'
+          canvas.isDrawingMode = false
+          canvas.selection = false
+          fabric.Object.prototype.set({
+            selectable: false,
+            hoverCursor: 'pointer'
+          })
+        }
+        break
       default:
         break
     }
   }
 
-  /**
-   * Handle paste events
-   */
-  handlePaste = (e: ClipboardEvent) => {
-    this.clipboardHandler.handlePaste(e)
+  handleKeyUp = (e: KeyboardEvent) => {
+    const canvas = paintBoard?.canvas
+    if (!canvas) {
+      return
+    }
+
+    switch (e.code) {
+      case KeyCode.SPACE:
+        /**
+         * restores all states.
+         */
+        paintBoard.evnet?.mouseEvent.setSpaceKeyDownState(false)
+        canvas.defaultCursor = 'default'
+
+        if (canvas.viewportTransform) {
+          useFileStore.getState().updateTransform(canvas.viewportTransform)
+          if (!useBoardStore.getState().isObjectCaching) {
+            fabric.Object.prototype.set({
+              objectCaching: false
+            })
+          }
+          paintBoard.handleMode()
+        }
+        break
+      default:
+        break
+    }
   }
 
   /**

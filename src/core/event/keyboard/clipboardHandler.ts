@@ -3,7 +3,7 @@ import { paintBoard } from '@/core/paintBoard'
 import { ImageElement } from '@/core/element/image'
 import { ActionMode } from '@/constants'
 import useBoardStore from '@/store/board'
-import { cloneObjects } from '@/core/utils/object'
+import { cloneObjects, filterUnlockedObjects } from '@/core/utils/object'
 
 /**
  * Clipboard operations handler
@@ -11,10 +11,9 @@ import { cloneObjects } from '@/core/utils/object'
  */
 export class ClipboardHandler {
   private copiedObjects: fabric.Object[] = [] // stored replicated objects
-  private isKeyboardPaste = false // flag whether it is keyboard paste
 
   /**
-   * Select all objects on canvas
+   * Select all objects on canvas (excluding locked objects)
    */
   selectAllObjects() {
     const canvas = paintBoard?.canvas
@@ -28,20 +27,34 @@ export class ClipboardHandler {
       return
     }
 
-    // if there is only one object, select it directly
-    if (allObjects.length === 1) {
-      canvas.setActiveObject(allObjects[0])
+    // filter out locked objects
+    const unlockedObjects = filterUnlockedObjects(allObjects)
+
+    if (unlockedObjects.length === 0) {
+      console.log('No unlocked objects to select')
+      return
+    }
+
+    // if there is only one unlocked object, select it directly
+    if (unlockedObjects.length === 1) {
+      canvas.setActiveObject(unlockedObjects[0])
     } else {
-      // if there are multiple objects, create an active selection group
-      const activeSelection = new fabric.ActiveSelection(allObjects, {
+      // if there are multiple unlocked objects, create an active selection group
+      const activeSelection = new fabric.ActiveSelection(unlockedObjects, {
         canvas: canvas
       })
       canvas.setActiveObject(activeSelection)
     }
 
+    useBoardStore.getState().updateMode(ActionMode.SELECT)
+
     // re-render the canvas
     canvas.renderAll()
-    console.log(`Selected ${allObjects.length} objects`)
+    console.log(
+      `Selected ${unlockedObjects.length} unlocked objects (${
+        allObjects.length - unlockedObjects.length
+      } locked objects excluded)`
+    )
   }
 
   /**
@@ -60,79 +73,99 @@ export class ClipboardHandler {
   }
 
   /**
-   * Set keyboard paste flag
-   */
-  setKeyboardPasteFlag() {
-    this.isKeyboardPaste = true
-  }
-
-  /**
    * Handle paste from clipboard (images/text) or copied objects
    */
-  handlePaste(e: ClipboardEvent) {
-    let handled = false
+  async pasteClipboard() {
+    const canvas = paintBoard?.canvas
+    if (!canvas) return
 
-    if (e.clipboardData && e.clipboardData.items) {
-      /**
-       * Paste Clipboard Image
-       */
-      const items = e.clipboardData.items
-      const imageItem = Array.from(items).find(
-        (item) => item.kind === 'file' && item.type.indexOf('image') !== -1
-      )
+    try {
+      const clipboardContents = await navigator.clipboard.read()
+      console.log('Clipboard contents:', clipboardContents)
 
-      if (imageItem) {
-        const blob = imageItem.getAsFile()
-        if (blob) {
-          const reader = new FileReader()
-          reader.onload = (event) => {
-            const data = event.target?.result
-            if (data && typeof data === 'string') {
-              const image = new ImageElement()
-              image.addImage(data)
-              useBoardStore.getState().updateMode(ActionMode.SELECT)
+      if (!clipboardContents.length) {
+        console.log('No clipboard contents found')
+        return
+      }
+
+      // handle image
+      for (const item of clipboardContents) {
+        console.log('Clipboard item types:', item.types)
+
+        // check if there is image type
+        const imageType = item.types.find((type) => type.startsWith('image/'))
+        if (imageType) {
+          console.log('Found image type:', imageType)
+          try {
+            const blob = await item.getType(imageType)
+            console.log('Image blob:', blob)
+
+            if (blob && blob.size > 0) {
+              const reader = new FileReader()
+              reader.onload = (event) => {
+                const data = event.target?.result
+                console.log(
+                  'Image data loaded:',
+                  typeof data,
+                  data?.toString().substring(0, 50)
+                )
+                if (data && typeof data === 'string') {
+                  const image = new ImageElement()
+                  image.addImage(data)
+                }
+              }
+              reader.onerror = (error) => {
+                console.error('FileReader error:', error)
+              }
+              reader.readAsDataURL(blob)
+              return
             }
+          } catch (error) {
+            console.error('Error reading image from clipboard:', error)
           }
-
-          reader.readAsDataURL(blob)
-        }
-        handled = true
-      } else {
-        /**
-         * Paste Clipboard Text
-         */
-        const text = e.clipboardData.getData('text/plain')
-        if (text && text.trim()) {
-          paintBoard.textElement?.loadText({
-            text
-          })
-          handled = true
-          useBoardStore.getState().updateMode(ActionMode.SELECT)
         }
       }
-    }
 
-    // if it is keyboard triggered paste and there is no handled clipboard content, then paste replicated objects
-    if (this.isKeyboardPaste && !handled) {
-      setTimeout(() => {
-        this.pasteObjects()
-      }, 0)
-    }
+      // if there is no image, handle text
+      for (const item of clipboardContents) {
+        if (item.types.includes('text/plain')) {
+          console.log('Found text type')
+          try {
+            const textBlob = await item.getType('text/plain')
+            if (textBlob) {
+              const text = await textBlob.text()
+              console.log('Text content:', text)
+              if (text && text.trim()) {
+                paintBoard.textElement?.loadText({
+                  text
+                })
+                useBoardStore.getState().updateMode(ActionMode.SELECT)
+                return
+              }
+            }
+          } catch (error) {
+            console.error('Error reading text from clipboard:', error)
+          }
+        }
+      }
 
-    // reset flag
-    this.isKeyboardPaste = false
+      console.log('No suitable clipboard content found')
+    } catch (error) {
+      console.error('Error accessing clipboard:', error)
+    }
   }
 
   /**
    * Paste copied objects
    */
-  private pasteObjects() {
+  async pasteObjects() {
     const canvas = paintBoard?.canvas
     if (!canvas || this.copiedObjects.length === 0) {
       console.log('No objects to paste')
       return
     }
 
+    useBoardStore.getState().updateMode(ActionMode.SELECT)
     cloneObjects(this.copiedObjects)
   }
 }
