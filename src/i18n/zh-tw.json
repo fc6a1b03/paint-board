@@ -79,46 +79,6 @@
     "saveFile": "保存文件数据",
     "uploadFile": "上传文件数据"
   },
-  "info": {
-    "welecome": "歡迎Star",
-    "FreeStyle": {
-      "line1": "提供了 12 種不同風格的畫筆，包括基本畫筆，彩虹畫筆，多形狀畫筆，多素材畫筆，像素畫筆，多色畫筆，文字畫筆，多線連接畫筆，網狀畫筆，多點連接畫筆，波浪曲線畫筆，荊棘畫筆。滿足多樣化的繪畫",
-      "line2": "所有畫筆均支持顏色和畫筆寬度的配置",
-      "line3": "多形狀可以靈活配置形狀類型和數量",
-      "line4": "素材和多色可以調整畫筆的素材類型",
-      "line5": "文字繪製支持循環文案配置和字體修改"
-    },
-    "ShapeDraw": {
-      "line1": "提供了多種常見形狀的繪製, 並支持多端點線段以及箭頭. 並且這些形狀均支持邊框和填充的樣式配置"
-    },
-    "EraserMode": {
-      "line1": "橡皮擦模式可以線性擦除所有內容",
-      "line2": "支持線性寬度配置"
-    },
-    "SelectMode": {
-      "line1": "在選擇模式下，可以通過點擊繪畫內容進行框選",
-      "line2": "點擊手柄支持拖拽、縮放和旋轉操作，提供靈活的編輯方式",
-      "line3": "選擇圖片支持多種濾鏡配置",
-      "line4": "選擇文字時，支持字體設置",
-      "line5": "所有繪製內容均支持圖層設置，包括向上移動層級、向下移動層級、移動至頂層和移動至底層",
-      "line6": "所有繪製內容支持透明度配置"
-    },
-    "BoardMode": {
-      "line1": "畫板支持配置背景配置, 包括顏色, 背景圖, 透明度",
-      "line2": "畫板支持自定義寬高配置",
-      "line3": "支持繪製緩存開啓. 在存在大量繪製內容的情況下，啓用緩存將提高繪製性能，而禁用緩存則會提升畫布清晰度",
-      "line4": "支持輔助線的開啓與關閉"
-    },
-    "BorderConfig": {
-      "line1": "左下角按鈕實時顯示當前縮放比例，點擊即可重置縮放比例",
-      "line2": "中間按鈕列表按從左到右的順序分別爲：撤銷、反撤銷、複製當前選擇內容、刪除當前選擇內容、繪製文字、上傳圖片、清除繪製內容、保存爲圖片、打開文件列表",
-      "line3": "電腦端：按住 Space 鍵並點擊鼠標左鍵可移動畫布，滾動鼠標滾輪實現畫布縮放，按住 Backspace 鍵可刪除已選內容，同時按住 Ctrl 鍵 + V 鍵可粘貼剪貼板圖片",
-      "line4": "移動端：支持雙指按壓後拖拽和縮放畫布"
-    },
-    "FileConfig": {
-      "line1": "多文件配置：支持多個畫布切換，每個畫布可自定義標題、增加、刪除，並提供上傳和下載功能"
-    }
-  },
   "cleanModal": {
     "title": "確認清除內容？"
   },
@@ -127,7 +87,8 @@
   },
   "tip": {
     "uploadFileFail": "上傳失敗，請重試",
-    "unselectedElementTip": "請點擊或者框選畫板內容"
+    "unselectedElementTip": "請點擊或者框選畫板內容",
+    "cameraPermissionDenied": "攝影機權限被拒絕，請檢查瀏覽器權限"
   },
   "filters": {
     "Sepia": "復古",
@@ -200,32 +161,42 @@
     "graphInputTip": "請輸入圖形名字",
     "add": "添加",
     "addSuccess": "添加成功",
-    "deleteTip": "icon已删除",
-    "addFailed": "未找到，请检查名字是否正确"
+    "deleteTip": "icon已刪除",
+    "addFailed": "未找到，請檢查名字是否正確"
   },
-  "displayConfig": {
-    "title": "顯示配置",
+  "camera": {
     "openCamera": "開啟攝影機",
-    "brightness": "亮度",
-    "contrast": "對比度",
-    "saturation": "飽和度",
-    "filter": {
-      "title": "濾鏡",
-      "normal": "正常",
-      "warm": "暖色",
-      "cold": "冷色",
-      "grayscale": "灰度",
-      "sepia": "復古",
-      "vintage": "古典",
-      "vivid": "鮮明",
-      "soft": "柔和",
-      "dramatic": "戲劇",
-      "neon": "霓虹",
-      "moonlight": "月光",
-      "sunrise": "日出",
-      "pixel": "像素",
-      "emboss": "浮雕",
-      "sketch": "素描"
+    "freezeFrame": "定格當前畫面",
+    "openTip": "點擊左下角可開啟攝影機",
+    "displayConfig": {
+      "title": "顯示配置",
+      "brightness": "亮度",
+      "contrast": "對比度",
+      "saturation": "飽和度",
+      "opacity": "透明度",
+      "reset": "重置",
+      "filter": {
+        "title": "濾鏡",
+        "normal": "正常",
+        "warm": "暖色",
+        "cold": "冷色",
+        "grayscale": "灰度",
+        "sepia": "復古",
+        "vintage": "古典",
+        "dramatic": "戲劇",
+        "moonlight": "月光",
+        "sunrise": "日出",
+        "pixel": "像素",
+        "emboss": "浮雕",
+        "sketch": "素描",
+        "brownie": "棕仙",
+        "kodachrome": "膠片",
+        "polaroid": "寶麗來",
+        "technicolor": "彩色",
+        "noise": "噪點",
+        "invert": "底片",
+        "blackWhite": "黑白"
+      }
     }
   },
   "handConfig": {
@@ -233,5 +204,103 @@
   },
   "shadow": {
     "configTip": "顏色, 模糊程度, X偏移量, Y偏移量"
+  },
+  "features": {
+    "drawingMode": "繪畫模式",
+    "freeDrawing": "自由繪畫",
+    "freeDrawingDesc1": "提供了 12 種不同風格的畫筆，基本畫筆，彩虹畫筆，多形狀畫筆，多素材畫筆，像素畫筆，多色畫筆，文字畫筆，多線連接畫筆，網狀畫筆，多點連接畫筆，波浪曲線畫筆，荊棘畫筆。滿足多樣化的繪畫",
+    "freeDrawingDesc2": "所有畫筆均支持顏色和畫筆寬度的自定義",
+    "freeDrawingDesc3": "多形狀畫筆支持靈活配置形狀類型與數量",
+    "freeDrawingDesc4": "素材畫筆與多色畫筆可自定義素材類型",
+    "freeDrawingDesc5": "文字畫筆支持循環文案與字體配置",
+    "shapeDrawing": "圖形繪畫",
+    "shapeDrawingDesc1": "支持繪製豐富的圖形，包括內置圖形與 Lucide 圖標庫圖形，只需點擊添加即可使用",
+    "shapeDrawingDesc2": "可配置線條寬度、線條樣式、填充顏色與填充樣式",
+    "eraserMode": "橡皮擦模式",
+    "eraserModeDesc1": "支持線性擦除任意繪製內容",
+    "eraserModeDesc2": "支持線性寬度配置",
+    "selectMode": "選擇模式",
+    "selectModeDesc1": "支持點擊或框選內容進行編輯",
+    "selectModeDesc2": "選中後可通過手柄進行 拖拽、縮放、旋轉 操作",
+    "selectModeDesc3": "每個元素支持以下設置",
+    "selectModeDesc3_1": "圖層管理：上移、下移、置頂、置底",
+    "selectModeDesc3_2": "橡皮擦開關：開啟後橡皮擦可擦除當前元素",
+    "selectModeDesc3_3": "鎖定開關：開啟後當前對象將無法移動、旋轉或縮放",
+    "selectModeDesc4": "圖片元素支持多種濾鏡效果",
+    "selectModeDesc5": "文本元素支持字體、粗體、斜體等樣式調整",
+    "boardMode": "畫板模式",
+    "boardModeDesc1": "畫板背景設置, 支持顏色, 背景圖, 攝像多背景, 支持同時展示, 可拖拽展示層級",
+    "boardModeDesc1_1": "背景顏色：支持純色, 漸變, 透明度配置",
+    "boardModeDesc1_2": "背景圖片：支持透明度以及上傳圖片時的去除背景和圖像分割配置",
+    "boardModeDesc1_3": "攝像頭：支持實時拍攝與定格當前畫面為背景，可調節濾鏡、亮度、對比度、飽和度與透明度",
+    "boardModeDesc2": "畫板尺寸支持自定義寬高",
+    "boardModeDesc3": "繪製緩存: 在存在大量繪製內容的情況下，啟用緩存將提高繪製性能，而禁用緩存則會提升畫布清晰度",
+    "boardModeDesc4": "輔助線: 開啟後, 便於多元素拖拽時吸附對齊",
+    "operationBar": "操作欄",
+    "bottomLeftButtons": "左下角按鈕",
+    "bottomLeftDesc1": "幫助按鈕：點擊打開彈出幫助彈窗, 支持語言切換和查看快捷鍵與功能說明",
+    "bottomLeftDesc2": "圓形進度條：實時展示當前縮放比例, 點擊後可重置縮放比例",
+    "bottomLeftDesc3": "攝像頭按鈕：展示當前攝像頭狀態, 支持多個顯示配置",
+    "bottomOperationBar": "底部操作欄",
+    "bottomOperationDesc1": "從左到右的功能分別為：撤銷、反撤銷、複製當前選擇內容、刪除當前選擇內容、繪製文字、上傳圖片、清除繪製內容、保存為圖片、打開文件列表",
+    "bottomOperationDesc1_1": "上傳圖片支持去除背景, 圖像分割. 此功能需要瀏覽器支持WebGPU, 建議用最新版谷歌瀏覽器",
+    "bottomOperationDesc1_2": "保存為圖片支持自定義配置. 旋轉, 縮放, 裁切",
+    "fileList": "文件列表",
+    "fileListDesc": "支持多個畫布切換，每個畫布可自定義標題、增加、刪除，並提供上傳和下載功能",
+    "internationalization": "國際化",
+    "internationalizationDesc": "支持中文(簡體), 中文(繁體), English, 日本語, 한국어"
+  },
+  "helpInfo": {
+    "openSourceRepo": "開源倉庫",
+    "featureIntro": "功能簡介",
+    "shortcuts": "快捷鍵",
+    "board": "畫板",
+    "elements": "元素",
+    "tools": "工具",
+    "operations": "操作",
+    "shortcutKey": "快捷鍵",
+    "boardOperations": {
+      "panBoard1": "平移畫板(1)",
+      "panBoard2": "平移畫板(2)",
+      "panBoardMobile": "平移畫板(移動端)",
+      "zoomBoard1": "縮放畫板(1)",
+      "zoomBoard2": "縮放畫板(2)",
+      "zoomBoardMobile": "縮放畫板(移動端)",
+      "resetZoom": "重置畫板縮放",
+      "undo": "撤銷",
+      "undoMobile": "撤銷(移動端)",
+      "redo": "重做",
+      "redoMobile": "重做(移動端)"
+    },
+    "elementOperations": {
+      "selectAll": "選中全部元素",
+      "selectMultiple": "選擇多個元素",
+      "copySelected": "複製當前選中元素",
+      "pasteElements": "粘貼元素",
+      "pasteClipboard": "粘貼剪貼板",
+      "duplicateSelected": "複製粘貼當前選中元素",
+      "deleteSelected": "刪除當前選中元素",
+      "moveLayer": "移動元素圖層"
+    },
+    "toolOperations": {
+      "switchDrawMode": "切換繪畫模式",
+      "switchEraserMode": "切換橡皮擦模式",
+      "switchSelectMode": "切換選擇模式",
+      "switchBoardMode": "切換畫板模式",
+      "switchFreeDrawing": "在繪畫模式下切換自由繪畫",
+      "switchShapeDrawing": "在繪畫模式下切換圖形繪畫",
+      "switchBrushType": "在自由繪畫下切換畫筆類型",
+      "brushTypeNote": "(可根據按鈕標記)"
+    },
+    "keyboardShortcuts": {
+      "spaceDrag": "鼠標拖拽",
+      "arrows": "上 / 下 / 左 / 右",
+      "doubleFingerDrag": "雙指按壓後退拽",
+      "mouseWheel": "鼠標滾輪",
+      "doubleFingerZoom": "雙指按壓後縮放",
+      "doubleFingerTap": "雙指雙擊",
+      "threeFingerTap": "三指雙擊",
+      "mouseLeftClick": "鼠標左鍵"
+    }
   }
 }

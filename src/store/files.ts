@@ -21,7 +21,7 @@ const storage: StateStorage = {
   }
 }
 
-export const DEFAULT_BACKGROUND_SORT = ['image', 'color']
+export const DEFAULT_BACKGROUND_SORT = ['camera', 'image', 'color']
 export const DEFAULT_BACKGROUND_COLOR_LIST = [
   'rgba(102, 204, 138, 0.4)',
   'linear-gradient(60deg, rgba(172,233,194,1) 0%, RGBA(23, 185, 48, 0.8) 49%, rgba(102,204,138,1) 100%)',
@@ -78,7 +78,7 @@ interface FileAction {
 }
 
 const initId = uuidv4()
-export const BOARD_VERSION = '1.5.7'
+export const BOARD_VERSION = '2.0.0'
 
 // Helper functions for common operations
 const findFileIndex = (files: IFile[], fileId: string): number => {

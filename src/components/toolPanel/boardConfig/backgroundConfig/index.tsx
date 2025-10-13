@@ -8,6 +8,7 @@ import Sortable from 'sortablejs'
 
 import BackgroundImageConfig from './backgroundImageConfig'
 import BackgroundColorConfig from './backgroundColorConfig'
+import BackgroundCameraConfig from './backgroundCameraConfig'
 
 const BackgroundConfig = () => {
   const { updateBackgroundSort } = useFileStore()
@@ -56,6 +57,8 @@ const BackgroundConfig = () => {
               return <BackgroundImageConfig key={type} />
             case 'color':
               return <BackgroundColorConfig key={type} />
+            case 'camera':
+              return <BackgroundCameraConfig key={type} />
             default:
               return null
           }

@@ -58,10 +58,6 @@ body {
   border-color: oklch(var(--n, var(--n)) / var(--tw-border-opacity));
 }
 
-.tab:not(.tab-active):hover {
-  color: #ffffff80;
-}
-
 .radial-progress:hover::after {
   opacity: 0.5;
 }

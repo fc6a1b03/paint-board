@@ -50,3 +50,8 @@ export const isMobile = () => {
     navigator.userAgent
   )
 }
+
+export const isAppleDevice = () => {
+  const platform = navigator.userAgent || navigator.platform
+  return /Mac|iPhone|iPad|iPod/.test(platform)
+}

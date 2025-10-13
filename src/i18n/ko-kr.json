@@ -79,46 +79,6 @@
     "saveFile": "파일 데이터 저장",
     "uploadFile": "파일 데이터 업로드"
   },
-  "info": {
-    "welecome": "별점 환영합니다",
-    "FreeStyle": {
-      "line1": "기본 브러시, 무지개 브러시, 다중 도형 브러시, 다중 재질 브러시, 픽셀 브러시, 다중 색상 브러시, 텍스트 브러시, 다중 선 연결 브러시, 그물형 브러시, 다중 포인트 연결 브러시, 지그재그 브러시, 가시 브러시 등 12가지 다양한 스타일의 브러시를 제공합니다. 다양한 그리기 요구 충족",
-      "line2": "모든 브러시는 색상 및 브러시 너비 구성을 지원합니다",
-      "line3": "다중 도형은 도형 유형 및 수량의 유연한 구성을 허용합니다",
-      "line4": "재질 및 다중 색상을 통해 브러시의 재질 유형을 조정할 수 있습니다",
-      "line5": "순환 텍스트 및 글꼴 구성을 위한 텍스트 그리기 지원"
-    },
-    "ShapeDraw": {
-      "line1": "다양한 일반 도형을 그리기 위해 제공되며, 다중 포인트 세그먼트 및 화살표를 지원합니다. 도형은 테두리 및 채우기 스타일을 지원합니다."
-    },
-    "EraserMode": {
-      "line1": "지우개 모드는 모든 내용을 선형으로 지웁니다",
-      "line2": "선형 너비 구성 지원"
-    },
-    "SelectMode": {
-      "line1": "선택 모드에서는 그림의 내용을 클릭하여 선택할 수 있습니다",
-      "line2": "핸들 클릭은 드래그 앤 드롭, 확대/축소 및 회전 작업을 지원하여 유연한 편집 옵션을 제공합니다",
-      "line3": "이미지 선택 시 다양한 필터 구성 지원",
-      "line4": "텍스트 선택 시 글꼴 구성 지원",
-      "line5": "모든 그림에 대해 레이어 위로 이동, 레이어 아래로 이동, 맨 위로 이동 및 맨 아래로 이동 등의 레이어 설정을 지원합니다",
-      "line6": "모든 그림은 투명도 구성을 지원합니다"
-    },
-    "BoardMode": {
-      "line1": "그림판은 색상, 배경 이미지 및 투명도를 포함한 배경 구성을 지원합니다",
-      "line2": "그림판은 사용자 정의 너비 및 높이 구성을 지원합니다",
-      "line3": "그리기 캐시 활성화를 지원합니다. 캐싱을 활성화하면 대량의 그리기 내용이 있을 때 그리기 성능이 향상되고, 캐싱을 비활성화하면 캔버스 선명도가 향상됩니다.",
-      "line4": "안내선 켜기/끄기 지원"
-    },
-    "BorderConfig": {
-      "line1": "왼쪽 하단 버튼은 현재 확대/축소 비율을 실시간으로 표시하며 클릭하면 확대/축소 비율이 재설정됩니다",
-      "line2": "중앙의 버튼 목록은 왼쪽에서 오른쪽으로 실행 취소, 다시 실행, 현재 선택 항목 복사, 현재 선택 항목 삭제, 텍스트 그리기, 이미지 업로드, 그리기 지우기, 이미지로 저장 및 파일 목록 열기입니다",
-      "line3": "PC: 스페이스 키를 누른 상태에서 왼쪽 마우스 버튼을 클릭하여 캔버스를 이동하고, 마우스 휠을 스크롤하여 캔버스 확대/축소를 실현하며, 백스페이스 키를 눌러 선택한 내용을 삭제하고, Ctrl + V 키를 동시에 눌러 클립보드 이미지를 붙여넣습니다",
-      "line4": "모바일: 두 손가락으로 누른 후 캔버스 드래그 및 확대/축소 지원"
-    },
-    "FileConfig": {
-      "line1": "다중 파일 구성: 여러 캔버스 전환 지원, 각 캔버스는 사용자 정의 제목, 추가, 삭제가 가능하며 업로드 및 다운로드 제공"
-    }
-  },
   "cleanModal": {
     "title": "내용을 지우시겠습니까?"
   },
@@ -127,7 +87,8 @@
   },
   "tip": {
     "uploadFileFail": "업로드 실패, 다시 시도해 주세요",
-    "unselectedElementTip": "그림판 내용을 클릭하거나 선택해 주세요"
+    "unselectedElementTip": "그림판 내용을 클릭하거나 선택해 주세요",
+    "cameraPermissionDenied": "카메라 권한이 거절되었습니다. 브라우저 권한을 확인해 주세요"
   },
   "filters": {
     "Sepia": "세피아",
@@ -202,29 +163,39 @@
     "addSuccess": "추가 성공",
     "addFailed": "찾을 수 없음, 이름을 확인해 주세요"
   },
-  "displayConfig": {
-    "title": "표시 설정",
+  "camera": {
     "openCamera": "카메라 열기",
-    "brightness": "밝기",
-    "contrast": "대비",
-    "saturation": "채도",
-    "filter": {
-      "title": "필터",
-      "normal": "정상",
-      "warm": "웜",
-      "cold": "콜드",
-      "grayscale": "그레이스케일",
-      "sepia": "세피아",
-      "vintage": "빈티지",
-      "vivid": "블루",
-      "soft": "소프트",
-      "dramatic": "드라마틱",
-      "neon": "네온",
-      "moonlight": "문오라",
-      "sunrise": "선해",
-      "pixel": "픽셀",
-      "emboss": "엠보싱",
-      "sketch": "스케치"
+    "freezeFrame": "현재 화면 정지",
+    "openTip": "왼쪽 하단 버튼을 클릭하여 카메라를 열 수 있습니다",
+    "displayConfig": {
+      "title": "표시 설정",
+      "brightness": "밝기",
+      "contrast": "대비",
+      "saturation": "채도",
+      "opacity": "투명도",
+      "reset": "초기화",
+      "filter": {
+        "title": "필터",
+        "normal": "정상",
+        "warm": "웜",
+        "cold": "콜드",
+        "grayscale": "그레이스케일",
+        "sepia": "세피아",
+        "vintage": "빈티지",
+        "dramatic": "드라마틱",
+        "moonlight": "문오라",
+        "sunrise": "선해",
+        "pixel": "픽셀",
+        "emboss": "엠보싱",
+        "sketch": "스케치",
+        "brownie": "브라우니",
+        "kodachrome": "코다크롬",
+        "polaroid": "폴라로이드",
+        "technicolor": "테크니컬러",
+        "noise": "노이즈",
+        "invert": "반전",
+        "blackWhite": "흑백"
+      }
     }
   },
   "handConfig": {
@@ -232,5 +203,103 @@
   },
   "shadow": {
     "configTip": "색상, 흐림, X 오프셋, Y 오프셋"
+  },
+  "features": {
+    "drawingMode": "그리기 모드",
+    "freeDrawing": "자유 그리기",
+    "freeDrawingDesc1": "12가지 다른 스타일의 브러시를 제공: 기본 브러시, 무지개 브러시, 다중 모양 브러시, 소재 브러시, 픽셀 브러시, 다중 색상 브러시, 텍스트 브러시, 다중 선 연결 브러시, 메시 브러시, 다중 점 연결 브러시, 파도 곡선 브러시, 가시 브러시. 다양한 그리기 요구를 충족",
+    "freeDrawingDesc2": "모든 브러시는 색상과 브러시 너비 사용자 정의를 지원",
+    "freeDrawingDesc3": "다중 모양 브러시는 모양 유형과 수량의 유연한 구성을 지원",
+    "freeDrawingDesc4": "소재 브러시와 다중 색상 브러시는 소재 유형을 사용자 정의 가능",
+    "freeDrawingDesc5": "텍스트 브러시는 루프 텍스트와 폰트 구성을 지원",
+    "shapeDrawing": "모양 그리기",
+    "shapeDrawingDesc1": "내장 그래픽과 Lucide 아이콘 라이브러리 그래픽을 포함한 풍부한 그래픽 그리기를 지원, 클릭하여 추가하기만 하면 사용 가능",
+    "shapeDrawingDesc2": "선 너비, 선 스타일, 채우기 색상 및 채우기 스타일 구성 가능",
+    "eraserMode": "지우개 모드",
+    "eraserModeDesc1": "임의의 그리기 콘텐츠의 선형 지우기를 지원",
+    "eraserModeDesc2": "선형 너비 구성을 지원",
+    "selectMode": "선택 모드",
+    "selectModeDesc1": "클릭 또는 박스 선택으로 콘텐츠 편집을 지원",
+    "selectModeDesc2": "선택 후 핸들로 드래그, 스케일, 회전 작업 가능",
+    "selectModeDesc3": "각 요소는 다음 설정을 지원",
+    "selectModeDesc3_1": "레이어 관리: 위로 이동, 아래로 이동, 맨 앞으로, 맨 뒤로",
+    "selectModeDesc3_2": "지우개 스위치: 활성화하면 지우개로 현재 요소를 지울 수 있음",
+    "selectModeDesc3_3": "잠금 스위치: 활성화하면 현재 객체를 이동, 회전 또는 스케일할 수 없음",
+    "selectModeDesc4": "이미지 요소는 여러 필터 효과를 지원",
+    "selectModeDesc5": "텍스트 요소는 폰트, 굵게, 기울임꼴 등 스타일 조정을 지원",
+    "boardMode": "보드 모드",
+    "boardModeDesc1": "보드 배경 설정, 색상, 배경 이미지, 카메라 다중 배경을 지원, 동시 표시를 지원, 드래그 가능한 표시 계층",
+    "boardModeDesc1_1": "배경 색상: 단색, 그라디언트, 투명도 구성을 지원",
+    "boardModeDesc1_2": "배경 이미지: 투명도 및 이미지 업로드 시 배경 제거와 이미지 분할 구성을 지원",
+    "boardModeDesc1_3": "카메라: 실시간 촬영과 현재 화면을 배경으로 정지하는 것을 지원, 필터, 밝기, 대비, 채도, 투명도 조정 가능",
+    "boardModeDesc2": "보드 크기는 사용자 정의 너비와 높이를 지원",
+    "boardModeDesc3": "그리기 캐시: 대량의 그리기 콘텐츠가 있는 경우 캐시를 활성화하면 그리기 성능이 향상되고, 캐시를 비활성화하면 캔버스 선명도가 향상됩니다",
+    "boardModeDesc4": "가이드 라인: 활성화하면 여러 요소 드래그 시 흡착 정렬에 편리",
+    "operationBar": "작업 표시줄",
+    "bottomLeftButtons": "왼쪽 하단 버튼",
+    "bottomLeftDesc1": "도움말 버튼: 클릭하여 도움말 팝업을 열고, 언어 전환 및 단축키와 기능 설명 보기를 지원",
+    "bottomLeftDesc2": "원형 진행 표시줄: 현재 확대/축소 비율을 실시간 표시, 클릭하여 확대/축소 비율 재설정",
+    "bottomLeftDesc3": "카메라 버튼: 현재 카메라 상태를 표시, 여러 표시 구성을 지원",
+    "bottomOperationBar": "하단 작업 표시줄",
+    "bottomOperationDesc1": "왼쪽에서 오른쪽으로의 기능: 실행 취소, 다시 실행, 현재 선택 복사, 현재 선택 삭제, 텍스트 그리기, 이미지 업로드, 그리기 콘텐츠 지우기, 이미지로 저장, 파일 목록 열기",
+    "bottomOperationDesc1_1": "이미지 업로드는 배경 제거, 이미지 분할을 지원. 이 기능은 브라우저에서 WebGPU 지원이 필요하며, 최신 버전의 Google Chrome 사용을 권장",
+    "bottomOperationDesc1_2": "이미지로 저장은 사용자 정의 구성을 지원. 회전, 스케일, 자르기",
+    "fileList": "파일 목록",
+    "fileListDesc": "여러 캔버스 전환을 지원, 각 캔버스는 제목 사용자 정의, 추가, 삭제가 가능하며, 업로드 및 다운로드 기능을 제공",
+    "internationalization": "국제화",
+    "internationalizationDesc": "중국어(간체), 중국어(번체), English, 일본어, 한국어를 지원"
+  },
+  "helpInfo": {
+    "openSourceRepo": "오픈소스 저장소",
+    "featureIntro": "기능 소개",
+    "shortcuts": "단축키",
+    "board": "보드",
+    "elements": "요소",
+    "tools": "도구",
+    "operations": "작업",
+    "shortcutKey": "단축키",
+    "boardOperations": {
+      "panBoard1": "보드 이동(1)",
+      "panBoard2": "보드 이동(2)",
+      "panBoardMobile": "보드 이동(모바일)",
+      "zoomBoard1": "보드 확대/축소(1)",
+      "zoomBoard2": "보드 확대/축소(2)",
+      "zoomBoardMobile": "보드 확대/축소(모바일)",
+      "resetZoom": "확대/축소 재설정",
+      "undo": "실행 취소",
+      "undoMobile": "실행 취소(모바일)",
+      "redo": "다시 실행",
+      "redoMobile": "다시 실행(모바일)"
+    },
+    "elementOperations": {
+      "selectAll": "모든 요소 선택",
+      "selectMultiple": "여러 요소 선택",
+      "copySelected": "선택된 요소 복사",
+      "pasteElements": "요소 붙여넣기",
+      "pasteClipboard": "클립보드 붙여넣기",
+      "duplicateSelected": "선택된 요소 복제",
+      "deleteSelected": "선택된 요소 삭제",
+      "moveLayer": "요소 레이어 이동"
+    },
+    "toolOperations": {
+      "switchDrawMode": "그리기 모드 전환",
+      "switchEraserMode": "지우개 모드 전환",
+      "switchSelectMode": "선택 모드 전환",
+      "switchBoardMode": "보드 모드 전환",
+      "switchFreeDrawing": "그리기 모드에서 자유 그리기 전환",
+      "switchShapeDrawing": "그리기 모드에서 도형 그리기 전환",
+      "switchBrushType": "자유 그리기에서 브러시 유형 전환",
+      "brushTypeNote": "(버튼 라벨에 따라)"
+    },
+    "keyboardShortcuts": {
+      "spaceDrag": "마우스 클릭 후 드래그",
+      "arrows": "위 / 아래 / 왼쪽 / 오른쪽",
+      "doubleFingerDrag": "두 손가락으로 누른 후 드래그",
+      "mouseWheel": "마우스 휠",
+      "doubleFingerZoom": "두 손가락으로 누른 후 축소",
+      "doubleFingerTap": "두 손가락으로 누른 후 클릭",
+      "threeFingerTap": "세 손가락으로 누른 후 클릭",
+      "mouseLeftClick": "마우스 왼쪽 클릭"
+    }
   }
 }

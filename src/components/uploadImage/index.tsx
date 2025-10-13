@@ -8,7 +8,6 @@ import {
   PreTrainedModel,
   Processor
 } from '@huggingface/transformers'
-import { ImageElement } from '@/core/element/image'
 import { cropTransparent } from '@/utils/cropTransparent'
 
 import { Info } from 'lucide-react'
@@ -19,6 +18,7 @@ interface IProps {
   url: string
   showModal: boolean
   setShowModal: (show: boolean) => void
+  handleUploadImage: (image: string) => void
 }
 
 const REMOVE_BACKGROUND_STATUS = {
@@ -33,7 +33,12 @@ const REMOVE_BACKGROUND_STATUS = {
 type RemoveBackgroundStatusType =
   (typeof REMOVE_BACKGROUND_STATUS)[keyof typeof REMOVE_BACKGROUND_STATUS]
 
-const UploadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
+const UploadImage: FC<IProps> = ({
+  url,
+  showModal,
+  setShowModal,
+  handleUploadImage
+}) => {
   const { t } = useTranslation()
   const [showImageSegmentationModal, setShowImageSegmentationModal] =
     useState(false)
@@ -157,14 +162,13 @@ const UploadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
     setShowOriginImage(false)
   }
 
-  const uploadImage = () => {
-    const image = new ImageElement()
+  const clickUploadImage = () => {
     if (showOriginImage) {
-      image.addImage(url)
+      handleUploadImage(url)
       handleCancel()
     } else if (processedImage) {
       cropTransparent(processedImage).then((url) => {
-        image.addImage(url)
+        handleUploadImage(url)
       })
       handleCancel()
     }
@@ -185,7 +189,7 @@ const UploadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
           >
             {t('cancel')}
           </button>
-          <button className="btn btn-primary btn-sm" onClick={uploadImage}>
+          <button className="btn btn-primary btn-sm" onClick={clickUploadImage}>
             {t('uploadImage.upload')}
           </button>
           <button

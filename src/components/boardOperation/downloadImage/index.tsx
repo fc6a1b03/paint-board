@@ -153,7 +153,9 @@ const DownloadImage: FC<IProps> = ({ url, showModal, setShowModal }) => {
                     <a
                       key={value}
                       className={`tab flex-grow font-fredokaOne font-normal text-white ${
-                        saveImageSize === value ? 'tab-active' : ''
+                        saveImageSize === value
+                          ? 'tab-active'
+                          : 'hover:text-base-300'
                       }`}
                       onClick={() => {
                         updateSaveImageSize(value)

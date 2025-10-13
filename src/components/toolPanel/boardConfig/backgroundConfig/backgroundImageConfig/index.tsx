@@ -1,9 +1,10 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 import useFileStore, { useCurrentFile } from '@/store/files'
 
 import { ImageUp, GripVertical } from 'lucide-react'
 import ClearIcon from '@/components/icons/clear.svg?react'
 import UploadSuccessIcon from '@/components/icons/uploadSuccess.svg?react'
+import UploadImage from '@/components/uploadImage'
 
 const BackgroundConfig = () => {
   const { updateBackgroundImage, updateBackgroundImageOpacity } = useFileStore()
@@ -12,8 +13,11 @@ const BackgroundConfig = () => {
     return null
   }
 
+  const [uploadImageURL, setUploadImageURL] = useState('')
+  const [showUploadModal, setShowUploadModal] = useState(false)
+
   // upload background image file
-  const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadImageFile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) {
       return
@@ -24,12 +28,19 @@ const BackgroundConfig = () => {
       const data = fEvent.target?.result
       if (data) {
         if (data && typeof data === 'string') {
-          updateBackgroundImage(data)
+          setUploadImageURL(data)
+          setShowUploadModal(true)
         }
       }
       e.target.value = ''
     }
     reader.readAsDataURL(file)
+  }
+
+  const handleUploadImage = (imageUrl: string) => {
+    if (imageUrl) {
+      updateBackgroundImage(imageUrl)
+    }
   }
 
   return (
@@ -55,7 +66,7 @@ const BackgroundConfig = () => {
         id="background-image-upload"
         accept=".jpeg, .jpg, .png"
         className="hidden"
-        onChange={uploadImage}
+        onChange={uploadImageFile}
       />
       <div className="divider divider-horizontal mx-1"></div>
       <input
@@ -73,6 +84,13 @@ const BackgroundConfig = () => {
         size={20}
         color="#66CC8A"
         className="drag-background-config-handle cursor-pointer ml-auto hidden xs:inline-block group-hover:inline-block"
+      />
+
+      <UploadImage
+        url={uploadImageURL}
+        showModal={showUploadModal}
+        setShowModal={setShowUploadModal}
+        handleUploadImage={handleUploadImage}
       />
     </div>
   )

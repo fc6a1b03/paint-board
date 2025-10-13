@@ -3,11 +3,12 @@ import { DEFAULT_BACKGROUND_SORT, useCurrentFile } from '@/store/files'
 import { paintBoard } from '@/core/paintBoard'
 
 import ToolPanel from '@/components/toolPanel'
-import GuideInfo from '@/components/guideInfo'
+import HelpArea from '@/components/helpArea'
 import CleanModal from '@/components/cleanModal'
 import BoardOperation from '@/components/boardOperation'
 import BackgroundColor from '@/components/background/backgroundColor'
 import BackgroundImage from '@/components/background/backgroundImage'
+import BackgroundCamera from '@/components/background/backgroundCamera'
 
 const Board: React.FC = () => {
   const canvasEl = useRef<HTMLCanvasElement>(null)
@@ -45,13 +46,15 @@ const Board: React.FC = () => {
               return <BackgroundImage key={type} />
             case 'color':
               return <BackgroundColor key={type} />
+            case 'camera':
+              return <BackgroundCamera key={type} />
           }
         })}
       </div>
       {canvasLoaded && (
         <>
           <ToolPanel />
-          <GuideInfo />
+          <HelpArea />
           <CleanModal />
           <BoardOperation />
         </>
