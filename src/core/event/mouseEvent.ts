@@ -16,7 +16,6 @@ export class CanvasMouseEvent {
     const canvas = paintBoard.canvas
 
     canvas?.on('mouse:down', (e) => {
-      console.log('mouse:down', e)
       this.isMouseDown = true
       if (this.isSpaceKeyDown) {
         return

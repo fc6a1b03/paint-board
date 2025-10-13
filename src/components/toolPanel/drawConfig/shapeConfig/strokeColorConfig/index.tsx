@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import debounce from 'lodash-es/debounce'
 import { useState } from 'react'
 import useShapeStore from '@/store/shape'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +18,7 @@ const StrokeColorConfig = () => {
   const { t } = useTranslation()
   const [editColorIndex, setEditColorIndex] = useState(-1)
 
-  const handleStrokeColor = _.debounce((color: string, colorIndex: number) => {
+  const handleStrokeColor = debounce((color: string, colorIndex: number) => {
     updateStrokeColor(color, colorIndex)
   }, 100)
 

@@ -1,5 +1,5 @@
 import { fabric } from 'fabric'
-import { isUndefined } from 'lodash'
+import isUndefined from 'lodash-es/isUndefined'
 import { paintBoard } from '../../paintBoard'
 
 import { FontStyle } from '@/constants/font'

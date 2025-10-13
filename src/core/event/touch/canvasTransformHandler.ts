@@ -1,5 +1,5 @@
 import { fabric } from 'fabric'
-import { debounce } from 'lodash'
+import debounce from 'lodash-es/debounce'
 import { paintBoard } from '@/core/paintBoard'
 
 import { MAX_ZOOM, MIN_ZOOM } from '../zoomEvent'

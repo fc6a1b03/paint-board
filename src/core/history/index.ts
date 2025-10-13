@@ -1,7 +1,7 @@
 import useFileStore, { IBoardData } from '@/store/files'
 import { paintBoard } from '../paintBoard'
 import { diff, unpatch, patch, Delta } from 'jsondiffpatch'
-import { cloneDeep } from 'lodash'
+import cloneDeep from 'lodash-es/cloneDeep'
 import { getCanvasJSON, handleCanvasJSONLoaded } from '../utils/loadCanvas'
 
 const initState = {}

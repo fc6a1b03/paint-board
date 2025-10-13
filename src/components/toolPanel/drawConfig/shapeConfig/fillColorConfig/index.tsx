@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import debounce from 'lodash-es/debounce'
 import { useState } from 'react'
 import useShapeStore from '@/store/shape'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +18,7 @@ const FillColorConfig = () => {
   const { t } = useTranslation()
   const [editColorIndex, setEditColorIndex] = useState(-1)
 
-  const handleFillColor = _.debounce((color: string, colorIndex: number) => {
+  const handleFillColor = debounce((color: string, colorIndex: number) => {
     updateFillColor(color, colorIndex)
   }, 100)
 

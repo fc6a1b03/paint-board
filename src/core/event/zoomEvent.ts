@@ -3,10 +3,10 @@ import { paintBoard } from '@/core/paintBoard'
 import { fabric } from 'fabric'
 import { ActionMode } from '@/constants'
 import { DrawStyle } from '@/constants/draw'
-import { getDrawWidth, getEraserWidth, getShadowWidth } from '@/core/utils/draw'
+import { getDrawWidth, getEraserWidth } from '@/core/utils/draw'
 import useDrawStore from '@/store/draw'
 import useFileStore from '@/store/files'
-import { debounce } from 'lodash'
+import debounce from 'lodash-es/debounce'
 import { getStrokeDashArray } from '@/core/element/draw/utils'
 
 let zoomHook: (zoom: number) => undefined
@@ -129,13 +129,6 @@ const handleWidth = () => {
         )
       ) {
         brush.width = getDrawWidth()
-        if (
-          useDrawStore.getState().drawStyle === DrawStyle.Basic &&
-          brush.shadow
-        ) {
-          ;(brush.shadow as fabric.Shadow).blur = getShadowWidth()
-        }
-
         brush.strokeDashArray = getStrokeDashArray()
       }
       break
