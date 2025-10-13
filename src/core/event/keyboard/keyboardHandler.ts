@@ -45,11 +45,23 @@ export class KeyboardHandler {
     }
 
     switch (e.code) {
+      case KeyCode.KEY_Q:
+      case KeyCode.KEY_W:
+      case KeyCode.KEY_E:
+      case KeyCode.KEY_S:
+      case KeyCode.KEY_X:
+      case KeyCode.KEY_R:
+      case KeyCode.KEY_F:
+        this.modeHandler.switchDrawStyle(e.code)
+        break
+
       case KeyCode.KEY_A:
         // Ctrl+A (Windows/Linux) or Cmd+A (Mac) select all elements
         if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
           e.preventDefault() // prevent default select all behavior
           this.clipboardHandler.selectAllObjects()
+        } else {
+          this.modeHandler.switchDrawStyle(e.code)
         }
         break
 
@@ -57,6 +69,8 @@ export class KeyboardHandler {
         // Ctrl+C (Windows/Linux) or Cmd+C (Mac) copy selected objects
         if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
           this.clipboardHandler.copySelectedObjects()
+        } else {
+          this.modeHandler.switchDrawStyle(e.code)
         }
         break
 
@@ -66,6 +80,8 @@ export class KeyboardHandler {
           e.preventDefault()
           useBoardStore.getState().updateMode(ActionMode.SELECT)
           paintBoard.copyObject()
+        } else {
+          this.modeHandler.switchDrawStyle(e.code)
         }
         break
 
@@ -74,6 +90,8 @@ export class KeyboardHandler {
         if (this.isModifierKey(e) && !e.shiftKey && !e.altKey) {
           e.preventDefault()
           this.clipboardHandler.pasteObjects()
+        } else {
+          this.modeHandler.switchDrawStyle(e.code)
         }
         break
 
@@ -96,6 +114,8 @@ export class KeyboardHandler {
             // Ctrl/Cmd + Z - undo
             this.historyHandler.undoAction()
           }
+        } else {
+          this.modeHandler.switchDrawStyle(e.code)
         }
         break
 
@@ -105,6 +125,11 @@ export class KeyboardHandler {
       case KeyCode.DIGIT_4:
         // Number keys for mode switching
         this.modeHandler.switchMode(e.code)
+        break
+
+      case KeyCode.DIGIT_5:
+      case KeyCode.DIGIT_6:
+        this.modeHandler.switchDrawType(e.code)
         break
 
       case KeyCode.BACKSPACE:

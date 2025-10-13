@@ -41,11 +41,11 @@ const ToolPanel: FC = () => {
         <div className="max-h-[100%] overflow-y-auto noScrollbar p-1">
           {/* switch mode tabs */}
           <div className="tabs tabs-sm tabs-boxed bg-[#333C4D]">
-            {modeSwitch.map(({ type, text }, modeIndex) => (
+            {modeSwitch.map(({ type, text, keyboard }) => (
               <a
                 key={type}
                 className={`tab flex-grow font-fredokaOne text-white font-medium ${
-                  mode === type ? 'tab-active' : ''
+                  mode === type ? 'tab-active' : 'hover:text-base-300'
                 }`}
                 onClick={() => {
                   updateMode(type)
@@ -53,7 +53,7 @@ const ToolPanel: FC = () => {
               >
                 {t(text)}
                 <span className="ml-1 text-xs leading-none font-normal opacity-70 pt-1 font-sans xs:hidden">
-                  {modeIndex + 1}
+                  {keyboard}
                 </span>
               </a>
             ))}
