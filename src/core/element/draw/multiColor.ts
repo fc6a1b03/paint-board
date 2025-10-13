@@ -1,5 +1,5 @@
 import useDrawStore from '@/store/draw'
-import { getDrawWidth, getShadowWidth } from '@/core/utils/draw'
+import { getDrawWidth } from '@/core/utils/draw'
 import { paintBoard } from '@/core/paintBoard'
 import { fabric } from 'fabric'
 import { getStrokeDashArray } from './utils'
@@ -60,12 +60,12 @@ export const renderMultiColor = (params: {
     const strokeDashArray = getStrokeDashArray()
     canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-    const { shadowOffsetX, shadowOffsetY, shadowColor, shadowWidth } =
+    const { shadowOffsetX, shadowOffsetY, shadowColor, shadowBlur } =
       useDrawStore.getState()
 
-    if (shadowWidth > 0) {
+    if (shadowBlur > 0) {
       canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-        blur: getShadowWidth(),
+        blur: shadowBlur,
         offsetX: shadowOffsetX,
         offsetY: shadowOffsetY,
         color: shadowColor

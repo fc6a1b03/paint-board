@@ -37,15 +37,24 @@ const useShapeStore = create<ShapeState & ShapeAction>()(
   persist(
     (set, get) => ({
       currentShapeIcon: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE,
-      shapeIconList: [],
+      shapeIconList: [
+        'Angry',
+        'Annoyed',
+        'Laugh',
+        'Meh',
+        'Frown',
+        'Smile',
+        'Star',
+        'Axe'
+      ],
       strokeStyle: StrokeStyleType.Solid,
       currentStrokeColor: 0,
-      strokeColorList: ['#000000'],
+      strokeColorList: ['#000000', '#65CC8A', '#FF6363', '#3A59D1'],
       strokeWidth: 3,
       shapeLinePointCount: 3,
       currentFillColor: 0,
-      fillColorList: ['#000000'],
-      fillStyle: FillStyleType.Solid,
+      fillColorList: ['#000000', '#65CC8A', '#FF6363', '#3A59D1'],
+      fillStyle: FillStyleType.Transparent,
       updateCurrentShapeIcon(shapeIcon) {
         set({
           currentShapeIcon: shapeIcon
@@ -84,11 +93,22 @@ const useShapeStore = create<ShapeState & ShapeAction>()(
         )
       },
       updateStrokeStyle(strokeStyle) {
-        const oldStrokeStyle = get().strokeStyle
+        const { strokeStyle: oldStrokeStyle, fillStyle } = get()
         if (oldStrokeStyle !== strokeStyle) {
           set({
             strokeStyle
           })
+
+          if (
+            (fillStyle === FillStyleType.Hachure ||
+              fillStyle === FillStyleType.CrossHatch ||
+              fillStyle === FillStyleType.Dots) &&
+            strokeStyle !== StrokeStyleType.Sketch
+          ) {
+            set({
+              fillStyle: FillStyleType.Transparent
+            })
+          }
         }
       },
       updateCurrentStrokeColor(colorIndex) {

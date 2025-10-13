@@ -6,8 +6,8 @@ const ShadowConfig = () => {
   const {
     shadowColor,
     updateShadowColor,
-    shadowWidth,
-    updateShadowWidth,
+    shadowBlur,
+    updateShadowBlur,
     shadowOffsetX,
     updateShadowOffsetX,
     shadowOffsetY,
@@ -39,9 +39,9 @@ const ShadowConfig = () => {
           min="0"
           max="50"
           step="1"
-          value={shadowWidth}
+          value={shadowBlur}
           className="range range-success range-xs w-16"
-          onChange={(e) => updateShadowWidth(Number(e.target.value))}
+          onChange={(e) => updateShadowBlur(Number(e.target.value))}
         />
         <input
           type="range"

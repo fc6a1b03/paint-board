@@ -1,7 +1,8 @@
 import useShapeStore from '@/store/shape'
 import { useTranslation } from 'react-i18next'
 import { fillStyleSwitch } from './constants'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
+import { StrokeStyleType } from '@/constants/shape'
 
 interface IProps {
   fillStyle?: string
@@ -9,8 +10,15 @@ interface IProps {
 }
 
 const FillStyleConfig: FC<IProps> = (props) => {
-  const { fillStyle, updateFillStyle } = useShapeStore()
+  const { strokeStyle, fillStyle, updateFillStyle } = useShapeStore()
   const { t } = useTranslation()
+
+  const filterFillStyleSwitch = useMemo(() => {
+    if (strokeStyle !== StrokeStyleType.Sketch) {
+      return fillStyleSwitch.filter(({ isSketch }) => !isSketch)
+    }
+    return fillStyleSwitch
+  }, [strokeStyle])
 
   return (
     <div className="mt-3">
@@ -18,7 +26,7 @@ const FillStyleConfig: FC<IProps> = (props) => {
         {t('title.fillStyle')}
       </div>
       <div className="flex items-center gap-2 mt-1">
-        {fillStyleSwitch.map(({ type, icon }) => (
+        {filterFillStyleSwitch.map(({ type, icon }) => (
           <div
             key={type}
             className={`w-7 h-7 rounded-lg cursor-pointer bg-white  flex items-center justify-center ${

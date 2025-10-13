@@ -79,7 +79,7 @@ export const getFabricShapeOptions = (path: PathInfo) => {
     strokeUniform: true,
     strokeLineCap: 'round',
     strokeDashArray:
-      path.strokeWidth === 1 ? getShapeStrokeDashArray() : undefined,
+      path.strokeWidth === 1 ? getShapeStrokeDashArray(strokeWidth) : undefined,
     fill: path?.fill === 'none' ? 'transparent' : path?.fill
   }
 }

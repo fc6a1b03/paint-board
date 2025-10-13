@@ -87,9 +87,7 @@ const ShapeSelectConfig = () => {
       addShapeIcon(pascalCaseName)
       setTipMessage(t('graphInput.addSuccess') as string)
     } else {
-      setTipMessage(
-        t('graphInput.addFailed', { Name: pascalCaseName }) as string
-      )
+      setTipMessage(t('graphInput.addFailed') as string)
     }
   }
 
@@ -169,7 +167,7 @@ const ShapeSelectConfig = () => {
         </div>
       )}
 
-      <div className="mt-2 bg-slate-50 shadow-inner shadow-slate-200 p-2 rounded-lg relative">
+      <div className="w-fit mt-2 bg-slate-50 shadow-inner shadow-slate-200 p-2 rounded-lg relative">
         <div className="flex flex-wrap w-64 gap-1 max-h-32 overflow-y-auto">
           {DEFAULT_SHAPE_ICON.map(({ type, iconName }) => {
             const IconComponent = (LucideIcons as any)[iconName]

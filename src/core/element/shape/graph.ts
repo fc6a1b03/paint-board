@@ -89,8 +89,7 @@ export class GraphElement {
           strokeWidth,
           strokeUniform: true,
           strokeLineCap: 'round',
-          perPixelTargetFind: true,
-          lockUniScaling: true
+          perPixelTargetFind: true
         })
 
         // apply styles to all objects in the SVG group
@@ -103,7 +102,8 @@ export class GraphElement {
                 strokeWidth,
                 strokeDashArray: dashArray,
                 strokeLineCap: 'round',
-                strokeUniform: true
+                strokeUniform: true,
+                perPixelTargetFind: true
               })
             })
           }

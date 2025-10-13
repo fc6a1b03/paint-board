@@ -13,27 +13,33 @@ interface FillStyleSwitchType {
       title?: string | undefined
     }
   >
+  isSketch: boolean
 }
 
 export const fillStyleSwitch: Array<FillStyleSwitchType> = [
   {
     type: FillStyleType.Transparent,
-    icon: TransparentIcon
+    icon: TransparentIcon,
+    isSketch: false
   },
   {
     type: FillStyleType.Solid,
-    icon: SolidIcon
+    icon: SolidIcon,
+    isSketch: false
   },
   {
     type: FillStyleType.Hachure,
-    icon: HachureIcon
+    icon: HachureIcon,
+    isSketch: true
   },
   {
     type: FillStyleType.CrossHatch,
-    icon: CrossHatchIcon
+    icon: CrossHatchIcon,
+    isSketch: true
   },
   {
     type: FillStyleType.Dots,
-    icon: DotsIcon
+    icon: DotsIcon,
+    isSketch: true
   }
 ]

@@ -2,7 +2,7 @@ import { fabric } from 'fabric'
 import { formatPublicUrl } from '@/utils/index'
 import { paintBoard } from '@/core/paintBoard'
 import useDrawStore from '@/store/draw'
-import { getDrawWidth, getShadowWidth } from '@/core/utils/draw'
+import { getDrawWidth } from '@/core/utils/draw'
 import { getStrokeDashArray } from './utils'
 
 export const MATERIAL_TYPE = {
@@ -77,10 +77,9 @@ export class Material {
       patternCanvas.width = patternCanvas.height = 100
       const context = patternCanvas.getContext('2d')
       if (context) {
-        context.fillStyle = `${color}90`
+        context.fillStyle = color
         context.fillRect(0, 0, 100, 100)
         if (materialImg) {
-          context.globalAlpha = 0.9
           context.drawImage(materialImg, 0, 0, 100, 100)
         }
       }
@@ -96,12 +95,12 @@ export class Material {
       const strokeDashArray = getStrokeDashArray()
       paintBoard.canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-      const { shadowOffsetX, shadowOffsetY, shadowColor, shadowWidth } =
+      const { shadowOffsetX, shadowOffsetY, shadowColor, shadowBlur } =
         useDrawStore.getState()
 
-      if (shadowWidth > 0) {
+      if (shadowBlur > 0) {
         paintBoard.canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-          blur: getShadowWidth(),
+          blur: shadowBlur,
           offsetX: shadowOffsetX,
           offsetY: shadowOffsetY,
           color: shadowColor

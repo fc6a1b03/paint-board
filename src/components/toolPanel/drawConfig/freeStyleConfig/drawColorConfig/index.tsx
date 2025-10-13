@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import debounce from 'lodash-es/debounce'
 import { useMemo, useState } from 'react'
 import useDrawStore from '@/store/draw'
 import { useTranslation } from 'react-i18next'
@@ -29,7 +29,7 @@ const DrawColorConfig = () => {
       : [currentDrawColor]
   }, [drawStyle, currentDrawColor, currentMultiColor])
 
-  const handleDrawColor = _.debounce((color: string, colorIndex: number) => {
+  const handleDrawColor = debounce((color: string, colorIndex: number) => {
     updateDrawColor(color, colorIndex)
   }, 100)
 

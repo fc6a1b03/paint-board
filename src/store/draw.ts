@@ -1,6 +1,6 @@
 import { DrawShape, DrawStyle } from '@/constants/draw'
 import { DrawLineType } from '@/constants/draw'
-import { getDrawWidth, getEraserWidth, getShadowWidth } from '@/core/utils/draw'
+import { getDrawWidth, getEraserWidth } from '@/core/utils/draw'
 import { getStrokeDashArray } from '@/core/element/draw/utils'
 import { MATERIAL_TYPE, material } from '@/core/element/draw/material'
 import {
@@ -19,7 +19,7 @@ interface DrawState {
   currentMultiColor: number[]
   drawColors: string[] // draw brush colors
   lineType: string // line type 'solid' | 'dashed' | 'dotted'
-  shadowWidth: number // brush shadow blur
+  shadowBlur: number // brush shadow blur
   shadowColor: string // brush shadow color
   shadowOffsetX: number // brush shadow offset x
   shadowOffsetY: number // brush shadow offset y
@@ -40,7 +40,7 @@ interface DrawAction {
   updateDrawColor: (color: string, colorIndex: number) => void
   deleteDrawColor: (colorIndex: number) => void
   updateLineType: (lineType: string) => void
-  updateShadowWidth: (shadowWidth: number) => void
+  updateShadowBlur: (shadowBlur: number) => void
   updateShadowColor: (shadowColor: string) => void
   updateShadowOffsetX: (shadowOffsetX: number) => void
   updateShadowOffsetY: (shadowOffsetY: number) => void
@@ -60,10 +60,10 @@ const useDrawStore = create<DrawState & DrawAction>()(
     (set, get) => ({
       drawWidth: 10,
       currentDrawColor: 0,
-      currentMultiColor: [0],
-      drawColors: ['#000000'],
+      currentMultiColor: [0, 1],
+      drawColors: ['#000000', '#65CC8A', '#FF6363', '#3A59D1'],
       lineType: DrawLineType.Solid,
-      shadowWidth: 0,
+      shadowBlur: 0,
       shadowColor: '#000000',
       shadowOffsetX: 0,
       shadowOffsetY: 0,
@@ -190,28 +190,28 @@ const useDrawStore = create<DrawState & DrawAction>()(
           }
         }
       },
-      updateShadowWidth: (shadowWidth) => {
+      updateShadowBlur: (shadowBlur) => {
         set(() => {
           const freeDrawingBrush = paintBoard?.canvas?.freeDrawingBrush
           const shadow = freeDrawingBrush?.shadow as fabric.Shadow
 
-          if (shadowWidth) {
+          if (shadowBlur) {
             if (shadow) {
-              shadow.blur = getShadowWidth(shadowWidth)
+              shadow.blur = shadowBlur
             } else if (freeDrawingBrush) {
               const { shadowOffsetX, shadowOffsetY, shadowColor } = get()
               freeDrawingBrush.shadow = new fabric.Shadow({
                 offsetX: shadowOffsetX,
                 offsetY: shadowOffsetY,
                 color: shadowColor,
-                blur: getShadowWidth(shadowWidth)
+                blur: shadowBlur
               })
             }
           } else if (freeDrawingBrush?.shadow) {
             freeDrawingBrush.shadow = ''
           }
 
-          return { shadowWidth }
+          return { shadowBlur }
         })
       },
       updateShadowColor: (shadowColor) => {
@@ -229,7 +229,7 @@ const useDrawStore = create<DrawState & DrawAction>()(
           const shadow = paintBoard?.canvas?.freeDrawingBrush
             ?.shadow as fabric.Shadow
           if (shadow) {
-            shadow.offsetX = getShadowWidth(shadowOffsetX)
+            shadow.offsetX = shadowOffsetX
           }
           return { shadowOffsetX }
         })
@@ -239,7 +239,7 @@ const useDrawStore = create<DrawState & DrawAction>()(
           const shadow = paintBoard?.canvas?.freeDrawingBrush
             ?.shadow as fabric.Shadow
           if (shadow) {
-            shadow.offsetY = getShadowWidth(shadowOffsetY)
+            shadow.offsetY = shadowOffsetY
           }
           return { shadowOffsetY }
         })

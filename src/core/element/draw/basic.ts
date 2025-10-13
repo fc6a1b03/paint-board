@@ -1,5 +1,5 @@
 import useDrawStore from '@/store/draw'
-import { getDrawWidth, getShadowWidth } from '@/core/utils/draw'
+import { getDrawWidth } from '@/core/utils/draw'
 import { paintBoard } from '@/core/paintBoard'
 import { fabric } from 'fabric'
 import { getStrokeDashArray } from './utils'
@@ -17,7 +17,7 @@ export const renderPencilBrush = () => {
   const {
     currentDrawColor,
     drawColors,
-    shadowWidth,
+    shadowBlur,
     shadowOffsetX,
     shadowOffsetY,
     shadowColor
@@ -27,9 +27,9 @@ export const renderPencilBrush = () => {
   const strokeDashArray = getStrokeDashArray()
   canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-  if (shadowWidth > 0) {
+  if (shadowBlur > 0) {
     canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-      blur: getShadowWidth(),
+      blur: shadowBlur,
       offsetX: shadowOffsetX,
       offsetY: shadowOffsetY,
       color: shadowColor

@@ -5,12 +5,7 @@ import { FC, useMemo } from 'react'
 import { SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
 import { StrokeStyleType } from '@/constants/shape'
 
-interface IProps {
-  strokeStyle?: string
-  updateStrokeStyle?: (strokeStyle: string) => void
-}
-
-const StrokeStyleConfig: FC<IProps> = (props) => {
+const StrokeStyleConfig: FC = () => {
   const { strokeStyle, updateStrokeStyle, currentShapeIcon } = useShapeStore()
   const { t } = useTranslation()
 
@@ -42,7 +37,6 @@ const StrokeStyleConfig: FC<IProps> = (props) => {
             }`}
             onClick={() => {
               updateStrokeStyle(type)
-              props?.updateStrokeStyle?.(type)
             }}
           >
             {icon({})}
