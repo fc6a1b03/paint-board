@@ -3,7 +3,8 @@ import { MaterialSwitch } from './constant'
 import { useTranslation } from 'react-i18next'
 
 const MaterialConfig = () => {
-  const { materialType, updateMaterialType, drawColors } = useDrawStore()
+  const { materialType, updateMaterialType, drawColors, currentDrawColor } =
+    useDrawStore()
   const { t } = useTranslation()
 
   return (
@@ -12,12 +13,12 @@ const MaterialConfig = () => {
         <div className="font-bold text-sm font-fredokaOne">
           {t('title.materialType')}
         </div>
-        <div className="btn-group mt-1 flex">
+        <div className="join mt-1 flex">
           {MaterialSwitch.map(({ type, image }, index) => (
             <button
               key={index}
-              className={`btn btn-xs flex-grow ${
-                materialType === type ? 'btn-active' : ''
+              className={`join-item btn btn-xs flex-grow ${
+                materialType === type ? 'btn-primary' : 'btn-neutral'
               }`}
               onClick={() => {
                 updateMaterialType(type)
@@ -28,7 +29,7 @@ const MaterialConfig = () => {
                 alt=""
                 className={`w-5 h-3 opacity-60 rounded-sm`}
                 style={{
-                  backgroundColor: drawColors[0]
+                  backgroundColor: drawColors[currentDrawColor]
                 }}
               />
             </button>

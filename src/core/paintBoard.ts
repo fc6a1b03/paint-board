@@ -2,22 +2,22 @@ import { fabric } from 'fabric'
 import 'fabric/src/mixins/eraser_brush.mixin.js'
 import { brushMouseMixin } from './fabricMixin/brushMouse'
 import { alignGuideLine } from './fabricMixin/alignGuideLine'
+import './fabricMixin/extendPrototype'
 
 import { History } from './history'
 import { ActionMode, ELEMENT_CUSTOM_TYPE } from '@/constants'
 import { DrawStyle, DrawType } from '@/constants/draw'
 
-import { v4 as uuidv4 } from 'uuid'
-import { debounce } from 'lodash'
+import debounce from 'lodash-es/debounce'
 import { isMobile } from '@/utils'
-import { CanvasEvent } from './event'
-import { TextElement } from './element/text'
+import { EventModule } from './event'
+import { TextElement } from './element/text/index'
 import { material } from './element/draw/material'
 import { renderMultiColor } from './element/draw/multiColor'
 import { renderPencilBrush } from './element/draw/basic'
 import { getEraserWidth } from './utils/draw'
-import { handleCanvasJSONLoaded } from './utils/loadCanvas'
-import { handleBackgroundImageWhenCanvasSizeChange } from './utils/background'
+import { handleFileListData, handleCanvasJSONLoaded } from './utils/loadCanvas'
+import { cloneObjects } from './utils/object'
 
 import useFileStore from '@/store/files'
 import useDrawStore from '@/store/draw'
@@ -28,7 +28,7 @@ import useBoardStore from '@/store/board'
  */
 export class PaintBoard {
   canvas: fabric.Canvas | null = null
-  evnet: CanvasEvent | null = null
+  evnet: EventModule | null = null
   history: History | null = null
   textElement: TextElement
   hookFn: Array<() => void> = []
@@ -37,36 +37,34 @@ export class PaintBoard {
     this.textElement = new TextElement()
   }
 
-  initCanvas(canvasEl: HTMLCanvasElement) {
-    return new Promise<boolean>(async (resolve) => {
-      this.canvas = new fabric.Canvas(canvasEl, {
-        selectionColor: 'rgba(101, 204, 138, 0.3)',
-        preserveObjectStacking: true,
-        enableRetinaScaling: true,
-        backgroundVpt: false
-      })
-      fabric.Object.prototype.set({
-        borderColor: '#65CC8A',
-        cornerColor: '#65CC8A',
-        cornerStyle: 'circle',
-        borderDashArray: [3, 3],
-        transparentCorners: false
-      })
-      fabric.Line.prototype.strokeLineJoin = 'round'
-      fabric.Line.prototype.strokeLineCap = 'round'
-
-      if (isMobile()) {
-        brushMouseMixin.initCanvas(this.canvas)
-      }
-      alignGuideLine.init(this.canvas, useBoardStore.getState().openGuideLine)
-
-      this.evnet = new CanvasEvent()
-      this.handleMode()
-
-      await this.initCanvasStorage()
-
-      resolve(true)
+  async initCanvas(canvasEl: HTMLCanvasElement) {
+    this.canvas = new fabric.Canvas(canvasEl, {
+      selectionColor: 'rgba(101, 204, 138, 0.3)',
+      preserveObjectStacking: true,
+      enableRetinaScaling: true,
+      backgroundVpt: false
     })
+    fabric.Object.prototype.set({
+      borderColor: '#65CC8A',
+      cornerColor: '#65CC8A',
+      cornerStyle: 'circle',
+      borderDashArray: [3, 3],
+      transparentCorners: false
+    })
+    fabric.Line.prototype.strokeLineJoin = 'round'
+    fabric.Line.prototype.strokeLineCap = 'round'
+
+    if (isMobile()) {
+      brushMouseMixin.initCanvas(this.canvas)
+    }
+    alignGuideLine.init(this.canvas, useBoardStore.getState().openGuideLine)
+
+    this.evnet = new EventModule()
+    this.handleMode()
+
+    await this.initCanvasStorage()
+
+    return true
   }
 
   removeCanvas() {
@@ -83,8 +81,11 @@ export class PaintBoard {
   initCanvasStorage() {
     return new Promise((resolve) => {
       setTimeout(() => {
+        handleFileListData()
+
         const { files, currentId } = useFileStore.getState()
         const file = files?.find((item) => item?.id === currentId)
+
         if (file && this.canvas) {
           this.canvas.clear()
           this.canvas.loadFromJSON(file.boardData, () => {
@@ -92,6 +93,12 @@ export class PaintBoard {
               if (file.viewportTransform) {
                 this.canvas.setViewportTransform(file.viewportTransform)
               }
+
+              this.canvas.setWidth(window.innerWidth * (file?.canvasWidth || 1))
+              this.canvas.setHeight(
+                window.innerHeight * (file?.canvasHeight || 1)
+              )
+
               if (file?.zoom && this.canvas.width && this.canvas.height) {
                 this.canvas.zoomToPoint(
                   new fabric.Point(
@@ -100,24 +107,15 @@ export class PaintBoard {
                   ),
                   file.zoom
                 )
+                this.evnet?.zoomEvent.handleZoomPercentage()
               }
-
-              this.canvas.setWidth(window.innerWidth * (file?.canvasWidth || 1))
-              useBoardStore.getState().updateCanvasWidth(file?.canvasWidth || 1)
-              this.canvas.setHeight(
-                window.innerHeight * (file?.canvasHeight || 1)
-              )
-              useBoardStore.getState().initBackground()
-
-              useBoardStore
-                .getState()
-                .updateCanvasHeight(file?.canvasHeight || 1)
 
               handleCanvasJSONLoaded(this.canvas)
 
               fabric.Object.prototype.set({
                 objectCaching: useBoardStore.getState().isObjectCaching
               })
+
               this.canvas.renderAll()
               this.triggerHook()
               this.history = new History()
@@ -254,34 +252,12 @@ export class PaintBoard {
     if (!canvas) {
       return
     }
-    const targets = canvas.getActiveObjects()
-    if (targets.length <= 0) {
+    const objects = canvas.getActiveObjects()
+    if (objects.length <= 0) {
       return
     }
-    canvas.discardActiveObject()
-    const copys = targets.map((target) => {
-      return new Promise<fabric.Object>((resolve) => {
-        target?.clone((cloned: fabric.Object) => {
-          const id = uuidv4()
-          cloned.set({
-            left: (cloned?.left || 0) + 10,
-            top: (cloned?.top || 0) + 10,
-            evented: true,
-            id,
-            perPixelTargetFind: true
-          })
-          resolve(cloned)
-          canvas.add(cloned)
-        })
-      })
-    })
-    Promise.all(copys).then((objs) => {
-      const activeSelection = new fabric.ActiveSelection(objs, {
-        canvas: canvas
-      })
-      canvas.setActiveObject(activeSelection)
-      this.render()
-    })
+
+    cloneObjects(objects)
   }
 
   /**
@@ -371,16 +347,12 @@ export class PaintBoard {
   updateCanvasWidth = debounce((width) => {
     if (this.canvas) {
       this.canvas.setWidth(window.innerWidth * width)
-      handleBackgroundImageWhenCanvasSizeChange()
-      useFileStore.getState().updateCanvasWidth(width)
     }
   }, 500)
 
   updateCanvasHeight = debounce((height) => {
     if (this.canvas) {
       this.canvas.setHeight(window.innerHeight * height)
-      handleBackgroundImageWhenCanvasSizeChange()
-      useFileStore.getState().updateCanvasHeight(height)
     }
   }, 500)
 }

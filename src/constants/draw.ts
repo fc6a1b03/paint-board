@@ -30,3 +30,9 @@ export const DrawShape = {
   Leaf: 'leaf',
   Flower: 'flower'
 }
+
+export const DrawLineType = {
+  Solid: 'solid',
+  Dashed: 'dashed',
+  Dotted: 'dotted'
+}

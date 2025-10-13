@@ -2,7 +2,7 @@ import { fabric } from 'fabric'
 import { formatPublicUrl } from '@/utils/index'
 import { paintBoard } from '@/core/paintBoard'
 import useDrawStore from '@/store/draw'
-import { getDrawWidth, getShadowWidth } from '@/core/utils/draw'
+import { getDrawWidth } from '@/core/utils/draw'
 import { getStrokeDashArray } from './utils'
 
 export const MATERIAL_TYPE = {
@@ -37,8 +37,16 @@ export class Material {
 
   render({
     materialType = useDrawStore.getState().materialType,
-    color = useDrawStore.getState().drawColors[0]
+    color
+  }: {
+    materialType?: string
+    color?: string
   }) {
+    if (!color) {
+      const { currentDrawColor, drawColors } = useDrawStore.getState()
+      color = drawColors[currentDrawColor]
+    }
+
     this.initPromise?.then(() => {
       switch (materialType) {
         case MATERIAL_TYPE.CRAYON:
@@ -62,11 +70,7 @@ export class Material {
     })
   }
 
-  renderMaterial(
-    materialImg: HTMLImageElement | null,
-    color: string,
-    opacity = 1
-  ) {
+  renderMaterial(materialImg: HTMLImageElement | null, color: string) {
     if (paintBoard.canvas) {
       const patternBrush = new fabric.PatternBrush(paintBoard.canvas)
       const patternCanvas = document.createElement('canvas')
@@ -76,7 +80,6 @@ export class Material {
         context.fillStyle = color
         context.fillRect(0, 0, 100, 100)
         if (materialImg) {
-          context.globalAlpha = opacity
           context.drawImage(materialImg, 0, 0, 100, 100)
         }
       }
@@ -92,12 +95,17 @@ export class Material {
       const strokeDashArray = getStrokeDashArray()
       paintBoard.canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-      paintBoard.canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-        blur: getShadowWidth(),
-        offsetX: 0,
-        offsetY: 0,
-        color: useDrawStore.getState().shadowColor
-      })
+      const { shadowOffsetX, shadowOffsetY, shadowColor, shadowBlur } =
+        useDrawStore.getState()
+
+      if (shadowBlur > 0) {
+        paintBoard.canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+          blur: shadowBlur,
+          offsetX: shadowOffsetX,
+          offsetY: shadowOffsetY,
+          color: shadowColor
+        })
+      }
     }
   }
 

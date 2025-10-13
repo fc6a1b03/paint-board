@@ -47,7 +47,7 @@ export class ThornElement {
 
 function drawThorn(el: ThornElement, curPoint: fabric.Point) {
   const lastPoint = el.lastPoint as fabric.Point
-
+  const { drawColors, currentDrawColor } = useDrawStore.getState()
   const distance = getDistance(lastPoint, curPoint)
 
   const angle = fabric.util.radiansToDegrees(
@@ -61,7 +61,7 @@ function drawThorn(el: ThornElement, curPoint: fabric.Point) {
     top: curPoint.y,
     originX: 'center',
     originY: 'center',
-    fill: useDrawStore.getState().drawColors[0],
+    fill: drawColors[currentDrawColor],
     opacity: Math.random(),
     rx: distance * 5 + minSize,
     ry: minSize

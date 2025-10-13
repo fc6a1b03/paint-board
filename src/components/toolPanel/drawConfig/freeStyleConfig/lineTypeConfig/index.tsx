@@ -1,6 +1,6 @@
 import useDrawStore from '@/store/draw'
 import { useTranslation } from 'react-i18next'
-import { drawLineTypeSwitch } from '@/constants/drawLineType'
+import { drawLineTypeSwitch } from './constants'
 import { FC } from 'react'
 
 const LineTypeConfig: FC = () => {
@@ -8,27 +8,27 @@ const LineTypeConfig: FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="mt-3">
+    <div className="mt-2">
       <div className="font-bold text-sm font-fredokaOne">
         {t('title.lineType')}
       </div>
-      {Object.keys(drawLineTypeSwitch).map((lineKey) => (
-        <div key={lineKey} className="btn-group mt-1 flex">
-          {drawLineTypeSwitch[lineKey].map(({ type, icon }) => (
-            <button
-              key={type}
-              className={`btn btn-xs flex-grow ${
-                lineType === type ? 'btn-active' : ''
-              }`}
-              onClick={() => {
-                updateLineType(type)
-              }}
-            >
-              {icon({})}
-            </button>
-          ))}
-        </div>
-      ))}
+      <div className="flex items-center gap-2 mt-1">
+        {drawLineTypeSwitch.map(({ type, icon }) => (
+          <div
+            key={type}
+            className={`w-7 h-7 rounded-lg cursor-pointer bg-white flex items-center justify-center ${
+              lineType === type
+                ? 'ring-2 ring-primary'
+                : 'hover:ring-2 ring-base-200'
+            }`}
+            onClick={() => {
+              updateLineType(type)
+            }}
+          >
+            {icon({})}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

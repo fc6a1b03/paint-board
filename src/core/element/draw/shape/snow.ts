@@ -4,12 +4,17 @@ import { generateRandomCoordinates } from '../utils'
 import useDrawStore from '@/store/draw'
 
 export function drawSnow(point: fabric.Point, size: number) {
+  const { currentMultiColor, drawColors } = useDrawStore.getState()
+  const filterDrawColors = drawColors.filter((_, index) =>
+    currentMultiColor.includes(index)
+  )
+
   if (useDrawStore.getState().drawShapeCount === 1) {
     const snow = drawSnowItem(size)
     snow.set({
       left: point.x - size,
       top: point.y - size,
-      stroke: useDrawStore.getState().drawColors[0],
+      stroke: filterDrawColors[getRandomInt(0, filterDrawColors.length - 1)],
       strokeWidth: 2
     })
     return snow
@@ -20,11 +25,9 @@ export function drawSnow(point: fabric.Point, size: number) {
       size * 3,
       useDrawStore.getState().drawShapeCount
     )
-    const snows = points.map((item, index) => {
+    const snows = points.map((item) => {
       const color =
-        index > useDrawStore.getState().drawColors.length - 1
-          ? useDrawStore.getState().drawColors[0]
-          : useDrawStore.getState().drawColors[index]
+        filterDrawColors[getRandomInt(0, filterDrawColors.length - 1)]
       const snow = drawSnowItem(size)
       snow.set({
         left: item.x,

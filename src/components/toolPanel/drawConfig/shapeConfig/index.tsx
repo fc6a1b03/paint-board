@@ -1,27 +1,43 @@
 import { useMemo } from 'react'
 import useShapeStore from '@/store/shape'
-import { ShapeStyle } from '@/constants/shape'
+import { SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
 
-import BorderStyleConfig from './borderStyleConfig'
-import BorderTypeConfig from './borderTypeConfig'
-import FillStyleConfig from './fillStyleConfig'
+import StrokeStyleConfig from './strokeStyleConfig'
 import PointCountConfig from './linePointCountConfig'
-import ShapeStyleConfig from './shapeStyleConfig'
+import ShapeSelectConfig from './shapeSelectConfig'
+import StrokeWidthConfig from './strokeWidthConfig'
+import StrokeColorConfig from './strokeColorConfig'
+import FillColorConfig from './fillColorConfig'
+import FillStyleConfig from './fillStyleConfig'
 
 const ShapeDrawConfig = () => {
-  const { shapeStyle } = useShapeStore()
+  const { currentShapeIcon } = useShapeStore()
   const isLine = useMemo(() => {
-    return [ShapeStyle.Line, ShapeStyle.ArrowLine].includes(shapeStyle)
-  }, [shapeStyle])
+    return [
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_ARROW_LINE
+    ].includes(currentShapeIcon)
+  }, [currentShapeIcon])
+
+  const isFill = useMemo(() => {
+    return [
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_RECTANGLE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_CIRCLE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_TRIANGLE,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_PENTAGON,
+      SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_HEXAGON
+    ].includes(currentShapeIcon)
+  }, [currentShapeIcon])
 
   return (
     <>
-      <ShapeStyleConfig />
+      <ShapeSelectConfig />
       {isLine && <PointCountConfig />}
-
-      <BorderTypeConfig />
-      <BorderStyleConfig />
-      {!isLine && <FillStyleConfig />}
+      <StrokeWidthConfig />
+      <StrokeStyleConfig />
+      <StrokeColorConfig />
+      {isFill && <FillColorConfig />}
+      {isFill && <FillStyleConfig />}
     </>
   )
 }

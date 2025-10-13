@@ -24,6 +24,10 @@ declare module 'fabric/fabric-impl' {
     _currentTransform: any
   }
 
+  export interface BaseBrush {
+    needsFullRender: (...args: any) => boolean
+  }
+
   export interface IAllFilters {
     BlackWhite: {
       new (options?: any): IBaseFilter

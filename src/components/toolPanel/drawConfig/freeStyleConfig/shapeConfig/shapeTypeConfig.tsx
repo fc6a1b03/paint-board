@@ -12,12 +12,12 @@ const shapeTypeConfig = () => {
         {t('title.shapeType')}
       </div>
       {Object.keys(shapeSwitch).map((lineKey) => (
-        <div key={lineKey} className="btn-group mt-1 flex">
+        <div key={lineKey} className="join mt-1 flex">
           {shapeSwitch[lineKey].map(({ type, icon }) => (
             <button
               key={type}
-              className={`btn btn-xs flex-grow text-white ${
-                drawShape === type ? 'btn-active' : ''
+              className={`join-item btn btn-xs flex-grow text-white ${
+                drawShape === type ? 'btn-primary' : 'btn-neutral'
               }`}
               onClick={() => {
                 updateDrawShape(type)

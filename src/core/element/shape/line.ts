@@ -1,7 +1,7 @@
 import { fabric } from 'fabric'
 import { paintBoard } from '@/core/paintBoard'
 import { initCustomObjectAttr } from '@/core/utils/object'
-import { getShapeBorder, getShapeBorderWidth } from './utils'
+import { getShapeStrokeDashArray, getShapeStrokeWidth } from './utils'
 import useShapeStore from '@/store/shape'
 import {
   actionHandler,
@@ -22,7 +22,7 @@ export class LineShape {
     this.startX = point.x
     this.startY = point.y
 
-    const strokeWidth = getShapeBorderWidth()
+    const strokeWidth = getShapeStrokeWidth()
 
     const points = []
     for (let i = 0; i < useShapeStore.getState().shapeLinePointCount; i++) {
@@ -32,12 +32,14 @@ export class LineShape {
       })
     }
 
+    const { strokeColorList, currentStrokeColor } = useShapeStore.getState()
+
     const line = new fabric.Polyline(points, {
-      stroke: useShapeStore.getState().borderColor,
+      stroke: strokeColorList[currentStrokeColor],
       strokeWidth,
       originX: 'center',
       originY: 'center',
-      strokeDashArray: getShapeBorder(strokeWidth + 5),
+      strokeDashArray: getShapeStrokeDashArray(strokeWidth + 5),
       strokeLineCap: 'round',
       fill: 'transparent',
       objectCaching: false,

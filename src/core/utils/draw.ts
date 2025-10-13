@@ -14,10 +14,3 @@ export const getEraserWidth = (width?: number) => {
     (paintBoard.canvas?.getZoom() ?? 1)
   )
 }
-
-export const getShadowWidth = (width?: number) => {
-  return (
-    (width ?? useDrawStore.getState().shadowWidth) /
-    (paintBoard.canvas?.getZoom() ?? 1)
-  )
-}

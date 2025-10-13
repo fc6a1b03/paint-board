@@ -1,83 +1,140 @@
-import { ShapeFillType, ShapeStyle } from '@/constants/shape'
-import { DrawLineType } from '@/constants/drawLineType'
+import { StrokeStyleType, FillStyleType } from '@/constants/shape'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { produce } from 'immer'
+import { SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
 
 interface ShapeState {
-  shapeStyle: string // shape style
-  borderType: string // shape border type
-  borderColor: string // border Color
-  borderWidth: number // border width
-  fillColor: string // shape fill color
-  fillType: string // shape fill type
+  currentShapeIcon: string // current shape icon
+  shapeIconList: string[] // shape icon list
+  strokeStyle: string // shape stroke style
+  currentStrokeColor: number // current stroke color
+  strokeColorList: string[] // stroke Color list
+  strokeWidth: number // stroke width
+  currentFillColor: number // current fill color
+  fillColorList: string[]
+  fillStyle: string // shape fill style
   shapeLinePointCount: number // Number of line segment turning points
 }
 
 interface ShapeAction {
-  updateShapeStyle: (shapeStyle: string) => void
-  updateBorderType: (borderType: string) => void
-  updateBorderColor: (borderColor: string) => void
-  updateBorderWidth: (borderWidth: number) => void
-  updateFillColor: (fillColor: string) => void
-  updateFillType: (fillType: string) => void
+  updateCurrentShapeIcon: (shapeIcon: string) => void
+  addShapeIcon: (shapeIcon: string) => void
+  deleteShapeIcon: (shapeIcon: string) => void
+  updateStrokeStyle: (strokeStyle: string) => void
+  updateCurrentStrokeColor: (strokeColorIndex: number) => void
+  updateStrokeColor: (strokeColor: string, strokeColorIndex: number) => void
+  deleteStrokeColor: (strokeColorIndex: number) => void
+  updateStrokeWidth: (strokeWidth: number) => void
+  updateCurrentFillColor: (fillColorIndex: number) => void
+  updateFillColor: (fillColor: string, fillColorIndex: number) => void
+  deleteFillColor: (fillColorIndex: number) => void
+  updateFillStyle: (fillStyle: string) => void
   updateShapeLinePointCount: (count: number) => void
 }
 
 const useShapeStore = create<ShapeState & ShapeAction>()(
   persist(
     (set, get) => ({
-      shapeStyle: ShapeStyle.Rect,
-      borderType: DrawLineType.Solid,
-      borderColor: '#000000',
-      borderWidth: 3,
-      fillColor: '#FFFFFF',
-      fillType: ShapeFillType.Transparent,
+      currentShapeIcon: SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE,
+      shapeIconList: [
+        'Angry',
+        'Annoyed',
+        'Laugh',
+        'Meh',
+        'Frown',
+        'Smile',
+        'Star',
+        'Axe'
+      ],
+      strokeStyle: StrokeStyleType.Solid,
+      currentStrokeColor: 0,
+      strokeColorList: ['#000000', '#65CC8A', '#FF6363', '#3A59D1'],
+      strokeWidth: 3,
       shapeLinePointCount: 3,
-      updateShapeStyle(shapeStyle) {
-        const oldShapeStyle = get().shapeStyle
-        if (oldShapeStyle !== shapeStyle) {
+      currentFillColor: 0,
+      fillColorList: ['#000000', '#65CC8A', '#FF6363', '#3A59D1'],
+      fillStyle: FillStyleType.Transparent,
+      updateCurrentShapeIcon(shapeIcon) {
+        set({
+          currentShapeIcon: shapeIcon
+        })
+
+        const { strokeStyle } = get()
+        if (
+          (shapeIcon === SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_LINE ||
+            shapeIcon === SHAPE_ELEMENT_CUSTOM_TYPE.SHAPE_ARROW_LINE) &&
+          strokeStyle === StrokeStyleType.Sketch
+        ) {
           set({
-            shapeStyle
+            strokeStyle: StrokeStyleType.Solid
           })
         }
       },
-      updateBorderType(borderType) {
-        const oldBorderType = get().borderType
-        if (oldBorderType !== borderType) {
-          set({
-            borderType
+      addShapeIcon(shapeIcon) {
+        set(
+          produce((state) => {
+            const findColorIndex = state.shapeIconList.findIndex(
+              (item: string) => item === shapeIcon
+            )
+            if (findColorIndex === -1) {
+              state.shapeIconList.push(shapeIcon)
+            }
           })
+        )
+      },
+      deleteShapeIcon(shapeIcon) {
+        set(
+          produce((state) => {
+            state.shapeIconList = state.shapeIconList.filter(
+              (item: string) => item !== shapeIcon
+            )
+          })
+        )
+      },
+      updateStrokeStyle(strokeStyle) {
+        const { strokeStyle: oldStrokeStyle, fillStyle } = get()
+        if (oldStrokeStyle !== strokeStyle) {
+          set({
+            strokeStyle
+          })
+
+          if (
+            (fillStyle === FillStyleType.Hachure ||
+              fillStyle === FillStyleType.CrossHatch ||
+              fillStyle === FillStyleType.Dots) &&
+            strokeStyle !== StrokeStyleType.Sketch
+          ) {
+            set({
+              fillStyle: FillStyleType.Transparent
+            })
+          }
         }
       },
-      updateBorderColor: (borderColor) => {
-        const oldBorderColor = get().borderColor
-        if (oldBorderColor !== borderColor) {
-          set({
-            borderColor
-          })
-        }
+      updateCurrentStrokeColor(colorIndex) {
+        set({
+          currentStrokeColor: colorIndex
+        })
       },
-      updateBorderWidth: (borderWidth) => {
-        const oldBorderWidth = get().borderWidth
-        if (oldBorderWidth !== borderWidth) {
-          set({
-            borderWidth
+      updateStrokeColor: (color: string, colorIndex: number) => {
+        set(
+          produce((state) => {
+            state.strokeColorList[colorIndex] = color
           })
-        }
+        )
       },
-      updateFillColor: (fillColor) => {
-        const oldFillColor = get().fillColor
-        if (oldFillColor !== fillColor) {
-          set({
-            fillColor
+      deleteStrokeColor(colorIndex) {
+        set(
+          produce((state) => {
+            state.strokeColorList.splice(colorIndex, 1)
           })
-        }
+        )
       },
-      updateFillType(fillType) {
-        const oldFillType = get().fillType
-        if (oldFillType !== fillType) {
+      updateStrokeWidth: (strokeWidth) => {
+        const oldStrokeWidth = get().strokeWidth
+        if (oldStrokeWidth !== strokeWidth) {
           set({
-            fillType
+            strokeWidth
           })
         }
       },
@@ -86,6 +143,33 @@ const useShapeStore = create<ShapeState & ShapeAction>()(
         if (count !== oldCount) {
           set({
             shapeLinePointCount: count
+          })
+        }
+      },
+      updateCurrentFillColor(colorIndex) {
+        set({
+          currentFillColor: colorIndex
+        })
+      },
+      updateFillColor(color: string, colorIndex: number) {
+        set(
+          produce((state) => {
+            state.fillColorList[colorIndex] = color
+          })
+        )
+      },
+      deleteFillColor(colorIndex) {
+        set(
+          produce((state) => {
+            state.fillColorList.splice(colorIndex, 1)
+          })
+        )
+      },
+      updateFillStyle(fillStyle) {
+        const oldFillStyle = get().fillStyle
+        if (oldFillStyle !== fillStyle) {
+          set({
+            fillStyle
           })
         }
       }

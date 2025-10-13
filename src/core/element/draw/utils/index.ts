@@ -1,5 +1,5 @@
 import useDrawStore from '@/store/draw'
-import { DrawLineType } from '@/constants/drawLineType'
+import { DrawLineType } from '@/constants/draw'
 import { paintBoard } from '@/core/paintBoard'
 
 /**

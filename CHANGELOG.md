@@ -1,3 +1,32 @@
+# 2.0.0
+
+### Feat
+
+- Tool Panel
+  - Refined overall layout for a more intuitive workflow.
+- Free Drawing
+  - Added multi-color switching and customizable configurations.
+  - Brush shadows now support adjustable X and Y offsets.
+- Shape Drawing
+  - Added dynamic drawing support for Lucide icons.
+  - Introduced a “hand-drawn” line style option.
+  - Line and fill colors can now be switched freely.
+  - Added five new shape fill patterns for richer visual effects.
+- Selection Mode
+  - Added a “Lock” toggle to prevent selected objects from being moved, dragged, or rotated.
+- Canvas Background
+  - Supports simultaneous drawing of background color, image, and camera feed, with adjustable layer order.
+  - Background color now supports gradient effects.
+  - Background images support background removal and segmentation processing.
+- File List
+  - Improved add/delete interactions for smoother operation.
+  - Added file sorting functionality.
+- Camera
+  - Added a camera button at the bottom-left corner to toggle the camera.
+  - Supports real-time capture or freezing a frame as the background, with adjustable filters, brightness, contrast, saturation, and opacity.
+- Shortcuts
+  - Refactored event handling module and added multiple new shortcuts for canvas transformations, element adjustments, and tool panel switching.
+
 # 1.5.7
 
 ### Feat

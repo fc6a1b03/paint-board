@@ -2,7 +2,11 @@ import { paintBoard } from '../paintBoard'
 import { v4 as uuidv4 } from 'uuid'
 import useBoardStore from '@/store/board'
 import { ActionMode, ELEMENT_CUSTOM_TYPE } from '@/constants'
-import { initCustomObjectAttr } from '@/core/utils/object'
+import {
+  initCustomObjectAttr,
+  filterUnlockedObjects
+} from '@/core/utils/object'
+import { fabric } from 'fabric'
 
 export class ObjectEvent {
   constructor() {
@@ -12,12 +16,12 @@ export class ObjectEvent {
 
   initObjectEvent() {
     const canvas = paintBoard?.canvas
-    canvas?.on('selection:created', () => {
-      paintBoard.triggerHook()
+    canvas?.on('selection:created', (e) => {
+      this.handleSelectionChange(e)
     })
 
-    canvas?.on('selection:updated', () => {
-      paintBoard.triggerHook()
+    canvas?.on('selection:updated', (e) => {
+      this.handleSelectionChange(e)
     })
 
     canvas?.on('selection:cleared', () => {
@@ -55,6 +59,51 @@ export class ObjectEvent {
         paintBoard.history?.saveState()
       }
     })
+  }
+
+  /**
+   * Handle selection changes
+   * filter out locked objects
+   */
+  private handleSelectionChange(e: any) {
+    const canvas = paintBoard?.canvas
+    if (!canvas) return
+
+    // get current selected objects
+    const selectedObjects = e.selected || []
+
+    if (selectedObjects.length <= 1) {
+      paintBoard.triggerHook()
+      return
+    }
+
+    // filter out locked objects
+    const unlockedObjects = filterUnlockedObjects(selectedObjects)
+
+    // if there are locked objects that are filtered out, they need to be re-selected
+    if (unlockedObjects.length !== selectedObjects.length) {
+      // clear current selection
+      canvas.discardActiveObject()
+
+      // if there are still unlocked objects, re-select them
+      if (unlockedObjects.length > 0) {
+        if (unlockedObjects.length === 1) {
+          // single object directly select
+          canvas.setActiveObject(unlockedObjects[0])
+        } else {
+          // create ActiveSelection for multiple objects
+          const activeSelection = new fabric.ActiveSelection(unlockedObjects, {
+            canvas: canvas
+          })
+          canvas.setActiveObject(activeSelection)
+        }
+      }
+
+      // re-render the canvas
+      canvas.renderAll()
+    }
+
+    paintBoard.triggerHook()
   }
 
   initTextEvent() {

@@ -2,6 +2,8 @@ import { useMemo, FC } from 'react'
 import { paintBoard } from '@/core/paintBoard'
 import { useTranslation } from 'react-i18next'
 
+import { CircleQuestionMark } from 'lucide-react'
+
 interface IProps {
   refreshCount: number
 }
@@ -36,27 +38,28 @@ const EraserConfig: FC<IProps> = ({ refreshCount }) => {
     }
   }
 
+  if (!erasableControl.show) {
+    return null
+  }
+
   return (
-    <>
-      {erasableControl.show && (
-        <>
-          <div className="font-bold font-fredokaOne mt-3 text-sm">
-            {t('eraserConfig.eraser')}
-          </div>
-          <div className="mt-1 flex items-center w-full">
-            <div className="font-fredokaOne text-xs mr-3">
-              {t('eraserConfig.erasable')}
-            </div>
-            <input
-              type="checkbox"
-              className="toggle toggle-success"
-              checked={erasableControl.erasable}
-              onChange={updateObjectErasable}
-            />
-          </div>
-        </>
-      )}
-    </>
+    <div className="flex items-center mt-2">
+      <div className="font-bold font-fredokaOne text-sm flex items-center justify-end shrink-0 w-20">
+        {t('eraserConfig.eraser')}
+        <div
+          className="tooltip tooltip-right ml-1 cursor-pointer before:max-w-24"
+          data-tip={t('eraserConfig.erasableTip')}
+        >
+          <CircleQuestionMark size={16} />
+        </div>
+      </div>
+      <input
+        type="checkbox"
+        className="toggle toggle-success toggle-sm ml-3"
+        checked={erasableControl.erasable}
+        onChange={updateObjectErasable}
+      />
+    </div>
   )
 }
 

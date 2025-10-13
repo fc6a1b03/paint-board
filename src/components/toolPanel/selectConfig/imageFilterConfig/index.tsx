@@ -14,29 +14,30 @@ const ImageFilterConfig = () => {
     paintBoard.triggerHook()
   }
 
+  const filters =
+    (paintBoard.canvas?.getActiveObject() as fabric.Image)?.filters?.map(
+      (item: any) => item?.type ?? ''
+    ) ?? []
+
   return (
-    <>
-      <div className="font-bold font-fredokaOne mt-3 text-sm">
+    <div className="flex items-start mt-2">
+      <div className="font-bold font-fredokaOne text-sm w-20 shrink-0 text-right">
         {t('title.imageFilters')}
       </div>
-      <div className="flex flex-row flex-wrap w-72 items-center justify-between">
+      <div className="flex flex-row flex-wrap w-44 items-center ml-2">
         {filtersCheckbox.map((item, index) => (
-          <label key={index} className="cursor-pointer label inline-flex w-32">
-            <span className="label-text mr-2">{t(item.text)}</span>
+          <label key={index} className="cursor-pointer label inline-flex p-1">
+            <span className="label-text mr-2 text-xs">{t(item.text)}</span>
             <input
               type="checkbox"
-              checked={(
-                (
-                  paintBoard.canvas?.getActiveObject() as fabric.Image
-                )?.filters?.map((item: any) => item?.type ?? '') ?? []
-              ).includes(item.type)}
+              checked={filters.includes(item.type)}
               onChange={() => updateImageFilters(item.type)}
-              className="checkbox checkbox-success"
+              className="checkbox checkbox-xs checkbox-success"
             />
           </label>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

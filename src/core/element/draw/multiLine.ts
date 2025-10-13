@@ -45,9 +45,10 @@ export class MultiLineElement {
 }
 
 function drawMultiLine(points: fabric.Point[]) {
-  const stroke = useDrawStore.getState().drawColors[0]
+  const { drawColors, currentDrawColor, drawWidth } = useDrawStore.getState()
+  const stroke = drawColors[currentDrawColor]
   const strokeWidth = Math.ceil(
-    useDrawStore.getState().drawWidth / 3 / (paintBoard.canvas?.getZoom() ?? 1)
+    drawWidth / 3 / (paintBoard.canvas?.getZoom() ?? 1)
   )
 
   const lines: fabric.Line[] = []

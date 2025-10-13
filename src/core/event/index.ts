@@ -1,19 +1,19 @@
-import { CanvasClickEvent } from './clickEvent'
+import { CanvasMouseEvent } from './mouseEvent'
 import { ObjectEvent } from './objectEvent'
 import { CanvasTouchEvent } from './touchEvent'
 import { CanvasZoomEvent } from './zoomEvent'
 import { WindowEvent } from './windowEvent'
 
-export class CanvasEvent {
-  clickEvent: CanvasClickEvent
+export class EventModule {
+  mouseEvent: CanvasMouseEvent
   zoomEvent: CanvasZoomEvent
   objectEvent: ObjectEvent
   windowEvent: WindowEvent
   touchEvent: CanvasTouchEvent
 
   constructor() {
-    const clickEvent = new CanvasClickEvent()
-    this.clickEvent = clickEvent
+    const mouseEvent = new CanvasMouseEvent()
+    this.mouseEvent = mouseEvent
 
     const zoomEvent = new CanvasZoomEvent()
     this.zoomEvent = zoomEvent
@@ -29,7 +29,7 @@ export class CanvasEvent {
   }
 
   removeEvent() {
-    this.windowEvent.removeWindowEvent()
-    this.touchEvent.removeTouchEvent()
+    this.windowEvent.removeWindowEvents()
+    this.touchEvent.removeTouchEvents()
   }
 }

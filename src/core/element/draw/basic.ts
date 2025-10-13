@@ -1,5 +1,5 @@
 import useDrawStore from '@/store/draw'
-import { getDrawWidth, getShadowWidth } from '@/core/utils/draw'
+import { getDrawWidth } from '@/core/utils/draw'
 import { paintBoard } from '@/core/paintBoard'
 import { fabric } from 'fabric'
 import { getStrokeDashArray } from './utils'
@@ -14,15 +14,25 @@ export const renderPencilBrush = () => {
   canvas.isDrawingMode = true
   canvas.freeDrawingBrush = pencilBrush
   canvas.freeDrawingBrush.width = getDrawWidth()
-  canvas.freeDrawingBrush.color = useDrawStore.getState().drawColors[0]
+  const {
+    currentDrawColor,
+    drawColors,
+    shadowBlur,
+    shadowOffsetX,
+    shadowOffsetY,
+    shadowColor
+  } = useDrawStore.getState()
+  canvas.freeDrawingBrush.color = drawColors[currentDrawColor]
 
   const strokeDashArray = getStrokeDashArray()
   canvas.freeDrawingBrush.strokeDashArray = strokeDashArray
 
-  canvas.freeDrawingBrush.shadow = new fabric.Shadow({
-    blur: getShadowWidth(),
-    offsetX: 0,
-    offsetY: 0,
-    color: useDrawStore.getState().shadowColor
-  })
+  if (shadowBlur > 0) {
+    canvas.freeDrawingBrush.shadow = new fabric.Shadow({
+      blur: shadowBlur,
+      offsetX: shadowOffsetX,
+      offsetY: shadowOffsetY,
+      color: shadowColor
+    })
+  }
 }
