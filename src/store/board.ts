@@ -5,6 +5,7 @@ import { paintBoard } from '@/core/paintBoard'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { alignGuideLine } from '@/core/fabricMixin/alignGuideLine'
+import { getInitLanguage } from '@/i18n/utils'
 
 interface BoardState {
   mode: string // operating mode
@@ -22,9 +23,7 @@ interface BoardAction {
   updateOpenGuideLine: () => void
 }
 
-const initLanguage = ['en', 'en-US', 'en-us'].includes(navigator.language)
-  ? 'en'
-  : 'zh'
+const initLanguage = getInitLanguage()
 
 const useBoardStore = create<BoardState & BoardAction>()(
   persist(
