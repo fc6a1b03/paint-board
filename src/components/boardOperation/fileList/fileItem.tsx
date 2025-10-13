@@ -5,6 +5,7 @@ import { ActionMode } from '@/constants'
 import { paintBoard } from '@/core/paintBoard'
 
 import { Pencil, Trash2, GripVertical } from 'lucide-react'
+import useCameraStore from '@/store/camera'
 
 interface IProps {
   file: IFile
@@ -15,10 +16,13 @@ const FileItem: FC<IProps> = ({ file, handleDelete }) => {
   const { files, currentId, updateCurrentFile, updateFileTitle } =
     useFileStore()
   const { updateMode } = useBoardStore()
+  const { updateOpenCamera } = useCameraStore()
   const [showNameInput, setShowNameInput] = useState(false)
 
   // update current file id
   const updateCurrentFileId = (id: string) => {
+    updateOpenCamera(false)
+
     updateCurrentFile(id)
     paintBoard.initCanvasStorage()
     updateMode(ActionMode.DRAW)

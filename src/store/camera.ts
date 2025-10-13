@@ -38,6 +38,12 @@ const useCameraStore = create<CameraState & CameraAction>()(
         set({
           openCamera
         })
+
+        if (!openCamera) {
+          set({
+            pauseCamera: false
+          })
+        }
       },
       updatePauseCamera(pauseCamera) {
         set({
