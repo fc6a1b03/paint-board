@@ -3,7 +3,7 @@
 </div>
 
 <h4 align="center">
-  A fun art drawing board that supports multi-end operation
+  An open-source web-based creative canvas
 </h4>
 
 <div align="center">
@@ -32,47 +32,16 @@ Link: [https://songlh.top/paint-board/](https://songlh.top/paint-board/)
   <img style="width: 100%" src="https://raw.githubusercontent.com/LHRUN/file-store/main/paint-board/preview_device.png" alt="preview"/>
 </div>
 
-## Completed Features:
+## Features
 + Drawing Mode
-  - FreeStyle
-    - Provides 12 different styles of brushes, including Basic Brush, Rainbow Brush, Multi-Shape Brush, Multi-Material Brush, Pixel Brush, Multi-Color Brush, Text Brush, Multi-Line Connection Brush, Reticulate Brush, Multi-Point Connection Brush, Wiggle Brush, Thorn Brush. Satisfy the diversified drawing.
-    - All brushes support color and brush width configuration, in addition to multi-shape, multi-material, multi-color and other brushes support custom configuration.
-  - ShapeDraw
-    - A variety of common shapes are provided for drawing, with support for multi-point segments and arrows. The shapes support border and fill styles.
-+ Eraser Mode
-  - Eraser mode linearly erases all content and supports linear width configuration.
-+ Select Mode
-  - In the selection mode, you can frame the drawing content by clicking on it. The click handle supports dragging, zooming and rotating operations, providing flexible editing.
-  - Selecting images supports multiple filter configurations.
-  - Supports font and style settings when selecting text.
-  - Layer settings are supported for all drawings, including Move Layer Up, Move Layer Down, Move to Top, and Move to Bottom.
-  - All drawings support transparency configurations.
-  - All drawings support eraser or not erasable configuration.
-+ Drawing Board Configuration
-  - The drawing board supports background configuration, including colour, background image, and transparency.
-  - The drawing board supports customized width and height configurations.
-  - Supports painting caching, enabling caching will improve painting performance in the presence of large amounts of painted content, while disabling caching will improve canvas sharpness.
-  - Added Guide Line drawing feature.
-+ Multifunction Menu
-  - The bottom left button shows the current zoom ratio in real time, click it to reset the zoom ratio.
-  - The list of buttons in the center, in order from left to right, are: Undo, Redo, Copy Current Selection, Delete Current Selection, Draw Text, Upload Image, Clear Drawing, Save as Image, and Open File List.
-    - Upload images with support for background remove, image segmentation. This function needs WebGPU support in your browser.
-    - Save as image supports custom configurations. Rotate, Scale, Crop
-  - PC:
-    - Hold down the Space key and click the left mouse button to move the canvas, scroll the mouse wheel to zoom the canvas.
-    - Press and hold the Backspace key to delete the selection.
-    - Press and hold Ctrl + V at the same time to paste the clipboard image.
-  - Mobile:
-    - Supports dragging and zooming the canvas after a two-finger press.
-+ Multifile Configuration
-  - Support multiple canvas switching, each canvas can be customized title, add, delete, and provide upload and download.
-+ i18n
-  - Support 中文(简体), 中文(繁体), English, 日本語, 한국어.
-+ PWA support, offline access.
-
-## Future Plans
-+ Multi-platform authentication login and data synchronization
-+ AI Enhanced Drawing
+  - Free Drawing: Provides 12 different brush styles, including basic brush, rainbow brush, multi-shape brush, multi-material brush, pixel brush, multi-color brush, text brush, multi-line connection brush, mesh brush, multi-point connection brush, wave curve brush, and thorn brush to meet diverse drawing needs.
+  - Shape Drawing: Supports drawing rich graphics, including built-in shapes and Lucide icon library graphics, which can be used with just a click. Configurable line width, line style, fill color, and fill style.
++ Eraser Mode: Can linearly erase all content and supports linear width configuration.
++ Selection Mode: Supports clicking or box selection for editing. After selection, you can perform drag, scale, rotate operations and various custom configurations through handles.
++ Canvas Mode: Supports canvas background, custom size, and global drawing configuration.
++ Action Bar: Functions from left to right are undo, redo, copy current selection, delete current selection, draw text, upload image, clear drawing content, save as image, and open file list.
++ Multi-file Configuration: Supports switching between multiple canvases, each canvas can have custom titles, add, delete, and provides sorting and upload/download functions.
++ i18n: 中文(简体), 中文(繁体), English, 日本語, 한국어.
 
 ## V1.3.0 Video Demo
 
