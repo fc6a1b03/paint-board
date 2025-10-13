@@ -105,10 +105,6 @@ export default defineConfig({
           getCache({
             pattern: /^https:\/\/fonts\.gstatic\.com\//,
             name: 'google-fonts-webfonts'
-          }),
-          getCache({
-            pattern: /^https:\/\/fonts\.font\.im\//,
-            name: 'font-im'
           })
         ]
       }
