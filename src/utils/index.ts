@@ -23,7 +23,11 @@ export const getRandomFloat = (min: number, max: number) => {
  */
 export const formatPublicUrl = (originUrl: string) => {
   if (originUrl && typeof originUrl === 'string') {
-    return `${import.meta.env.BASE_URL}${originUrl}`
+    const baseUrl = import.meta.env.BASE_URL
+    // Ensure there's a slash between BASE_URL and originUrl
+    const separator =
+      baseUrl.endsWith('/') || originUrl.startsWith('/') ? '' : '/'
+    return `${baseUrl}${separator}${originUrl}`
   }
   return ''
 }
@@ -45,4 +49,9 @@ export const isMobile = () => {
   return /phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone|Mobi|Android|iPhone|iPad/i.test(
     navigator.userAgent
   )
+}
+
+export const isAppleDevice = () => {
+  const platform = navigator.userAgent || navigator.platform
+  return /Mac|iPhone|iPad|iPod/.test(platform)
 }

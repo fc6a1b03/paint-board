@@ -21,25 +21,13 @@ export const FREESTYLE_ELEMENT_CUSTOM_TYPE = {
 
 export const SHAPE_ELEMENT_CUSTOM_TYPE = {
   SHAPE_LINE: 'shapeLine',
-  SHAPE_RECT: 'shapeRect',
-  SHAPE_CIRCLE: 'shapeCircle',
-  SHAPE_ELLIPSE: 'shapeEllipse',
-  SHAPE_TRIANGLE: 'shapeTriangle',
   SHAPE_ARROW_LINE: 'shapeArrowLine',
-  SHAPE_ARROW_OUTLINE: 'shapeArrowOutline',
-  SHAPE_CLOUD: 'shapeCloud',
-  SHAPE_TOOLTIPS: 'shapeTooltips',
-  SHAPE_LIGHTNING: 'shapeLightning',
-  SHAPE_CLOSE: 'shapeClose',
-  SHAPE_CHECK: 'shapeCheck',
-  SHAPE_INFO: 'shapeInfo',
-  SHAPE_BACKSPACE: 'shapeBackspace',
-  SHAPE_BLOCK: 'shapeBlock',
-  SHAPE_SPEAKER: 'shapeSpeaker',
-  SHAPE_SEARCH: 'shapeSearch',
-  SHAPE_INFO_OUTLINE: 'shapeInfoOutline',
-  SHAPE_HEART: 'shapeHeart',
-  SHAPE_ALERT: 'shapeAlert'
+  SHAPE_RECTANGLE: 'shapeRectangle',
+  SHAPE_CIRCLE: 'shapeCircle',
+  SHAPE_TRIANGLE: 'shapeTriangle',
+  SHAPE_PENTAGON: 'shapePentagon',
+  SHAPE_HEXAGON: 'shapeHexagon',
+  SHAPE_GRAPH: 'shapeGraph'
 }
 
 export const ELEMENT_CUSTOM_TYPE = {

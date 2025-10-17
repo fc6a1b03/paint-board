@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400;700&display=swap');
-@import url('https://fonts.font.im/css?family=Hanalei+Fill:wght@400;700&display=swap');
-@import url('https://fonts.font.im/css?family=Ruslan+Display:wght@400;700&display=swap');
-@import url('https://fonts.font.im/css?family=Lobster:wght@400;700&display=swap');
-@import url('https://fonts.font.im/css?family=Pacifico:wght@400;700&display=swap');
-@import url('https://fonts.font.im/css?family=Gloria+Hallelujah:wght@400;700&display=swap');
-@import url('https://fonts.font.im/css?family=Permanent+Marker:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -24,8 +24,8 @@
 }
 
 .colorInput {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
   cursor: pointer;
   border: none;
@@ -33,16 +33,16 @@
 }
 
 .colorInput::-webkit-color-swatch-wrapper {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
   border: none;
   border-radius: 4px;
 }
 
 .colorInput::-webkit-color-swatch {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
   border: none;
   border-radius: 4px;
@@ -52,14 +52,10 @@ body {
   overflow: hidden;
 }
 
-.btn:not(.btn-active):hover {
+.btn:not(.btn-primary):hover {
   color: #ffffff80;
-  background-color: hsl(var(--n, var(--n)) / var(--tw-bg-opacity));
-  border-color: hsl(var(--n, var(--n)) / var(--tw-border-opacity));
-}
-
-.tab:not(.tab-active):hover {
-  color: #ffffff80;
+  background-color: oklch(var(--n, var(--n)) / var(--tw-bg-opacity));
+  border-color: oklch(var(--n, var(--n)) / var(--tw-border-opacity));
 }
 
 .radial-progress:hover::after {

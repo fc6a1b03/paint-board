@@ -10,7 +10,6 @@ export class MultiPointElement {
   lastCoordinates: { x: number; y: number }[] = []
   points: fabric.Point[] = []
   group: fabric.Group
-  shadow: fabric.Shadow
 
   constructor() {
     const group = new fabric.Group([], {
@@ -18,12 +17,6 @@ export class MultiPointElement {
     })
     paintBoard.canvas?.add(group)
     this.group = group
-    this.shadow = new fabric.Shadow({
-      blur: 3,
-      offsetX: 0,
-      offsetY: 0,
-      color: useDrawStore.getState().drawColors[0]
-    })
 
     initCustomObjectAttr(group, ELEMENT_CUSTOM_TYPE.MULTI_POINT)
   }
@@ -55,10 +48,10 @@ export class MultiPointElement {
 
 function drawMultiPoint(el: MultiPointElement) {
   const { points, lastCoordinates } = el
+  const { drawColors, currentDrawColor, drawWidth, drawShapeCount } =
+    useDrawStore.getState()
   const boardZoom = paintBoard.canvas?.getZoom() ?? 1
-  const rectSize = Math.ceil(
-    (useDrawStore.getState().drawWidth * 3) / boardZoom
-  )
+  const rectSize = Math.ceil((drawWidth * 3) / boardZoom)
   const radius = 6 / boardZoom
   const strokeWidth = 2 / boardZoom
 
@@ -70,15 +63,14 @@ function drawMultiPoint(el: MultiPointElement) {
     curX,
     curY,
     rectSize,
-    useDrawStore.getState().drawShapeCount
+    drawShapeCount
   )
   const circle = coordinates.map((item) => {
     return new fabric.Circle({
       left: item.x,
       top: item.y,
       radius,
-      // shadow: el.shadow,
-      fill: useDrawStore.getState().drawColors[0]
+      fill: drawColors[currentDrawColor]
     })
   })
   objects.push(...circle)
@@ -92,7 +84,7 @@ function drawMultiPoint(el: MultiPointElement) {
           coordinates[index].y + radius
         ],
         {
-          stroke: useDrawStore.getState().drawColors[0],
+          stroke: drawColors[currentDrawColor],
           strokeWidth
         }
       )

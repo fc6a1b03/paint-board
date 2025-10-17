@@ -1,10 +1,8 @@
 import useFileStore, { IBoardData } from '@/store/files'
 import { paintBoard } from '../paintBoard'
 import { diff, unpatch, patch, Delta } from 'jsondiffpatch'
-import { cloneDeep } from 'lodash'
+import cloneDeep from 'lodash-es/cloneDeep'
 import { getCanvasJSON, handleCanvasJSONLoaded } from '../utils/loadCanvas'
-import useBoardStore from '@/store/board'
-import { handleBackgroundImageWhenCanvasSizeChange } from '../utils/background'
 
 const initState = {}
 
@@ -56,10 +54,6 @@ export class History {
         useFileStore.getState().updateBoardData(canvasJson)
         this.canvasData = cloneDeep(canvasJson ?? {})
         paintBoard.triggerHook()
-
-        if ((delta as unknown as IBoardData)?.backgroundImage) {
-          handleBackgroundImageWhenCanvasSizeChange()
-        }
       })
     }
   }
@@ -77,10 +71,6 @@ export class History {
         useFileStore.getState().updateBoardData(canvasJson)
         this.canvasData = cloneDeep(canvasJson ?? {})
         paintBoard.triggerHook()
-
-        if ((delta as unknown as IBoardData)?.backgroundImage) {
-          handleBackgroundImageWhenCanvasSizeChange()
-        }
       })
     }
   }
@@ -91,8 +81,6 @@ export class History {
     this.diffs = []
     this.canvasData = {}
     useFileStore.getState().updateBoardData(initState)
-    useBoardStore.getState().updateBackgroundColor('#ffffff')
-    useBoardStore.getState().cleanBackgroundImage()
   }
 
   initHistory() {

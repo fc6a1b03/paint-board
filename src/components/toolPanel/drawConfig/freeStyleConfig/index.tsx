@@ -5,6 +5,7 @@ import ShapeConutConfig from './shapeConfig/shapeConutConfig'
 import ShapeTypeConfig from './shapeConfig/shapeTypeConfig'
 import ShadowConfig from './shadowConfig'
 import DrawTextConfig from './drawTextConfig'
+import FontFamilyConfg from './fontFamilyConfig'
 import MaterialConfig from './materialConfig'
 import MultiColorConfig from './multiColorConfig'
 import DrawWidthConfig from './drawWidthConfig'
@@ -15,27 +16,45 @@ import LineTypeConfig from './lineTypeConfig'
 const FreeDrawConfig = () => {
   const { drawStyle } = useDrawStore()
 
+  const stylesWithLineAndShadow = [
+    DrawStyle.Basic,
+    DrawStyle.Material,
+    DrawStyle.MultiColor
+  ]
+  const stylesWithoutWidth = [DrawStyle.Text, DrawStyle.Wiggle, DrawStyle.Thorn]
+  const shapeStyles = [DrawStyle.Shape, DrawStyle.MultiPoint]
+
+  const isShapeStyle = drawStyle === DrawStyle.Shape
+  const isShapeOrMultiPoint = shapeStyles.includes(drawStyle)
+  const isMaterialStyle = drawStyle === DrawStyle.Material
+  const isMultiColorStyle = drawStyle === DrawStyle.MultiColor
+  const isTextStyle = drawStyle === DrawStyle.Text
+  const showWidthConfig = !stylesWithoutWidth.includes(drawStyle)
+  const showColorConfig = drawStyle !== DrawStyle.Rainbow
+  const showLineAndShadowConfig = stylesWithLineAndShadow.includes(drawStyle)
+
   return (
     <>
-      {/* style config */}
       <DrawStyleConfig />
-      {drawStyle === DrawStyle.Shape && <ShapeTypeConfig />}
-      {(drawStyle === DrawStyle.Shape ||
-        drawStyle === DrawStyle.MultiPoint) && <ShapeConutConfig />}
-      {drawStyle === DrawStyle.Material && <MaterialConfig />}
-      {drawStyle === DrawStyle.MultiColor && <MultiColorConfig />}
-      {![DrawStyle.Text, DrawStyle.Wiggle, DrawStyle.Thorn].includes(
-        drawStyle
-      ) && <DrawWidthConfig />}
-      {/* color config */}
-      {drawStyle !== DrawStyle.Rainbow && <DrawColorConfig />}
-      {[DrawStyle.Basic, DrawStyle.Material, DrawStyle.MultiColor].includes(
-        drawStyle
-      ) && <LineTypeConfig />}
-      {[DrawStyle.Basic, DrawStyle.Material, DrawStyle.MultiColor].includes(
-        drawStyle
-      ) && <ShadowConfig />}
-      {drawStyle === DrawStyle.Text && <DrawTextConfig />}
+
+      {isShapeStyle && <ShapeTypeConfig />}
+      {isShapeOrMultiPoint && <ShapeConutConfig />}
+
+      {isMaterialStyle && <MaterialConfig />}
+      {isMultiColorStyle && <MultiColorConfig />}
+
+      {showWidthConfig && <DrawWidthConfig />}
+      {showColorConfig && <DrawColorConfig />}
+
+      {showLineAndShadowConfig && <LineTypeConfig />}
+      {showLineAndShadowConfig && <ShadowConfig />}
+
+      {isTextStyle && (
+        <>
+          <DrawTextConfig />
+          <FontFamilyConfg layoutType="vertical" />
+        </>
+      )}
     </>
   )
 }

@@ -10,7 +10,7 @@ const DrawWidthConfig = () => {
       <div className="font-bold text-sm font-fredokaOne">
         {t('title.drawWidth')}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center mt-0">
         <div className="text-lg font-fredokaOne mr-2 text-primary-focus">
           {drawWidth}
         </div>

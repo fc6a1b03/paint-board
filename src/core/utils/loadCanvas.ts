@@ -11,7 +11,11 @@ import {
 } from '../element/shape/utils/arrowLine'
 import { ELEMENT_CUSTOM_TYPE } from '@/constants'
 import { paintBoard } from '../paintBoard'
-import { IBoardData } from '@/store/files'
+import useFileStore, {
+  DEFAULT_BACKGROUND_COLOR_LIST,
+  DEFAULT_BACKGROUND_SORT,
+  IBoardData
+} from '@/store/files'
 
 /**
  * get fabric.js canvas JSON data
@@ -25,7 +29,14 @@ export const getCanvasJSON = (): Partial<IBoardData> => {
         'id',
         '_customType',
         'perPixelTargetFind',
-        'objectCaching'
+        'objectCaching',
+        'lockMovementX',
+        'lockMovementY',
+        'lockRotation',
+        'lockScalingX',
+        'lockScalingY',
+        'lockUniScaling',
+        'hasControls'
       ]) ?? {}
     )
   }
@@ -74,4 +85,35 @@ export const handleCanvasJSONLoaded = (canvas: fabric.Canvas) => {
         }, {} as Record<string, fabric.Control>)
     }
   })
+}
+
+export const handleFileListData = () => {
+  const { files } = useFileStore.getState()
+  let hasChanges = false
+
+  const updatedFiles = files.map((file) => {
+    const { background, backgroundImage, ...otherBoardData } =
+      file.boardData || {}
+
+    if (background || backgroundImage) {
+      hasChanges = true
+      return {
+        ...file,
+        backgroundColorList: background
+          ? [background]
+          : file.backgroundColorList || DEFAULT_BACKGROUND_COLOR_LIST,
+        currentBackgroundColor: background ? 0 : file.currentBackgroundColor,
+        backgroundImage: backgroundImage?.src || file.backgroundImage || '',
+        boardData: otherBoardData,
+        backgroundSort: file.backgroundSort || DEFAULT_BACKGROUND_SORT
+      }
+    }
+    return file
+  })
+
+  if (hasChanges) {
+    useFileStore.setState({
+      files: updatedFiles
+    })
+  }
 }

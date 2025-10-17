@@ -21,7 +21,7 @@ const ZoomInfo = () => {
           '--thickness': '0.2rem'
         } as CSSProperties
       }
-      onClick={() => paintBoard.evnet?.zoomEvent.initZoom()}
+      onClick={() => paintBoard.evnet?.zoomEvent.resetZoom()}
     ></div>
   )
 }

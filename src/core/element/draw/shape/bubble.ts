@@ -4,6 +4,11 @@ import { generateRandomCoordinates } from '../utils'
 import useDrawStore from '@/store/draw'
 
 export function drawBubble(point: fabric.Point, size: number) {
+  const { currentMultiColor, drawColors } = useDrawStore.getState()
+  const filterDrawColors = drawColors.filter((_, index) =>
+    currentMultiColor.includes(index)
+  )
+
   if (useDrawStore.getState().drawShapeCount === 1) {
     const radius = getRandomInt(size * 0.3, size * 1)
     const left = point?.x - radius
@@ -13,7 +18,7 @@ export function drawBubble(point: fabric.Point, size: number) {
       top,
       radius,
       opacity: Math.random(),
-      fill: useDrawStore.getState().drawColors[0]
+      fill: filterDrawColors[getRandomInt(0, filterDrawColors.length - 1)]
     })
     return circle
   }
@@ -24,12 +29,9 @@ export function drawBubble(point: fabric.Point, size: number) {
     size * 3,
     useDrawStore.getState().drawShapeCount
   )
-  const circles = points.map((item, index) => {
+  const circles = points.map((item) => {
     const radius = getRandomInt(size * 0.3, size)
-    const color =
-      index > useDrawStore.getState().drawColors.length - 1
-        ? useDrawStore.getState().drawColors[0]
-        : useDrawStore.getState().drawColors[index]
+    const color = filterDrawColors[getRandomInt(0, filterDrawColors.length - 1)]
     return new fabric.Circle({
       left: item.x,
       top: item.y,

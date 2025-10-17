@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { paintBoard } from '@/core/paintBoard'
-import { ELEMENT_CUSTOM_TYPE, SHAPE_ELEMENT_CUSTOM_TYPE } from '@/constants'
+import { ELEMENT_CUSTOM_TYPE } from '@/constants'
 
+import { Info } from 'lucide-react'
 import LayerConfig from './layerConfig'
 import OpacityConfig from './opacityConfig'
 import EraserConfig from './eraserConfig'
+import LockConfig from './lockConfig'
 import ImageFilterConfig from './imageFilterConfig'
 import FontStyleConfig from './fontStyleConfig'
-import SelectShapeConfig from './selectShapeConfig'
 import SelectFontFamilyConfig from './selectFontFamilyConfig'
 
 const SelectConfig = () => {
+  const { t } = useTranslation()
   const [refreshCount, setRefresh] = useState(0) // refresh data
 
   useEffect(() => {
@@ -21,28 +24,37 @@ const SelectConfig = () => {
     }
   }, [setRefresh])
 
+  const activeObject = paintBoard.canvas?.getActiveObject()
+
+  if (!activeObject) {
+    return (
+      <div className="flex mt-3 w-56">
+        <Info size={16} className="mr-1 shrink-0" />
+        <span className="text-sm">{t('tip.unselectedElementTip')}</span>
+      </div>
+    )
+  }
+
   return (
     <div className="form-control">
       <OpacityConfig refreshCount={refreshCount} />
 
       <EraserConfig refreshCount={refreshCount} />
 
-      {paintBoard.canvas?.getActiveObject() && <LayerConfig />}
+      <LockConfig refreshCount={refreshCount} />
 
-      {paintBoard.canvas?.getActiveObject()?._customType ===
-        ELEMENT_CUSTOM_TYPE.IMAGE && <ImageFilterConfig />}
+      <LayerConfig />
 
-      {paintBoard.canvas?.getActiveObject()?._customType ===
-        ELEMENT_CUSTOM_TYPE.I_TEXT && (
+      {activeObject?._customType === ELEMENT_CUSTOM_TYPE.IMAGE && (
+        <ImageFilterConfig />
+      )}
+
+      {activeObject?._customType === ELEMENT_CUSTOM_TYPE.I_TEXT && (
         <FontStyleConfig refreshCount={refreshCount} />
       )}
       {[ELEMENT_CUSTOM_TYPE.DRAW_TEXT, ELEMENT_CUSTOM_TYPE.I_TEXT].includes(
-        paintBoard.canvas?.getActiveObject()?._customType as string
+        activeObject?._customType as string
       ) && <SelectFontFamilyConfig refreshCount={refreshCount} />}
-
-      {Object.values(SHAPE_ELEMENT_CUSTOM_TYPE).includes(
-        paintBoard.canvas?.getActiveObject()?._customType as string
-      ) && <SelectShapeConfig refreshCount={refreshCount} />}
     </div>
   )
 }

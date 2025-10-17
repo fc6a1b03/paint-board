@@ -9,7 +9,7 @@ interface IProps {
 const Mask: FC<IProps> = ({ show, clickMask, children }) => {
   return (
     <div
-      className={`fixed top-0 left-0 right-0 bottom-0 bg-black z-10 bg-opacity-75 ${
+      className={`fixed top-0 left-0 right-0 bottom-0 bg-black z-50 bg-opacity-75 ${
         show ? 'block' : 'hidden'
       }`}
       onClick={clickMask}

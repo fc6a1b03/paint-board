@@ -3,18 +3,22 @@ import { ActionMode } from '@/constants'
 export const modeSwitch = [
   {
     type: ActionMode.DRAW,
-    text: 'tool.draw'
+    text: 'tool.draw',
+    keyboard: '1'
   },
   {
     type: ActionMode.ERASE,
-    text: 'tool.eraser'
+    text: 'tool.eraser',
+    keyboard: '2'
   },
   {
     type: ActionMode.SELECT,
-    text: 'tool.select'
+    text: 'tool.select',
+    keyboard: '3'
   },
   {
     type: ActionMode.Board,
-    text: 'tool.board'
+    text: 'tool.board',
+    keyboard: '4'
   }
 ]
